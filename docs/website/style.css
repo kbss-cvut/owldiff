@@ -1,0 +1,132 @@
+/*
+ * Copyright (c) 2012 Czech Technical University in Prague.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser Public License v2.1
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+body {
+    color: #434343;
+    font-family: Arial;
+    font-size: 12px;
+    margin: 0px;
+}
+
+img {
+    border: 0px
+}
+
+#main {
+    width: 780px;
+    position: relative;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover, li.active a {
+    text-decoration: underline;
+}
+
+.left {
+    float: left
+}
+
+.right {
+    float: right;
+}
+
+#menu {
+    background: url("images/bgmenu.gif");
+    padding: 0px 10px 0px 10px;
+    height: 22px
+}
+
+#menu a {
+    display: block;
+    color: white;
+    font-weight: bold;
+    padding: 3px 5px 4px 5px;
+}
+
+#menu a:hover {
+    background: url("images/select.gif");
+    text-decoration: none
+}
+
+#menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+#menu li {
+    position: relative;
+    list-style: none;
+    margin: 0px;
+    float: left;
+}
+
+#menu li:hover {
+    background: url("images/select.gif");
+}
+
+#header {
+    background: url("images/header.jpg") no-repeat right;
+    height: 140px;
+}
+
+h1 {
+    font-size: 20px;
+    color: #2e4a85;
+    font-weight: normal;
+    margin: 0px;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0px;
+    margin-top: 12px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+#body {
+    margin: 20px
+}
+
+#title {
+    border-bottom: 1px solid #7f7f7f;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#footer {
+    margin-top: 10px;
+    height: 14px;
+    background: url("images/footer.gif");
+    color: white;
+    font-size: 10px;
+    padding: 8px 15px 8px 15px;
+}
+
+#footer a {
+    color: white
+}
+
+#body p {
+    text-align: justify
+}
+			
+

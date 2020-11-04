@@ -1,0 +1,345 @@
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OWL Diff</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="OWL Diff"/>
+    <meta name="keywords" content="OWL, diff, onthology"/>
+    <meta name="author" content="Jaromír Pufler"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+
+<body>
+
+<div id="main">
+<div id="header"></div>
+<div id="menu">
+    <div class="left">
+        <ul>
+            <li><a href="index.html">Intro</a></li>
+            <li><a href="screenshots.html">Screenshots</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li class="active"><a href="documentation.html">Documentation</a></li>
+        </ul>
+    </div>
+    <div class="right">
+        <ul>
+            <li><a href="contacts.html">Contacts</a></li>
+        </ul>
+    </div>
+</div>
+<!-- end of menu -->
+
+<div id="body">
+<div id="title">Documentation</div>
+
+
+<h1>Contents</h1>
+<a href="#introduction">Introduction</a> <br/>
+<a href="#installalone">Installation - Standalone</a> <br/>
+<a href="#installneon">Installation - NeOn Plugin</a> <br/>
+<a href="#userguide">User Guide</a> <br/>
+<a href="#algorithms">Algorithms</a> <br/>
+
+
+<a id="introduction" name="introduction"></a>
+
+<h1>Introduction</h1>
+
+<p>
+    OWLdiff is a project for comparing and merging of two ongologies. It aims to help managing and updating ontologies,
+    which are often modified by several sides, and merging of concurrent updates is necessary.
+    Usually, as for case of textual source codes, a versioning system is used for similar purpose: when multiple people
+    update the same file, one of them performs a merge, using a <tt>diff</tt> utility,
+    which allows him to view the changes in the file, select the changes which are to be included in the result, merge
+    the files, and commit the resulting file.
+</p>
+
+<p>
+    OWLdiff serves the same purpose for ontologies, as <tt>diff</tt> does for textual files. It takes two ontologies as
+    arguments; let us call them the <q>original</q> and the <q>update.</q>
+    Then it uses the Pellet reasoner to check, if the two ontologies are semantically equivalent. If not, it shows the
+    differences graphically in two trees, one for each ontology. User can select
+    differing items in either tree, which is to be updated in the resulting merged ontology.
+</p>
+
+
+<a id="installalone" name="installalone"></a>
+
+<h1>Installation - Standalone</h1>
+
+<h2>How to setup the development environment</h2>
+<ol>
+    <li>Download and install Maven (http://maven.apache.org/). <br/>
+        NOTE: Ensure that You have internet connection for the initial setup and that you have set proxy (if
+        applicable).
+        There will be a significant network traffic when downloading all necessary libraries and plugins for Maven for
+        the first time setup.
+    </li>
+
+    <li>Run the 'install-local-files'. (On Windows machines, rename it to .bat first). This will add local dependencies
+        to the Maven local repository.
+    </li>
+    <li>Go to the 'owldiff-core' directory and run 'mvn install'. This compiles and installs the OWLDiff core part -
+        that is used by the other OWLDiff projects.
+    </li>
+    <li>Go back to the 'owldiff' dir and now You can generate project files for Your favorite development environment:
+        <br/>
+        'mvn eclipse:eclipse' (For Neon Plugin you will need to perform this command also in the plugin directory to
+        preserver the dependencies) <br/>
+        'mvn idea:idea' <br/>
+        For NetBeans there should be a direct support in the 6.5 version. For earlier versions try MevenIDE
+        (http://mevenide.codehaus.org/) .
+    </li>
+    <li>You can start Your IDE and start coding :-) :
+        <ul>
+            <li>for developing standalone application you will need to open owldiff-core and owldiff-standalone projects
+                in your favorite IDE
+            </li>
+            <li>for developing neon plugin you will need to open owldiff-core and owldiff-neon-plugin projects in
+                Eclipse
+            </li>
+            <li>for developing protege plugin you will need to open owldiff-core and owldiff-protege-plugin projects in
+                Eclipse
+            </li>
+        </ul>
+    </li>
+</ol>
+<p>NOTE: For project lifecycle management You can use maven directly for command-line. The only exceptions are</p>
+<ol>
+    <li>the owldiff-neon-plugin project, as it requires Eclipse libraries (not attached through Maven, meanwhile)</li>
+    <li>the owldiff project as it has the owldiff-neon-plugin as its module.</li>
+</ol>
+
+<p>NOTE: Please read all readme.txt for nested projects for other configuration setups.</p>
+
+<p>
+    The Maven setup is just an experiment - its benefits are not clear by now. Anyway the directory 'lib-old' is NOT
+    SUPPOSED to be used during the development stage.
+    It is left in the repository as a backup - all required libraries should be loaded through Maven as described above.
+</p>
+
+
+<a id="installneon" name="installneon"></a>
+
+<h1>Installation - NeOn Plugin</h1>
+
+
+<a id="userguide" name="userguide"></a>
+
+<h1>User Guide</h1>
+<!--hr /-->
+<h2>Introduction</h2>
+
+<p>
+    This user guide describes the usage of the main features of OWLdiff.
+</p>
+
+<h2>startup</h2>
+
+<p>
+    The OWLDiff is started with two parameters, which are locations of ontologies to be compared.
+    <br/>
+    <br/>
+    <i>java -jar swutils.jar [ontology-old.owl] [ontology-update.owl]</i>
+    <br/>
+    <br/>
+    After the program starts, the <i>diff</i> algorithm is performed and window, showing the differences, is opened.
+    <br/>
+    <br/>
+    <img src="images/main.png" alt="Overview of the main screen"/>
+    <br/>
+</p>
+<ol>
+    <li>Left pane - Overview of axioms of the old ontology.</li>
+    <li>Right pane - Overview of axioms of the new ontology.</li>
+    <li>Main menu - here you can adjust type of view, switch off reasoner and select different ontologies</li>
+    <li><b>Select all/Deselect All</b> - allows you to select/deselect all axioms, which are different</li>
+    <li>Merge - performs merge on loaded ontologies with respect to selected axioms to be deleted/removed
+        CEX - Shows differences based on results of the <i>CEX</i> algorithm.
+    </li>
+    <li>Axiom properties - shows the role of each axioms
+        <ol>
+            <li>Inferred - this axioms is not presented in the ontology, but can be inferred. The axioms, which were
+                used for inferring are shown.
+            </li>
+            <li>Axiom is in both ontologies</li>
+            <li>Axiom has no connection to other ontology</li>
+        </ol>
+    </li>
+</ol>
+
+<h2>settings</h2>
+
+<p>
+    In the settings, you can select the different representation of axioms or switch off <i>Pellet</i> reasoner.
+</p>
+<ol>
+    <li>Show common axioms - If selected, all axioms from the ontology are shown(even the common axioms)</li>
+    <li>Show class hierarchy - If selected, classes/properties are organised based on subclass axioms</li>
+    <li>Use pellet classification - If selected, the <i>Pellet</i> reasoner is used for finding differential axioms. It
+        leads to less(or equal) set of differential axioms, because some of the axioms can be inferred even if not
+        presented in the ontology.
+    </li>
+    <li>Manchester syntax - axioms are shown in more human-readable <a
+            href="http://www.w3.org/2007/OWL/wiki/ManchesterSyntax">Manchester syntax</a></li>
+    <li>Description logic - classical description logic syntax <a href="http://en.wikipedia.org/wiki/Description_logic">more
+        ...</a></li>
+</ol>
+
+<h2>selecting axioms</h2>
+
+<p>
+    Axioms for merge can be selected by highlighting each axiom with double-click, or by clicking on select/deselect all
+    axioms button above each ontology view.
+    <br/>
+    Selecting axioms in original and update ontology has different meaning:
+</p>
+<ol>
+    <li>Original - Axioms selected here will be removed from the ontology(assuming they should be removed, because they
+        are not contained in the update)
+    </li>
+    <li>Update - These axioms are to be added to the merged ontology</li>
+</ol>
+
+<h2>merge</h2>
+
+<p>
+    By clicking the <i>merge</i> button, a window showing the operations to be performed is opened.
+    <br/>
+    <br/>
+    <img src="images/merge.png" alt="Merge window"/>
+    <br/>
+    <br/>
+    In the left pane, there are axioms to be deleted from the original ontology and in the right pane, there are axioms,
+    which will be added from update ontology.
+    <br/>
+    By default, the merged ontology is saved to the location of the original ontology(assuming we performed update to
+    that one) and the <b>original ontology is lost</b>. By clicking the <i>change</i> button, the location of the
+    resulting ontology can be changed to merge into another file.
+    <br/>
+    After clicking <i>OK</i> button, the new ontology is created from the common axioms and the axioms selected from the
+    update ontology and saved to the specified file.
+    <br/>
+    <br/>
+    After merging the ontology, new <i>diff</i> is performed on the selected files to show if there are any remaining
+    differences in the ontologies.
+</p>
+
+
+<a id="algorithms" name="algorithms"></a>
+
+<h1>Algorithms</h1>
+
+<p>
+    The system incorporates two algorithms described in following chapters to find differences between two ontologies.
+    The first one is a simple way how to find missing, added or modified axioms,
+    but cannot reveal complex dependencies. The other, CEX, is more complicated, can find deep impacts of modified
+    axioms (differences that cannot be seen in class hierarchies),
+    but supports only <img alt="EL" src="images/el.png"/> description logics.
+</p>
+
+<h2>Basic Ontology Comparison</h2>
+
+<p>
+    This algorithm compares only axioms. It generates 4 axiom lists, to represent a few types of ontology differences:
+    <em>origRest</em>, <em>updateRest</em>, <em>inferred</em>, <em>possiblyRemove</em>.
+    The process is divided into two steps.
+</p>
+
+<p>
+    The first step is the syntactic diff. The algoritm first adds all the axioms contained in the <q>update</q> ontology
+    but not in the <q>original</q> ontology into the <em>updateRest</em> list,
+    then the axioms contained in the <q>original</q> ontology but not in the <q>update</q> ontology into the <em>origRest</em>
+    list.
+</p>
+
+<p>
+    The other step is based upon entailments. It uses the lists <em>origRest</em> and <em>updateRest</em> from the
+    previous step. It takes all axioms from the <em>updateRest</em> list, and checks
+    if the axioms can be entailed from the <q>original</q> ontology; if yes, it puts them into the
+    <em>possiblyRemove</em> list - list of axioms, that may be redundant in the <q>update</q> ontology
+    (with respect to <q>original</q> ontology).
+    Then it takes all axioms from the <em>origRest</em> list, and checks if the axioms can be entailed from the <q>update</q>
+    ontology; if yes, it puts them into the <em>inferred</em> list
+    - list of axioms, that are covered by the <q>update</q> ontology, and thus are not lost when omitted.
+</p>
+
+<h2>CEX: Logical Diff</h2>
+
+<p>
+    This is a more complicated algorithm, finding complex effects of axiom modifications, but only able to work on <img
+        alt="EL" src="images/el.png"/> description logics. It is based on the paper:
+    Konev, B., Walther, D., and Wolter, F.: <em>The logical difference problem for description logic terminologies</em>,
+    online at
+    <a href="http://www.csc.liv.ac.uk/~frank/publ/publ.html">http://www.csc.liv.ac.uk/~frank/publ/publ.html</a>.
+</p>
+
+<p>
+    The <img alt="EL" src="images/el.png"/> description logics allows following constructs:
+</p>
+<ul>
+    <li>Concept <img alt="concept definition" src="images/cor.png"/></li>
+    <li>Axioms: concept inclusion <img alt="C sub D" src="images/csubd.png"/>, concept equality <img alt="C eq D"
+                                                                                                     src="images/ceqd.png"/>
+    </li>
+    <li>No concept name can occur on the left side of an axiom more than once</li>
+</ul>
+
+<p>
+    The algorithm uses a signature <img alt="sigma" src="images/sigma.png"/>, which is an union of a set of concept and
+    a set of roles.
+</p>
+
+
+<p>
+    The algorithm returns in polynomial time two sets of concepts:
+</p>
+<ul>
+    <li><img alt="diffR" src="images/diffr.png"/></li>
+    <li><img alt="diffL" src="images/diffl.png"/></li>
+</ul>
+<p>
+    The two sets represent differences between two ontologies, even when the differences cannot be observed in class
+    hierarchies.
+    The algorithm uses various auxiliary sets, and is rather complicated; it is beyond scope of this document, for
+    details please see the paper <em>Kovev et al.</em>
+</p>
+
+<p>
+    Following image shows how a sample output of CEX algorithm looks like. This is is an example used in the paper <em>Kovev
+    et al.</em>, giving the same results as in the paper.
+</p>
+
+<p><img alt="CEX screenshot" src="images/cex_screenshot.png"/></p>
+
+
+</div>
+<!-- end of body -->
+
+<div id="footer">
+    <div class="left">Last change: 2008-06-26</div>
+    <div class="right"><a href="http://www.feld.cvut.cz/en">Faculty of Electrical Engineering @ CTU in Prague</a></div>
+</div>
+
+
+</div>
+<!-- end of main -->
+
+</body>
+</html>

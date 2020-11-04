@@ -1,0 +1,26 @@
+How to setup the development environment ?
+ 
+1) Download and install Maven (http://maven.apache.org/). 
+
+NOTE: Ensure that You have internet connection for the initial setup and that you have set proxy (if applicable). 
+	  There will be a significant network traffic when downloading all necessary libraries and plugins for Maven for the first time setup. 
+
+2) Run the 'install-local-files'. (On Windows machines, rename it to .bat first). This will add local dependencies to the Maven local repository.
+3) Go to the 'owldiff-core' directory and run 'mvn install'. This compiles and installs the OWLDiff core part - that is used by the other OWLDiff projects.
+4) Go back to the 'owldiff' dir and now You can generate project files for Your favorite development environment:
+	'mvn eclipse:eclipse' (For Neon Plugin you will need to perform this command also in the plugin directory to preserver the dependencies)
+	'mvn idea:idea'
+	For NetBeans there should be a direct support in the 6.5 version. For earlier versions try MevenIDE (http://mevenide.codehaus.org/) .
+5) You can start Your IDE and start coding :-) :
+		- for developing standalone application you will need to open owldiff-core and owldiff-standalone projects in your favorite IDE
+		- for developing neon plugin you will need to open owldiff-core and owldiff-neon-plugin projects in Eclipse
+		- for developing protege plugin you will need to open owldiff-core and owldiff-protege-plugin projects in Eclipse
+		
+NOTE: For project lifecycle management You can use maven directly for command-line. The only exceptions are 
+	1) the owldiff-neon-plugin project, as it requires Eclipse libraries (not attached through Maven, meanwhile)
+	2) the owldiff project as it has the owldiff-neon-plugin as its module.
+
+NOTE: Please read all readme.txt for nested projects for other configuration setups.
+
+The Maven setup is just an experiment - its benefits are not clear by now. Anyway the directory 'lib-old' is NOT SUPPOSED to be used during the development stage.
+It is left in the repository as a backup - all required libraries should be loaded through Maven as described above.

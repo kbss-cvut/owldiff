@@ -1,0 +1,3 @@
+#!/bin/sh
+F=`dirname ${0}`
+java -jar ${F}/../lib/owldiff-standalone-${project.version}.jar $1 $2

@@ -1,0 +1,79 @@
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OWL Diff</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="description" content="OWL Diff"/>
+    <meta name="keywords" content="OWL, diff, onthology"/>
+    <meta name="author" content="Jaromír Pufler"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+
+<body>
+
+<div id="main">
+    <div id="header"></div>
+    <div id="menu">
+        <div class="left">
+            <ul>
+                <li class="active"><a href="index.html">Intro</a></li>
+                <li><a href="screenshots.html">Screenshots</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="downloads.html">Downloads</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+            </ul>
+        </div>
+        <div class="right">
+            <ul>
+                <li><a href="contacts.html">Contacts</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- end of menu -->
+
+    <div id="body">
+        <div id="title">OWLdiff</div>
+        <p>OWLDiff is a project aiming to substitute classical diff used in version control systems, when such system is
+            used for keeping ontologies. Naturally OWLDiff can be used as stand-alone application, too.</p>
+
+        <p>It supports ontologies in language OWL 1.1 (standardized by W3C) stored as XML files.</p>
+
+        <p>The application loads two ontologies specified in command-line arguments, or user can choose them after
+            starting the application using open dialogs. The main window show trees of both loaded ontologies, showing
+            only axioms that differ between the ontologies. Different colors highlight axioms in one ontology which can
+            be inferred from the other and axioms which are present in one ontology and not the other.</p>
+
+        <p>Optional analysis of difference can be performed using CEX algorithm (Boris Konev, Dirk Walther, and Frank
+            Wolter, see <a href="http://www.csc.liv.ac.uk/~frank/publ/publ.html">http://www.csc.liv.ac.uk/~frank/publ/publ.html</a>).It
+            only supports description logic <span class="cal">EL</span>, but it can find differences that the basic
+            method cannot. However, the results are two lists of classes (DiffL and DiffR, for details see the paper in
+            the link above), not axioms.</p>
+    </div>
+    <!-- end of body -->
+
+    <div id="footer">
+        <div class="left">Last change: 2008-06-26</div>
+        <div class="right"><a href="http://www.feld.cvut.cz/en">Faculty of Electrical Engineering @ CTU in Prague</a>
+        </div>
+    </div>
+
+
+</div>
+<!-- end of main -->
+
+</body>
+</html>

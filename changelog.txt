@@ -1,0 +1,30 @@
+version 0.2
+    - Maven refactoring
+    - update to SVN 1.7
+    - bug fixes in CEX, OWL reasoner provider,
+    - basic support for annotated axioms
+
+version 0.1.5
+	- adaptation to the OWLAPI v 3.2.2
+	- minor UI improvements and sync with Protege
+
+version 0.1.4
+	- adaptation to the OWLAPI v 3.0.0
+
+version 0.1.3
+	- migration to OWLAPI v3
+        - minor bug fixes
+
+version 0.1.2
+	- minor GUI improvements
+	- spliting the project into core/standalone/Neon plugin parts
+	- change of licensing from GPL to LGPL
+	- redesign of the OWLDiff API
+
+version 0.1.1
+	- minor bug fixes to 0.1
+	- updated the readme.txt instructions
+	- added web pages of libraries<><------>
+
+version 0.1
+	- initial release

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY owl11 "http://www.w3.org/2006/12/owl11#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl11xml "http://www.w3.org/2006/12/owl11-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY CEXexample "http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl11="http://www.w3.org/2006/12/owl11#"
+     xmlns:owl11xml="http://www.w3.org/2006/12/owl11-xml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:CEXexample="http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#">
+    <owl:Ontology rdf:about=""/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#Neck_injection -->
+
+    <owl:Class rdf:about="#Neck_injection">
+        <rdfs:subClassOf rdf:resource="#Operation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#Neck_operation -->
+
+    <owl:Class rdf:about="#Neck_operation">
+        <rdfs:subClassOf rdf:resource="#Operation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#Operation -->
+
+    <owl:Class rdf:about="#Operation"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#Removal_foreign_body -->
+
+    <owl:Class rdf:about="#Removal_foreign_body"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/3/CEXexample.owl#Removal_foreign_body_from_neck -->
+
+    <owl:Class rdf:about="#Removal_foreign_body_from_neck">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Neck_operation"/>
+                    <rdf:Description rdf:about="#Removal_foreign_body"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+</rdf:RDF>

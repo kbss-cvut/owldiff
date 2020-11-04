@@ -1,0 +1,58 @@
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<assembly>
+    <id>dist-src</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>*:jar:*</include>
+            </includes>
+            <!-- excludes>
+                   <exclude>cz.cvut.kbss:owldiff-standalone</exclude>
+                   </excludes-->
+        </dependencySet>
+        <!-- dependencySet>
+              <outputDirectory>.</outputDirectory>
+              <includes>
+              <include>cz.cvut.kbss:owldiff-standalone</include>
+              </includes>
+              </dependencySet-->
+    </dependencySets>
+    <fileSets>
+        <fileSet>
+            <useStrictFiltering>true</useStrictFiltering>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>readme.txt</include>
+                <include>license.txt</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <useStrictFiltering>true</useStrictFiltering>
+            <includes>
+                <include>examples/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <useStrictFiltering>true</useStrictFiltering>
+            <includes>
+                <include>src/**</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

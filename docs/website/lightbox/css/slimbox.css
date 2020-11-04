@@ -1,0 +1,92 @@
+/*
+ * Copyright (c) 2012 Czech Technical University in Prague.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser Public License v2.1
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/* SLIMBOX */
+
+#lbOverlay {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    cursor: pointer;
+}
+
+#lbCenter, #lbBottomContainer {
+    position: absolute;
+    left: 50%;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.lbLoading {
+    background: #fff url(loading.gif) no-repeat center;
+}
+
+#lbImage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 10px solid #fff;
+    background-repeat: no-repeat;
+}
+
+#lbPrevLink, #lbNextLink {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 50%;
+    outline: none;
+}
+
+#lbPrevLink {
+    left: 0;
+}
+
+#lbPrevLink:hover {
+    background: transparent url(prevlabel.gif) no-repeat 0% 15%;
+}
+
+#lbNextLink {
+    right: 0;
+}
+
+#lbNextLink:hover {
+    background: transparent url(nextlabel.gif) no-repeat 100% 15%;
+}
+
+#lbBottom {
+    font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+    font-size: 10px;
+    color: #666;
+    line-height: 1.4em;
+    text-align: left;
+    border: 10px solid #fff;
+    border-top-style: none;
+}
+
+#lbCloseLink {
+    display: block;
+    float: right;
+    width: 90px;
+    height: 22px;
+    background: transparent url(closelabel.gif) no-repeat center;
+    margin: 5px 0;
+}
+
+#lbCaption, #lbNumber {
+    margin-right: 100px;
+}
+
+#lbCaption {
+    font-weight: bold;
+}

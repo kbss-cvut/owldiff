@@ -1,0 +1,182 @@
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>cz.cvut.kbss</groupId>
+        <artifactId>owldiff-parent</artifactId>
+        <relativePath>../owldiff-parent/pom.xml</relativePath>
+        <version>0.2.1</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>owldiff-protege-plugin</artifactId>
+    <packaging>bundle</packaging>
+    <name>OWLDiff Protege plugin</name>
+    <description>OWLDiff Protege Plugin - syntactic and semantic comparison of OWL 2 ontologies</description>
+
+    <repositories>      
+        <repository>
+            <id>tmatesoft - snapshots</id>
+            <url>http://maven.tmatesoft.com/content/repositories/snapshots</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+        <repository>
+            <id>tmatesoft - releases</id>
+            <url>http://maven.tmatesoft.com/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>cz.cvut.kbss</groupId>
+            <artifactId>owldiff-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cz.cvut.kbss</groupId>
+            <artifactId>explanations</artifactId>
+            <version>0.91</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tmatesoft.svnkit</groupId>
+            <artifactId>svnkit</artifactId>
+            <version>1.7.5-v1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tmatesoft.sqljet</groupId>
+            <artifactId>sqljet-osgi</artifactId>
+            <version>1.1.4</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.regnis.q.sequence</groupId>
+            <artifactId>sequence-library</artifactId>
+            <version>1.0.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>org.protege.editor.core.application</artifactId>
+            <version>4.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>org.protege.editor.owl</artifactId>
+            <version>4.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>org.protege.common</artifactId>
+            <version>4.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>owlapi</groupId>
+            <artifactId>owlapi</artifactId>
+            <version>3.2.5</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>update.properties</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>cz.cvut.kbss.owldiff.protege.OWLDiff;singleton:=true</Bundle-SymbolicName>
+                        <Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Name>${project.name}</Bundle-Name>
+                        <Bundle-Localization>plugin</Bundle-Localization>
+                        <Bundle-Description>${project.description}</Bundle-Description>
+                        <Update-Url>http://krizik.felk.cvut.cz/km/owldiff/protege-update.properties</Update-Url>
+                        <Export-Package>cz.cvut.kbss.owldiff.protege.*</Export-Package>
+                        <Bundle-Activator>org.protege.editor.core.plugin.DefaultPluginActivator</Bundle-Activator>
+                        <Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
+                        <Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+                        <Embed-Dependency>owldiff-core,explanations,svnkit,sqljet-osgi,sequence-library
+                        </Embed-Dependency>
+                        <Include-Resource>{maven-resources}</Include-Resource>
+                        <Bundle-Category>protege</Bundle-Category>
+                        <Require-Bundle>
+                            org.eclipse.equinox.registry,
+                            org.eclipse.equinox.common,
+                            org.protege.editor.core.application,
+                            org.protege.editor.owl,
+                            org.semanticweb.owl.owlapi
+                        </Require-Bundle>
+                        <Import-Package>
+                            !com.sun.*,!java.*,!org.antlr.*,!com.trilead.ssh2.*,*
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

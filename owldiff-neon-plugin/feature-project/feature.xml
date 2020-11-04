@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<feature
+        id="cz.cvut.kbss.owldiff-neon-plugin"
+        label="OWLDiff Neon Plugin"
+        version="0.1.2"
+        provider-name="Petr Křemen">
+
+
+    <description url="http://krizik.felk.cvut.cz/km/owldiff-neon-plugin.html">
+        OWLDiff Neon Plugin homepage.
+    </description>
+
+    <copyright>
+        Copyright (c) 2008 Petr Křemen. All rights reserved.
+    </copyright>
+
+    <license>
+        This program and the accompanying materials
+        are made available under the terms of the
+        - GNU Lesser Public License v2.1 which accompanies this distribution,
+        and is available at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+        - Eclipse Public License v1.0 which accompanies this distribution,
+        and is available at http://www.eclipse.org/legal/epl-v10.html
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    </license>
+
+    <url>
+        <update label="OWLDiff Neon Plugin" url="http://krizik.felk.cvut.cz/km/owldiff-neon-plugin/site"/>
+    </url>
+
+    <plugin
+            id="cz.cvut.kbss.owldiff.neonplugin"
+            download-size="0"
+            install-size="0"
+            version="0.0.0"
+            unpack="false"/>
+
+    <plugin
+            id="swingintegration.example"
+            download-size="0"
+            install-size="0"
+            version="0.0.0"
+            unpack="false"/>
+
+</feature>

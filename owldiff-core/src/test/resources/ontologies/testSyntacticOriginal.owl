@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#"
+     xml:base="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1 -->
+
+    <owl:ObjectProperty rdf:about="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1 -->
+
+    <owl:Class rdf:about="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1">
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    <owl:Axiom>
+        <rdfs:isDefinedBy>isDefinedBy</rdfs:isDefinedBy>
+        <owl:annotatedSource rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+        <owl:annotatedProperty rdf:resource="&rdfs;subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+    </owl:Axiom>
+    <owl:Axiom>
+        <rdfs:comment>comment1</rdfs:comment>
+        <rdfs:comment>comment2</rdfs:comment>
+        <owl:annotatedSource rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+        <owl:annotatedProperty rdf:resource="&rdfs;subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+    </owl:Axiom>
+    <owl:Axiom>
+        <rdfs:label>label1</rdfs:label>
+        <rdfs:label xml:lang="en">label2</rdfs:label>
+        <owl:annotatedSource rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+        <owl:annotatedProperty rdf:resource="&rdfs;subClassOf"/>
+        <owl:annotatedTarget>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#R1"/>
+                <owl:someValuesFrom rdf:resource="http://kbss.felk.cvut.cz/ontologies/2012/testSyntacticOriginal.owl#A1"/>
+            </owl:Restriction>
+        </owl:annotatedTarget>
+    </owl:Axiom>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.3.1957) http://owlapi.sourceforge.net -->
+

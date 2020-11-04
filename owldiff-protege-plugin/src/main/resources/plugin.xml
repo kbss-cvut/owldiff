@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright (c) 2012 Czech Technical University in Prague.
+  ~
+  ~ All rights reserved. This program and the accompanying materials
+  ~ are made available under the terms of the GNU Lesser Public License v2.1
+  ~ which accompanies this distribution, and is available at
+  ~ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  -->
+
+<plugin>
+    <extension id="OWLDiffPluginPanel"
+               point="org.protege.editor.core.application.ViewComponent">
+        <label value="OWLDiff"/>
+        <class value="cz.cvut.kbss.owldiff.protege.OWLDiffPlugin"/>
+        <headerColor value="@org.protege.ontologycolor"/>
+        <category value="@org.protege.differencecategory"/>
+        <userCreatable
+                value="false"/>
+    </extension>
+
+    <extension id="menu.compareto"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="Compare To"/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToOntologyAction"/>
+        <path value="org.protege.editor.owl.menu.tools/SlotA-A"/>
+        <editorKitId value="OWLEditorKit"/>
+    </extension>
+
+    <extension id="CompareToFile"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="File ..."/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToFileAction"/>
+        <toolTip value="Compares an active SVN versioned ontology to an ontology stored in a file."/>
+        <path value="cz.cvut.kbss.owldiff.protege.OWLDiff.menu.compareto/SlotA-A"/>
+        <editorKitId value="OWLEditorKit"/>
+    </extension>
+    <extension id="CompareToSVNBase"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="SVN Base"/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToSVNBaseAction"/>
+        <toolTip value="Compares an active SVN versioned ontology to its BASE revision"/>
+        <path value="cz.cvut.kbss.owldiff.protege.OWLDiff.menu.compareto/SlotB-A"/>
+        <accelerator value="control B"/>
+        <editorKitId value="OWLEditorKit"/>
+    </extension>
+    <extension id="CompareToSVNHead"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="SVN Head"/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToSVNHeadAction"/>
+        <toolTip value="Compares an active SVN versioned ontology to its HEAD revision"/>
+        <path value="cz.cvut.kbss.owldiff.protege.OWLDiff.menu.compareto/SlotB-B"/>
+        <editorKitId value="OWLEditorKit"/>
+    </extension>
+    <extension id="CompareToSVNRevision"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="SVN Revision ..."/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToSVNRevisionAction"/>
+        <toolTip value="Compares an active SVN versioned ontology to a revision"/>
+        <path value="cz.cvut.kbss.owldiff.protege.OWLDiff.menu.compareto/SlotB-C"/>
+        <editorKitId value="OWLEditorKit"/>
+    </extension>
+    <extension id="CompareToOntology"
+               point="org.protege.editor.core.application.EditorKitMenuAction">
+        <name value="Loaded ontology"/>
+        <class value="cz.cvut.kbss.owldiff.protege.actions.CompareToOntologyAction"/>
+        <path value="cz.cvut.kbss.owldiff.protege.OWLDiff.menu.compareto/SlotC-As"/>
+        <editorKitId value="OWLEditorKit"/>
+        <dynamic value="true"/>
+    </extension>
+</plugin>

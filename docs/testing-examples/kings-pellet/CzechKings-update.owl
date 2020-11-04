@@ -1,0 +1,2128 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY owl11 "http://www.w3.org/2006/12/owl11#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl11xml "http://www.w3.org/2006/12/owl11-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY cidoc_v4 "http://cidoc.ics.forth.gr/cidoc_v4.2.owl#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY CzechKings "http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#"
+     xml:base="http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl"
+     xmlns:CzechKings="http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#"
+     xmlns:owl11="http://www.w3.org/2006/12/owl11#"
+     xmlns:owl11xml="http://www.w3.org/2006/12/owl11-xml#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:cidoc_v4="http://cidoc.ics.forth.gr/cidoc_v4.2.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#">
+    <owl:Ontology rdf:about="">
+        <dc:rights
+            >published under GNU FDL license</dc:rights>
+        <owl:imports rdf:resource="http://cidoc.ics.forth.gr/OWL/cidoc_v4.2.owl#"/>
+        <rdfs:comment
+            >Ontology of the Czech kings (and dukes) made for demonstration purposes of KBSS
+
+TODO: place-of-reign asi nahradit P7F.took_place_at</rdfs:comment>
+        <dc:creator
+            >Jiri Kouba
+Petr Aubrecht</dc:creator>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;rights"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P114F.is_equal_in_time_to -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P114F.is_equal_in_time_to">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdf:type rdf:resource="&owl11;ReflexiveProperty"/>
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P115B.is_finished_by -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P115B.is_finished_by">
+        <owl:inverseOf rdf:resource="&cidoc_v4;P115F.finishes"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P115F.finishes -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P115F.finishes"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P116B.is_started_by -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P116B.is_started_by"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P116F.starts -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P116F.starts">
+        <owl:inverseOf rdf:resource="&cidoc_v4;P116F.starts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P119F.meets_in_time_with -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P119F.meets_in_time_with"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P4B.is_time-span_of -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P4B.is_time-span_of"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P4F.has_time-span -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P4F.has_time-span">
+        <owl:inverseOf rdf:resource="&cidoc_v4;P4B.is_time-span_of"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P98F.brought_into_life -->
+
+    <owl:ObjectProperty rdf:about="&cidoc_v4;P98F.brought_into_life"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#follows -->
+
+    <owl:ObjectProperty rdf:about="#follows">
+        <rdfs:domain rdf:resource="&cidoc_v4;E4.Period"/>
+        <owl:equivalentProperty rdf:resource="&cidoc_v4;P119F.meets_in_time_with"/>
+        <rdfs:range rdf:resource="&cidoc_v4;E4.Period"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#person-of-reign -->
+
+    <owl:ObjectProperty rdf:about="#person-of-reign">
+        <rdfs:range rdf:resource="&cidoc_v4;E21.Person"/>
+        <rdfs:domain rdf:resource="#Reign"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#place-of-reign -->
+
+    <owl:ObjectProperty rdf:about="#place-of-reign">
+        <rdfs:domain rdf:resource="#Reign"/>
+        <rdfs:range rdf:resource="&cidoc_v4;E53.Place"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#time-of-reign -->
+
+    <owl:ObjectProperty rdf:about="#time-of-reign">
+        <rdfs:domain rdf:resource="#Reign"/>
+        <rdfs:range rdf:resource="&cidoc_v4;E52.Time-Span"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#title-of-reign -->
+
+    <owl:ObjectProperty rdf:about="#title-of-reign">
+        <rdfs:range rdf:resource="#TitleOfReign"/>
+        <rdfs:domain rdf:resource="#Reign"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P57F.has_number_of_parts -->
+
+    <owl:DatatypeProperty rdf:about="&cidoc_v4;P57F.has_number_of_parts"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#P79F.beginning_is_qualified_by -->
+
+    <owl:DatatypeProperty rdf:about="&cidoc_v4;P79F.beginning_is_qualified_by">
+        <rdfs:subPropertyOf rdf:resource="&cidoc_v4;P57F.has_number_of_parts"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#has_year_number -->
+
+    <owl:DatatypeProperty rdf:about="#has_year_number">
+        <rdfs:range rdf:resource="&xsd;integer"/>
+        <rdfs:domain rdf:resource="#Year"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E21.Person -->
+
+    <owl:Class rdf:about="&cidoc_v4;E21.Person"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E4.Period -->
+
+    <owl:Class rdf:about="&cidoc_v4;E4.Period"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E52.Time-Span -->
+
+    <owl:Class rdf:about="&cidoc_v4;E52.Time-Span"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E53.Place -->
+
+    <owl:Class rdf:about="&cidoc_v4;E53.Place"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E67.Birth -->
+
+    <owl:Class rdf:about="&cidoc_v4;E67.Birth"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E69.Death -->
+
+    <owl:Class rdf:about="&cidoc_v4;E69.Death"/>
+    
+
+
+    <!-- http://cidoc.ics.forth.gr/cidoc_v4.2.owl#E7.Activity -->
+
+    <owl:Class rdf:about="&cidoc_v4;E7.Activity"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Duke -->
+
+    <owl:Class rdf:about="#Duke">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#title-of-reign"/>
+                        <owl:hasValue rdf:resource="#duke"/>
+                    </owl:Restriction>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Emperor -->
+
+    <owl:Class rdf:about="#Emperor">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#title-of-reign"/>
+                        <owl:hasValue rdf:resource="#emperor"/>
+                    </owl:Restriction>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#King -->
+
+    <owl:Class rdf:about="#King">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#title-of-reign"/>
+                        <owl:hasValue rdf:resource="#king"/>
+                    </owl:Restriction>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#President -->
+
+    <owl:Class rdf:about="#President">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#title-of-reign"/>
+                        <owl:hasValue rdf:resource="#president"/>
+                    </owl:Restriction>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Queen -->
+
+    <owl:Class rdf:about="#Queen">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#title-of-reign"/>
+                        <owl:hasValue rdf:resource="#queen"/>
+                    </owl:Restriction>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Reign -->
+
+    <owl:Class rdf:about="#Reign">
+        <rdfs:subClassOf rdf:resource="&cidoc_v4;E7.Activity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Ruler -->
+
+    <owl:Class rdf:about="#Ruler">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty>
+                    <rdf:Description>
+                        <owl:inverseOf rdf:resource="#person-of-reign"/>
+                    </rdf:Description>
+                </owl:onProperty>
+                <owl:someValuesFrom rdf:resource="#Reign"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#TitleOfReign -->
+
+    <owl:Class rdf:about="#TitleOfReign">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#Year -->
+
+    <owl:Class rdf:about="#Year">
+        <rdfs:subClassOf rdf:resource="&cidoc_v4;E52.Time-Span"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#albrecht-ii-habsbursky -->
+
+    <cidoc_v4:E21.Person rdf:about="#albrecht-ii-habsbursky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#antonin-novotny -->
+
+    <cidoc_v4:E21.Person rdf:about="#antonin-novotny"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#antonin-zapotocky -->
+
+    <cidoc_v4:E21.Person rdf:about="#antonin-zapotocky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#bedrich -->
+
+    <cidoc_v4:E21.Person rdf:about="#bedrich"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#birth-of-mojmir-i -->
+
+    <cidoc_v4:E67.Birth rdf:about="#birth-of-mojmir-i">
+        <cidoc_v4:P98F.brought_into_life rdf:resource="#mojmir-i"/>
+    </cidoc_v4:E67.Birth>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#birth-of-rostislav -->
+
+    <cidoc_v4:E67.Birth rdf:about="#birth-of-rostislav">
+        <cidoc_v4:P98F.brought_into_life rdf:resource="#rostilav"/>
+    </cidoc_v4:E67.Birth>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#birth-of-samo -->
+
+    <cidoc_v4:E67.Birth rdf:about="#birth-of-samo">
+        <cidoc_v4:P98F.brought_into_life rdf:resource="#samo"/>
+    </cidoc_v4:E67.Birth>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#birth-of-svatopluk-i -->
+
+    <cidoc_v4:E67.Birth rdf:about="#birth-of-svatopluk-i">
+        <cidoc_v4:P98F.brought_into_life rdf:resource="#svatopluk-i"/>
+    </cidoc_v4:E67.Birth>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#boleslav-chrabry -->
+
+    <cidoc_v4:E21.Person rdf:about="#boleslav-chrabry"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#boleslav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#boleslav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#boleslav-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#boleslav-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#boleslav-iii -->
+
+    <cidoc_v4:E21.Person rdf:about="#boleslav-iii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#borivoj-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#borivoj-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#borivoj-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#borivoj-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#bretislav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#bretislav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#bretislav-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#bretislav-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#charles-iv -->
+
+    <cidoc_v4:E21.Person rdf:about="#charles-iv"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#czech-countries -->
+
+    <cidoc_v4:E53.Place rdf:about="#czech-countries"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#death-of-samo -->
+
+    <cidoc_v4:E69.Death rdf:about="#death-of-samo"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#duke -->
+
+    <TitleOfReign rdf:about="#duke"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#edvard-benes -->
+
+    <cidoc_v4:E21.Person rdf:about="#edvard-benes"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#emil-hacha -->
+
+    <cidoc_v4:E21.Person rdf:about="#emil-hacha"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#emperor -->
+
+    <TitleOfReign rdf:about="#emperor"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ferdinand-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#ferdinand-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ferdinand-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#ferdinand-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ferdinand-iii -->
+
+    <cidoc_v4:E21.Person rdf:about="#ferdinand-iii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ferdinand-iv -->
+
+    <cidoc_v4:E21.Person rdf:about="#ferdinand-iv"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ferdinand-v-dobrotivy -->
+
+    <cidoc_v4:E21.Person rdf:about="#ferdinand-v-dobrotivy"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#frantisek-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#frantisek-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#frantisek-josef-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#frantisek-josef-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#fridrich-falcky -->
+
+    <cidoc_v4:E21.Person rdf:about="#fridrich-falcky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#gustav-husak -->
+
+    <cidoc_v4:E21.Person rdf:about="#gustav-husak"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#jan-lucembursky -->
+
+    <cidoc_v4:E21.Person rdf:about="#jan-lucembursky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#jaromir -->
+
+    <cidoc_v4:E21.Person rdf:about="#jaromir"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#jindrich-bretislav -->
+
+    <cidoc_v4:E21.Person rdf:about="#jindrich-bretislav"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#jindrich-korutansky -->
+
+    <cidoc_v4:E21.Person rdf:about="#jindrich-korutansky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#jiri-z-podebrad -->
+
+    <cidoc_v4:E21.Person rdf:about="#jiri-z-podebrad"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#josef-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#josef-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#josef-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#josef-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#karel-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#karel-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#karel-iv -->
+
+    <cidoc_v4:E21.Person rdf:about="#karel-iv"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#karel-vi -->
+
+    <cidoc_v4:E21.Person rdf:about="#karel-vi"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#karel-vii-bavorsky -->
+
+    <cidoc_v4:E21.Person rdf:about="#karel-vii-bavorsky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#king -->
+
+    <TitleOfReign rdf:about="#king"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#klement-gottwald -->
+
+    <cidoc_v4:E21.Person rdf:about="#klement-gottwald"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#konrad-i-brnensky -->
+
+    <cidoc_v4:E21.Person rdf:about="#konrad-i-brnensky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#konrad-ii-ota -->
+
+    <cidoc_v4:E21.Person rdf:about="#konrad-ii-ota"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ladislav-pohrobek -->
+
+    <cidoc_v4:E21.Person rdf:about="#ladislav-pohrobek"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#leopold-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#leopold-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#leopold-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#leopold-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ludvik-jagellonsky -->
+
+    <cidoc_v4:E21.Person rdf:about="#ludvik-jagellonsky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#ludvik-svoboda -->
+
+    <cidoc_v4:E21.Person rdf:about="#ludvik-svoboda"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#marie-terezie -->
+
+    <cidoc_v4:E21.Person rdf:about="#marie-terezie"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#matyas-habsbursky -->
+
+    <cidoc_v4:E21.Person rdf:about="#matyas-habsbursky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#matyas-korvin -->
+
+    <cidoc_v4:E21.Person rdf:about="#matyas-korvin"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#maxmilian-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#maxmilian-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#mojmir-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#mojmir-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#mojmir-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#mojmir-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#oldrich -->
+
+    <cidoc_v4:E21.Person rdf:about="#oldrich"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#polish-countries -->
+
+    <cidoc_v4:E53.Place rdf:about="#polish-countries"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#premysl-otakar-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#premysl-otakar-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#premysl-otakar-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#premysl-otakar-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#president -->
+
+    <TitleOfReign rdf:about="#president"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#queen -->
+
+    <TitleOfReign rdf:about="#queen"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-albrecht-ii-habsbursky-1 -->
+
+    <Reign rdf:about="#reign-of-albrecht-ii-habsbursky-1">
+        <follows rdf:resource="#reign-of-zikmund-lucembursk&#253;-1"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#albrecht-ii-habsbursky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-antonin-novotny-1 -->
+
+    <Reign rdf:about="#reign-of-antonin-novotny-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-antonin-zapotocky-1"/>
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#antonin-novotny"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-antonin-zapotocky-1 -->
+
+    <Reign rdf:about="#reign-of-antonin-zapotocky-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#antonin-zapotocky"/>
+        <follows rdf:resource="#reign-of-klement-gottwald-1"/>
+        <title-of-reign rdf:resource="#president"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-bedrich-1 -->
+
+    <Reign rdf:about="#reign-of-bedrich-1">
+        <follows rdf:resource="#reign-of-vladislav-ii-2"/>
+        <person-of-reign rdf:resource="#bedrich"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-bedrich-2 -->
+
+    <Reign rdf:about="#reign-of-bedrich-2">
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#bedrich"/>
+        <follows rdf:resource="#reign-of-sobeslav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-boleslav-chrabry -->
+
+    <Reign rdf:about="#reign-of-boleslav-chrabry">
+        <person-of-reign rdf:resource="#boleslav-chrabry"/>
+        <follows rdf:resource="#reign-of-boleslav-iii-2"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-boleslav-i -->
+
+    <Reign rdf:about="#reign-of-boleslav-i">
+        <follows rdf:resource="#reign-of-svaty-vaclav"/>
+        <person-of-reign rdf:resource="#boleslav-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <time-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-boleslav-ii -->
+
+    <Reign rdf:about="#reign-of-boleslav-ii">
+        <person-of-reign rdf:resource="#boleslav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-boleslav-i"/>
+        <title-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-boleslav-iii-1 -->
+
+    <Reign rdf:about="#reign-of-boleslav-iii-1">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-boleslav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#boleslav-iii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-boleslav-iii-2 -->
+
+    <Reign rdf:about="#reign-of-boleslav-iii-2">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#boleslav-iii"/>
+        <follows rdf:resource="#reign-of-jaromir-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-borivoj-i -->
+
+    <Reign rdf:about="#reign-of-borivoj-i">
+        <person-of-reign rdf:resource="#borivoj-i"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-mojmir-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-borivoj-ii-1 -->
+
+    <Reign rdf:about="#reign-of-borivoj-ii-1">
+        <follows rdf:resource="#reign-of-bretislav-ii"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#borivoj-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-borivoj-ii-2 -->
+
+    <Reign rdf:about="#reign-of-borivoj-ii-2">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-vladislav-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#borivoj-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-bretislav-i -->
+
+    <Reign rdf:about="#reign-of-bretislav-i">
+        <follows rdf:resource="#reign-of-oldrich-2"/>
+        <person-of-reign rdf:resource="#bretislav-i"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-bretislav-ii -->
+
+    <Reign rdf:about="#reign-of-bretislav-ii">
+        <follows rdf:resource="#reign-of-konrad-i-brnensky"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#bretislav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-charles-iv -->
+
+    <Reign rdf:about="#reign-of-charles-iv">
+        <person-of-reign rdf:resource="#charles-iv"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-edvard-benes-1 -->
+
+    <Reign rdf:about="#reign-of-edvard-benes-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#edvard-benes"/>
+        <follows rdf:resource="#reign-of-tomas-garrique-masaryk-1"/>
+        <title-of-reign rdf:resource="#president"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-edvard-benes-2 -->
+
+    <Reign rdf:about="#reign-of-edvard-benes-2">
+        <follows rdf:resource="#reign-of-emil-hacha-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#edvard-benes"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-emil-hacha-1 -->
+
+    <Reign rdf:about="#reign-of-emil-hacha-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-edvard-benes-1"/>
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#emil-hacha"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-i-1 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-i-1">
+        <follows rdf:resource="#reign-of-ludvik-jagellonsky-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#ferdinand-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-ii-1 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-ii-1">
+        <follows rdf:resource="#reign-of-matyas-habsbursky-1"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#ferdinand-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-ii-2 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-ii-2">
+        <person-of-reign rdf:resource="#ferdinand-ii"/>
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-fridrich-falcky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-iii-1 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-iii-1">
+        <person-of-reign rdf:resource="#ferdinand-iii"/>
+        <follows rdf:resource="#reign-of-ferdinand-ii-2"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-iv-1 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-iv-1">
+        <person-of-reign rdf:resource="#ferdinand-iv"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-ferdinand-iii-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ferdinand-v-dobrotivy-1 -->
+
+    <Reign rdf:about="#reign-of-ferdinand-v-dobrotivy-1">
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#ferdinand-v-dobrotivy"/>
+        <follows rdf:resource="#reign-of-frantisek-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-frantisek-i-1 -->
+
+    <Reign rdf:about="#reign-of-frantisek-i-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#frantisek-i"/>
+        <follows rdf:resource="#reign-of-leopold-ii-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-frantisek-josef-i-1 -->
+
+    <Reign rdf:about="#reign-of-frantisek-josef-i-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-ferdinand-v-dobrotivy-1"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#frantisek-josef-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-fridrich-falcky -->
+
+    <Reign rdf:about="#reign-of-fridrich-falcky">
+        <follows rdf:resource="#reign-of-ferdinand-ii-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#fridrich-falcky"/>
+        <title-of-reign rdf:resource="#king"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-gustav-husak-1 -->
+
+    <Reign rdf:about="#reign-of-gustav-husak-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#gustav-husak"/>
+        <follows rdf:resource="#reign-of-ludvik-svoboda-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jan-lucembursky -->
+
+    <Reign rdf:about="#reign-of-jan-lucembursky">
+        <follows rdf:resource="#reign-of-jindrich-korutansky-2"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#jan-lucembursky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jaromir-1 -->
+
+    <Reign rdf:about="#reign-of-jaromir-1">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-vladivoj"/>
+        <person-of-reign rdf:resource="#jaromir"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jaromir-2 -->
+
+    <Reign rdf:about="#reign-of-jaromir-2">
+        <follows rdf:resource="#reign-of-boleslav-chrabry"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#jaromir"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jaromir-3 -->
+
+    <Reign rdf:about="#reign-of-jaromir-3">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#jaromir"/>
+        <follows rdf:resource="#reign-of-oldrich-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jindrich-bretislav -->
+
+    <Reign rdf:about="#reign-of-jindrich-bretislav">
+        <person-of-reign rdf:resource="#jindrich-bretislav"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-premysl-otakar-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jindrich-korutansky-1 -->
+
+    <Reign rdf:about="#reign-of-jindrich-korutansky-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#jindrich-korutansky"/>
+        <follows rdf:resource="#reign-of-vaclav-iii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jindrich-korutansky-2 -->
+
+    <Reign rdf:about="#reign-of-jindrich-korutansky-2">
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#jindrich-korutansky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-rudolf-i-habsbursky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-jiri-z-podebrad -->
+
+    <Reign rdf:about="#reign-of-jiri-z-podebrad">
+        <person-of-reign rdf:resource="#jiri-z-podebrad"/>
+        <follows rdf:resource="#reign-of-ladislav-pohrobek-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-josef-i-1 -->
+
+    <Reign rdf:about="#reign-of-josef-i-1">
+        <person-of-reign rdf:resource="#josef-i"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-leopold-i-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-josef-ii-1 -->
+
+    <Reign rdf:about="#reign-of-josef-ii-1">
+        <follows rdf:resource="#reign-of-marie-terezie-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#josef-ii"/>
+        <title-of-reign rdf:resource="#king"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-karel-i-1 -->
+
+    <Reign rdf:about="#reign-of-karel-i-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-frantisek-josef-i-1"/>
+        <person-of-reign rdf:resource="#karel-i"/>
+        <title-of-reign rdf:resource="#king"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-karel-iv-1 -->
+
+    <Reign rdf:about="#reign-of-karel-iv-1">
+        <person-of-reign rdf:resource="#karel-iv"/>
+        <follows rdf:resource="#reign-of-jan-lucembursky"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-karel-vi-1 -->
+
+    <Reign rdf:about="#reign-of-karel-vi-1">
+        <follows rdf:resource="#reign-of-josef-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#karel-vi"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-karel-vii-bavorsky-1 -->
+
+    <Reign rdf:about="#reign-of-karel-vii-bavorsky-1">
+        <person-of-reign rdf:resource="#karel-vii-bavorsky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-klement-gottwald-1 -->
+
+    <Reign rdf:about="#reign-of-klement-gottwald-1">
+        <person-of-reign rdf:resource="#klement-gottwald"/>
+        <follows rdf:resource="#reign-of-edvard-benes-2"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#klement-gottwald"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-konrad-i-brnensky -->
+
+    <Reign rdf:about="#reign-of-konrad-i-brnensky">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-vratislav-ii-2"/>
+        <time-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#konrad-i-brnensky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-konrad-ii-ota -->
+
+    <Reign rdf:about="#reign-of-konrad-ii-ota">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#konrad-ii-ota"/>
+        <follows rdf:resource="#reign-of-bedrich-2"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ladislav-pohrobek-1 -->
+
+    <Reign rdf:about="#reign-of-ladislav-pohrobek-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#ladislav-pohrobek"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-leopold-i-1 -->
+
+    <Reign rdf:about="#reign-of-leopold-i-1">
+        <person-of-reign rdf:resource="#leopold-i"/>
+        <follows rdf:resource="#reign-of-ferdinand-iv-1"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-leopold-ii-1 -->
+
+    <Reign rdf:about="#reign-of-leopold-ii-1">
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-josef-ii-1"/>
+        <person-of-reign rdf:resource="#leopold-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ludvik-jagellonsky-1 -->
+
+    <Reign rdf:about="#reign-of-ludvik-jagellonsky-1">
+        <person-of-reign rdf:resource="#ludvik-jagellonsky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-vladislav-jagellonsky-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-ludvik-svoboda-1 -->
+
+    <Reign rdf:about="#reign-of-ludvik-svoboda-1">
+        <title-of-reign rdf:resource="#president"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-antonin-novotny-1"/>
+        <person-of-reign rdf:resource="#ludvik-svoboda"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-marie-terezie-1 -->
+
+    <Reign rdf:about="#reign-of-marie-terezie-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#queen"/>
+        <person-of-reign rdf:resource="#marie-terezie"/>
+        <follows rdf:resource="#reign-of-karel-vi-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-matyas-habsbursky-1 -->
+
+    <Reign rdf:about="#reign-of-matyas-habsbursky-1">
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#matyas-habsbursky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-rudolf-ii-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-matyas-korvin -->
+
+    <Reign rdf:about="#reign-of-matyas-korvin">
+        <person-of-reign rdf:resource="#matyas-korvin"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-maxmilian-ii-1 -->
+
+    <Reign rdf:about="#reign-of-maxmilian-ii-1">
+        <follows rdf:resource="#reign-of-ferdinand-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#maxmilian-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-mojmir-i -->
+
+    <Reign rdf:about="#reign-of-mojmir-i">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-samo"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#mojmir-i"/>
+        <cidoc_v4:P4F.has_time-span rdf:resource="#years-830-846"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-mojmir-ii -->
+
+    <Reign rdf:about="#reign-of-mojmir-ii">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#mojmir-ii"/>
+        <follows rdf:resource="#reign-of-svatopluk-i"/>
+        <cidoc_v4:P4F.has_time-span rdf:resource="#years-894-907"/>
+        <title-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-oldrich-1 -->
+
+    <Reign rdf:about="#reign-of-oldrich-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#oldrich"/>
+        <follows rdf:resource="#reign-of-jaromir-2"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-oldrich-2 -->
+
+    <Reign rdf:about="#reign-of-oldrich-2">
+        <person-of-reign rdf:resource="#oldrich"/>
+        <follows rdf:resource="#reign-of-jaromir-3"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-premysl-otakar-i-1 -->
+
+    <Reign rdf:about="#reign-of-premysl-otakar-i-1">
+        <person-of-reign rdf:resource="#premysl-otakar-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-vaclav-ii-d"/>
+        <title-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-premysl-otakar-i-2 -->
+
+    <Reign rdf:about="#reign-of-premysl-otakar-i-2">
+        <follows rdf:resource="#reign-of-vladislav-jindrich"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#premysl-otakar-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-premysl-otakar-i-3 -->
+
+    <Reign rdf:about="#reign-of-premysl-otakar-i-3">
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-premysl-otakar-i-2"/>
+        <person-of-reign rdf:resource="#premysl-otakar-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-premysl-otakar-ii -->
+
+    <Reign rdf:about="#reign-of-premysl-otakar-ii">
+        <follows rdf:resource="#reign-of-vaclav-i"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#premysl-otakar-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-rostislav -->
+
+    <Reign rdf:about="#reign-of-rostislav">
+        <person-of-reign rdf:resource="#rostilav"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <cidoc_v4:P4F.has_time-span rdf:resource="#years-846-870"/>
+        <follows rdf:resource="#reign-of-mojmir-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-rudolf-i-habsbursky -->
+
+    <Reign rdf:about="#reign-of-rudolf-i-habsbursky">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-jindrich-korutansky-1"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#rudolf-i-habsbursky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-rudolf-ii-1 -->
+
+    <Reign rdf:about="#reign-of-rudolf-ii-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#rudolf-ii"/>
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-maxmilian-ii-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-samo -->
+
+    <Reign rdf:about="#reign-of-samo">
+        <cidoc_v4:P4F.has_time-span rdf:resource="#years-623-659"/>
+        <person-of-reign rdf:resource="#samo"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-sobeslav-i -->
+
+    <Reign rdf:about="#reign-of-sobeslav-i">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-vladislav-i-2"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#sobeslav-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-sobeslav-ii -->
+
+    <Reign rdf:about="#reign-of-sobeslav-ii">
+        <follows rdf:resource="#reign-of-bedrich-1"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#sobeslav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-spytihnev-i -->
+
+    <Reign rdf:about="#reign-of-spytihnev-i">
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#spytihnev-i"/>
+        <follows rdf:resource="#reign-of-borivoj-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-spytihnev-ii -->
+
+    <Reign rdf:about="#reign-of-spytihnev-ii">
+        <person-of-reign rdf:resource="#spytihnev-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-bretislav-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-svatopluk-i -->
+
+    <Reign rdf:about="#reign-of-svatopluk-i">
+        <follows rdf:resource="#reign-of-rostislav"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#svatopluk-i"/>
+        <cidoc_v4:P4F.has_time-span rdf:resource="#years-870-894"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-svatopluk-olomoucky -->
+
+    <Reign rdf:about="#reign-of-svatopluk-olomoucky">
+        <follows rdf:resource="#reign-of-borivoj-ii-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#svatopluk-olomoucky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-svaty-vaclav -->
+
+    <Reign rdf:about="#reign-of-svaty-vaclav">
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-vratislav-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#svaty-vaclav"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-tomas-garrique-masaryk-1 -->
+
+    <Reign rdf:about="#reign-of-tomas-garrique-masaryk-1">
+        <person-of-reign rdf:resource="#tomas-garrique-masaryk"/>
+        <follows rdf:resource="#reign-of-karel-i-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#president"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-havel-1 -->
+
+    <Reign rdf:about="#reign-of-vaclav-havel-1">
+        <person-of-reign rdf:resource="#vaclav-havel"/>
+        <title-of-reign rdf:resource="#president"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-gustav-husak-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-havel-2 -->
+
+    <Reign rdf:about="#reign-of-vaclav-havel-2">
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#vaclav-havel"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-vaclav-havel-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-i -->
+
+    <Reign rdf:about="#reign-of-vaclav-i">
+        <follows rdf:resource="#reign-of-premysl-otakar-i-3"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#vaclav-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-ii-d -->
+
+    <Reign rdf:about="#reign-of-vaclav-ii-d">
+        <person-of-reign rdf:resource="#vaclav-ii-d"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-konrad-ii-ota"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-ii-k -->
+
+    <Reign rdf:about="#reign-of-vaclav-ii-k">
+        <person-of-reign rdf:resource="#vaclav-ii-k"/>
+        <follows rdf:resource="#reign-of-premysl-otakar-ii"/>
+        <title-of-reign rdf:resource="#king"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-iii -->
+
+    <Reign rdf:about="#reign-of-vaclav-iii">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-vaclav-ii-k"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#vaclav-iii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-iv-1 -->
+
+    <Reign rdf:about="#reign-of-vaclav-iv-1">
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-karel-iv-1"/>
+        <person-of-reign rdf:resource="#vaclav-iv"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vaclav-klaus -->
+
+    <Reign rdf:about="#reign-of-vaclav-klaus">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#president"/>
+        <person-of-reign rdf:resource="#vaclav-klaus"/>
+        <follows rdf:resource="#reign-of-vaclav-havel-2"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-i-1 -->
+
+    <Reign rdf:about="#reign-of-vladislav-i-1">
+        <person-of-reign rdf:resource="#vladislav-i"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-svatopluk-olomoucky"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-i-2 -->
+
+    <Reign rdf:about="#reign-of-vladislav-i-2">
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-borivoj-ii-2"/>
+        <person-of-reign rdf:resource="#vladislav-i"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-ii-1 -->
+
+    <Reign rdf:about="#reign-of-vladislav-ii-1">
+        <title-of-reign rdf:resource="#duke"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <follows rdf:resource="#reign-of-sobeslav-i"/>
+        <person-of-reign rdf:resource="#vladislav-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-ii-2 -->
+
+    <Reign rdf:about="#reign-of-vladislav-ii-2">
+        <follows rdf:resource="#reign-of-vladislav-ii-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#vladislav-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-jagellonsky-1 -->
+
+    <Reign rdf:about="#reign-of-vladislav-jagellonsky-1">
+        <follows rdf:resource="#reign-of-jiri-z-podebrad"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#vladislav-jagellonsky"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladislav-jindrich -->
+
+    <Reign rdf:about="#reign-of-vladislav-jindrich">
+        <follows rdf:resource="#reign-of-jindrich-bretislav"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#vladislav-jindrich"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vladivoj -->
+
+    <Reign rdf:about="#reign-of-vladivoj">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#vladivoj"/>
+        <follows rdf:resource="#reign-of-boleslav-iii-1"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vratislav-i -->
+
+    <Reign rdf:about="#reign-of-vratislav-i">
+        <title-of-reign rdf:resource="#duke"/>
+        <person-of-reign rdf:resource="#vratislav-i"/>
+        <follows rdf:resource="#reign-of-spytihnev-i"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vratislav-ii-1 -->
+
+    <Reign rdf:about="#reign-of-vratislav-ii-1">
+        <place-of-reign rdf:resource="#czech-countries"/>
+        <person-of-reign rdf:resource="#vratislav-ii"/>
+        <title-of-reign rdf:resource="#duke"/>
+        <follows rdf:resource="#reign-of-spytihnev-ii"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vratislav-ii-2 -->
+
+    <Reign rdf:about="#reign-of-vratislav-ii-2">
+        <title-of-reign rdf:resource="#king"/>
+        <follows rdf:resource="#reign-of-vratislav-ii-1"/>
+        <person-of-reign rdf:resource="#vratislav-ii"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-vratislav-ii-3 -->
+
+    <Reign rdf:about="#reign-of-vratislav-ii-3">
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#vratislav-ii"/>
+        <place-of-reign rdf:resource="#polish-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#reign-of-zikmund-lucembursk&#253;-1 -->
+
+    <Reign rdf:about="#reign-of-zikmund-lucembursk&#253;-1">
+        <title-of-reign rdf:resource="#king"/>
+        <person-of-reign rdf:resource="#zikmund-lucembursky"/>
+        <follows rdf:resource="#reign-of-vaclav-iv-1"/>
+        <place-of-reign rdf:resource="#czech-countries"/>
+    </Reign>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#rostilav -->
+
+    <cidoc_v4:E21.Person rdf:about="#rostilav"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#rudolf-i-habsbursky -->
+
+    <cidoc_v4:E21.Person rdf:about="#rudolf-i-habsbursky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#rudolf-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#rudolf-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#samo -->
+
+    <cidoc_v4:E21.Person rdf:about="#samo"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#sobeslav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#sobeslav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#sobeslav-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#sobeslav-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#spytihnev-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#spytihnev-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#spytihnev-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#spytihnev-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#svatopluk-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#svatopluk-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#svatopluk-olomoucky -->
+
+    <cidoc_v4:E21.Person rdf:about="#svatopluk-olomoucky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#svaty-vaclav -->
+
+    <cidoc_v4:E21.Person rdf:about="#svaty-vaclav"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#tomas-garrique-masaryk -->
+
+    <cidoc_v4:E21.Person rdf:about="#tomas-garrique-masaryk"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-havel -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-havel"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-ii-d -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-ii-d"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-ii-k -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-ii-k"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-iii -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-iii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-iv -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-iv"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vaclav-klaus -->
+
+    <cidoc_v4:E21.Person rdf:about="#vaclav-klaus"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vladislav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#vladislav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vladislav-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#vladislav-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vladislav-jagellonsky -->
+
+    <cidoc_v4:E21.Person rdf:about="#vladislav-jagellonsky"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vladislav-jindrich -->
+
+    <cidoc_v4:E21.Person rdf:about="#vladislav-jindrich"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vladivoj -->
+
+    <cidoc_v4:E21.Person rdf:about="#vladivoj"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vratislav-i -->
+
+    <cidoc_v4:E21.Person rdf:about="#vratislav-i"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#vratislav-ii -->
+
+    <cidoc_v4:E21.Person rdf:about="#vratislav-ii"/>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-623 -->
+
+    <Year rdf:about="#year-623">
+        <has_year_number rdf:datatype="&xsd;integer">623</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-659 -->
+
+    <Year rdf:about="#year-659">
+        <has_year_number rdf:datatype="&xsd;integer">659</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-830 -->
+
+    <Year rdf:about="#year-830">
+        <has_year_number rdf:datatype="&xsd;integer">830</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-846 -->
+
+    <Year rdf:about="#year-846">
+        <has_year_number rdf:datatype="&xsd;integer">846</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-870 -->
+
+    <Year rdf:about="#year-870">
+        <has_year_number rdf:datatype="&xsd;integer">870</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-894 -->
+
+    <Year rdf:about="#year-894">
+        <has_year_number rdf:datatype="&xsd;integer">894</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#year-907 -->
+
+    <Year rdf:about="#year-907">
+        <has_year_number rdf:datatype="&xsd;integer">907</has_year_number>
+    </Year>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#years-623-659 -->
+
+    <cidoc_v4:E52.Time-Span rdf:about="#years-623-659">
+        <cidoc_v4:P115B.is_finished_by rdf:resource="#year-659"/>
+        <cidoc_v4:P116B.is_started_by rdf:resource="#year-623"/>
+    </cidoc_v4:E52.Time-Span>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#years-830-846 -->
+
+    <cidoc_v4:E52.Time-Span rdf:about="#years-830-846">
+        <cidoc_v4:P115B.is_finished_by rdf:resource="#year-846"/>
+        <cidoc_v4:P116B.is_started_by rdf:resource="#year-830"/>
+    </cidoc_v4:E52.Time-Span>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#years-846-870 -->
+
+    <cidoc_v4:E52.Time-Span rdf:about="#years-846-870">
+        <cidoc_v4:P116B.is_started_by rdf:resource="#year-846"/>
+        <cidoc_v4:P115B.is_finished_by rdf:resource="#year-870"/>
+    </cidoc_v4:E52.Time-Span>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#years-870-894 -->
+
+    <cidoc_v4:E52.Time-Span rdf:about="#years-870-894">
+        <cidoc_v4:P116B.is_started_by rdf:resource="#year-870"/>
+        <cidoc_v4:P115B.is_finished_by rdf:resource="#year-894"/>
+    </cidoc_v4:E52.Time-Span>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#years-894-907 -->
+
+    <cidoc_v4:E52.Time-Span rdf:about="#years-894-907">
+        <cidoc_v4:P115B.is_finished_by rdf:resource="#year-907"/>
+        <cidoc_v4:P116B.is_started_by rdf:resource="#year-894"/>
+    </cidoc_v4:E52.Time-Span>
+    
+
+
+    <!-- http://www.semanticweb.org/ontologies/2008/CVUT/CzechKings.owl#zikmund-lucembursky -->
+
+    <cidoc_v4:E21.Person rdf:about="#zikmund-lucembursky"/>
+</rdf:RDF>

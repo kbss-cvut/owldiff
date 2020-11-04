@@ -1,0 +1,2711 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY owl2 "http://www.w3.org/2006/12/owl2#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY owl11 "http://www.w3.org/2006/12/owl11#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY owl11xml "http://www.w3.org/2006/12/owl11-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY rdm "http://www.sevenpro.org/ontologies/2006/rdm#" >
+    <!ENTITY RDF "http://www.sevenpro.org/ontologies/2006/rdm#RDF/" >
+]>
+
+
+<rdf:RDF xmlns="http://www.sevenpro.org/ontologies/2006/rdm#"
+     xml:base="http://www.sevenpro.org/ontologies/2006/rdm"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:owl11="http://www.w3.org/2006/12/owl11#"
+     xmlns:owl11xml="http://www.w3.org/2006/12/owl11-xml#"
+     xmlns:rdm="http://www.sevenpro.org/ontologies/2006/rdm#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl2="http://www.w3.org/2006/12/owl2#"
+     xmlns:RDF="&rdm;RDF/">
+    <owl:Ontology rdf:about="">
+        <dc:creator>Petr K&#345;emen</dc:creator>
+        <dc:title
+            >Ontology for Knowlege Discovery Process Management</dc:title>
+        <rdfs:comment
+            >TODO 
+- move towards OWL 2 - it simplifies algorithm descriptions, inputs/outputs
+- SWRL rules
+- GCIs</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;title"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#antecedent -->
+
+    <owl:ObjectProperty rdf:about="#antecedent">
+        <rdfs:domain rdf:resource="#AtomicKnowledge"/>
+        <rdfs:range rdf:resource="#BooleanAtom"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#atom -->
+
+    <owl:ObjectProperty rdf:about="#atom">
+        <rdfs:range rdf:resource="#BooleanAtom"/>
+        <rdfs:domain rdf:resource="#BooleanAtom"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#child -->
+
+    <owl:ObjectProperty rdf:about="#child">
+        <rdfs:subPropertyOf rdf:resource="#descendant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#classAttribute -->
+
+    <owl:ObjectProperty rdf:about="#classAttribute">
+        <rdfs:domain rdf:resource="#ClassifiedDataset"/>
+        <rdfs:range rdf:resource="#CategoricalAttribute"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#classSpecification -->
+
+    <owl:ObjectProperty rdf:about="#classSpecification">
+        <rdfs:range rdf:resource="#CategoricalAttributeValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#consequent -->
+
+    <owl:ObjectProperty rdf:about="#consequent">
+        <rdfs:range rdf:resource="#BooleanAtom"/>
+        <rdfs:domain rdf:resource="#AtomicKnowledge"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#contains -->
+
+    <owl:ObjectProperty rdf:about="#contains">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Knowledge"/>
+                    <rdf:Description rdf:about="#Example"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="#AtomicKnowledge"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#correspondsTo -->
+
+    <owl:ObjectProperty rdf:about="#correspondsTo">
+        <rdfs:domain rdf:resource="#TopClass"/>
+        <rdfs:range rdf:resource="#TopClass"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#descendant -->
+
+    <owl:ObjectProperty rdf:about="#descendant">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#example -->
+
+    <owl:ObjectProperty rdf:about="#example">
+        <rdfs:domain rdf:resource="#Dataset"/>
+        <rdfs:range rdf:resource="#Example"/>
+        <rdfs:subPropertyOf rdf:resource="#contains"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#extends -->
+
+    <owl:ObjectProperty rdf:about="#extends">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="#AlgorithmConfiguration"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#firstTerm -->
+
+    <owl:ObjectProperty rdf:about="#firstTerm">
+        <rdfs:domain rdf:resource="#Feature"/>
+        <rdfs:range rdf:resource="#TopClass"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#format -->
+
+    <owl:ObjectProperty rdf:about="#format">
+        <rdfs:range rdf:resource="#KnowledgeFormat"/>
+        <rdfs:domain rdf:resource="#Knowledge"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#input -->
+
+    <owl:ObjectProperty rdf:about="#input">
+        <rdfs:range rdf:resource="#Knowledge"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ofAttribute -->
+
+    <owl:ObjectProperty rdf:about="#ofAttribute">
+        <rdfs:range rdf:resource="#Attribute"/>
+        <rdfs:domain rdf:resource="#AttributeValue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#operator -->
+
+    <owl:ObjectProperty rdf:about="#operator"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#output -->
+
+    <owl:ObjectProperty rdf:about="#output">
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="#Knowledge"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#producedBy -->
+
+    <owl:ObjectProperty rdf:about="#producedBy">
+        <owl:inverseOf rdf:resource="#output"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#representsExample -->
+
+    <owl:ObjectProperty rdf:about="#representsExample">
+        <rdfs:range rdf:resource="#Example"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#rootCluster -->
+
+    <owl:ObjectProperty rdf:about="#rootCluster">
+        <rdfs:subPropertyOf rdf:resource="#contains"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#term -->
+
+    <owl:ObjectProperty rdf:about="#term">
+        <rdfs:comment xml:lang="en"
+            >A property that binds a ground fact with its agruments - terms in the form of AttributeValues</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#topProperty -->
+
+    <owl:ObjectProperty rdf:about="#topProperty">
+        <rdfs:domain rdf:resource="#TopClass"/>
+        <rdfs:range rdf:resource="#TopClass"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#attribute -->
+
+    <owl:DatatypeProperty rdf:about="#attribute">
+        <rdfs:comment
+            >super property of all data attributes of algorithms</rdfs:comment>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#beamWidth -->
+
+    <owl:DatatypeProperty rdf:about="#beamWidth">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">beam width</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#confidence -->
+
+    <owl:DatatypeProperty rdf:about="#confidence">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#singleResultAnnotation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#cpuTimeSeconds -->
+
+    <owl:DatatypeProperty rdf:about="#cpuTimeSeconds">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="&xsd;double"/>
+        <rdfs:domain rdf:resource="#MiningResult"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#creator -->
+
+    <owl:DatatypeProperty rdf:about="#creator">
+        <rdfs:domain rdf:resource="#AnnotatedEntity"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#data -->
+
+    <owl:DatatypeProperty rdf:about="#data">
+        <rdfs:domain rdf:resource="#AttributeValue"/>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#hasFP -->
+
+    <owl:DatatypeProperty rdf:about="#hasFP">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#singleResultAnnotation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#hasTP -->
+
+    <owl:DatatypeProperty rdf:about="#hasTP">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#singleResultAnnotation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#isConsumed -->
+
+    <owl:DatatypeProperty rdf:about="#isConsumed"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#maxLength -->
+
+    <owl:DatatypeProperty rdf:about="#maxLength">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">maximal length</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#maxRuleSize -->
+
+    <owl:DatatypeProperty rdf:about="#maxRuleSize">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en"
+            >maxima rule size</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#maxRulesetSize -->
+
+    <owl:DatatypeProperty rdf:about="#maxRulesetSize">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en"
+            >maximal ruleset size</rdfs:label>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#maxSteps -->
+
+    <owl:DatatypeProperty rdf:about="#maxSteps">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en"
+            >maximal number of steps</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minConfidence -->
+
+    <owl:DatatypeProperty rdf:about="#minConfidence">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label
+            >minimal confidence</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#minMetric"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minConviction -->
+
+    <owl:DatatypeProperty rdf:about="#minConviction">
+        <rdfs:label
+            >minimal conviction</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#minMetric"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minLeverage -->
+
+    <owl:DatatypeProperty rdf:about="#minLeverage">
+        <rdfs:label
+            >minimal leverage</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#minMetric"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minLift -->
+
+    <owl:DatatypeProperty rdf:about="#minLift">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>minimal lift</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#minMetric"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minMetric -->
+
+    <owl:DatatypeProperty rdf:about="#minMetric">
+        <rdfs:comment
+            >abstract property - not to be used in annotations</rdfs:comment>
+        <rdfs:domain rdf:resource="#WekaAprioriAlgorithm"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:range rdf:resource="&xsd;double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#minSupport -->
+
+    <owl:DatatypeProperty rdf:about="#minSupport">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>minimal support</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#numClusters -->
+
+    <owl:DatatypeProperty rdf:about="#numClusters">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label
+            >number of clusters</rdfs:label>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:range rdf:resource="&xsd;positiveInteger"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ordering -->
+
+    <owl:DatatypeProperty rdf:about="#ordering">
+        <rdfs:range rdf:resource="&xsd;int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#positiveClass -->
+
+    <owl:DatatypeProperty rdf:about="#positiveClass">
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#precision -->
+
+    <owl:DatatypeProperty rdf:about="#precision"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#preservesDatasetExpressivity -->
+
+    <owl:DatatypeProperty rdf:about="#preservesDatasetExpressivity">
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#pruning -->
+
+    <owl:DatatypeProperty rdf:about="#pruning">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label>use pruning</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#recall -->
+
+    <owl:DatatypeProperty rdf:about="#recall">
+        <rdfs:range rdf:resource="&xsd;double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#relation -->
+
+    <owl:DatatypeProperty rdf:about="#relation">
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain rdf:resource="#GroundFact"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ruleThreshold -->
+
+    <owl:DatatypeProperty rdf:about="#ruleThreshold">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">rule threshold</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#rulesetThreshold -->
+
+    <owl:DatatypeProperty rdf:about="#rulesetThreshold">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en"
+            >ruleset threshold</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#singleResultAnnotation -->
+
+    <owl:DatatypeProperty rdf:about="#singleResultAnnotation"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#stringRepresentation -->
+
+    <owl:DatatypeProperty rdf:about="#stringRepresentation">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#support -->
+
+    <owl:DatatypeProperty rdf:about="#support">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#singleResultAnnotation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#targetClass -->
+
+    <owl:DatatypeProperty rdf:about="#targetClass">
+        <rdfs:comment
+            >DEPRECATED : just for querying - remodel</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#targetScore -->
+
+    <owl:DatatypeProperty rdf:about="#targetScore">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en">target score</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#timeStamp -->
+
+    <owl:DatatypeProperty rdf:about="#timeStamp">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#AnnotatedEntity"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#trainingToAllRatio -->
+
+    <owl:DatatypeProperty rdf:about="#trainingToAllRatio">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:label xml:lang="en"
+            >ratio of training examples to al examplesl</rdfs:label>
+        <rdfs:range rdf:resource="&xsd;anySimpleType"/>
+        <rdfs:subPropertyOf rdf:resource="#attribute"/>
+        <rdfs:domain rdf:resource="#AlgorithmConfiguration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#treeSize -->
+
+    <owl:DatatypeProperty rdf:about="#treeSize">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#uri -->
+
+    <owl:DatatypeProperty rdf:about="#uri">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Example"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#version -->
+
+    <owl:DatatypeProperty rdf:about="#version">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#AnnotatedEntity"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AlgorithmConfiguration -->
+
+    <owl:Class rdf:about="#AlgorithmConfiguration">
+        <rdfs:subClassOf rdf:resource="#AnnotatedEntity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#stringRepresentation"/>
+                <owl:someValuesFrom rdf:resource="&xsd;string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#preservesDatasetExpressivity"/>
+                <owl:someValuesFrom rdf:resource="&xsd;boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >General Algorithm Configuration - stores general parameters to be executed in external tool.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#And -->
+
+    <owl:Class rdf:about="#And">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#BooleanAtom"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#atom"/>
+                        <owl:someValuesFrom rdf:resource="#BooleanAtom"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Selector"/>
+        <owl:disjointWith rdf:resource="#Or"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AnnotatedEntity -->
+
+    <owl:Class rdf:about="#AnnotatedEntity">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#timeStamp"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;dateTime"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#creator"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;string"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#TopClass"/>
+        <owl:disjointWith rdf:resource="#Attribute"/>
+        <owl:disjointWith rdf:resource="#KnowledgeFormat"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AprioriResult -->
+
+    <owl:Class rdf:about="#AprioriResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#MiningResult"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom rdf:resource="#WekaAprioriAlgorithm"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#MiningResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AssociationRule -->
+
+    <owl:Class rdf:about="#AssociationRule">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#confidence"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AtomicKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#antecedent"/>
+                        <owl:someValuesFrom rdf:resource="#And"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:someValuesFrom rdf:resource="#And"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AtomicKnowledge -->
+
+    <owl:Class rdf:about="#AtomicKnowledge">
+        <rdfs:subClassOf rdf:resource="#Example"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Attribute -->
+
+    <owl:Class rdf:about="#Attribute">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#TopClass"/>
+        <owl:disjointWith rdf:resource="#KnowledgeFormat"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#AttributeValue -->
+
+    <owl:Class rdf:about="#AttributeValue">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:someValuesFrom rdf:resource="#Attribute"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#operator"/>
+                        <owl:someValuesFrom rdf:resource="#Operator"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#data"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;anySimpleType"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#Selector"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#BackgroundKnowledge -->
+
+    <owl:Class rdf:about="#BackgroundKnowledge">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Knowledge"/>
+                    <owl:Class>
+                        <owl:complementOf rdf:resource="#Dataset"/>
+                    </owl:Class>
+                    <owl:Class>
+                        <owl:complementOf rdf:resource="#MiningResult"/>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#Knowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#BooleanAtom -->
+
+    <owl:Class rdf:about="#BooleanAtom">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#AnnotatedEntity"/>
+        <owl:disjointWith rdf:resource="#TopClass"/>
+        <owl:disjointWith rdf:resource="#Attribute"/>
+        <owl:disjointWith rdf:resource="#KnowledgeFormat"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#BooleanAttribute -->
+
+    <owl:Class rdf:about="#BooleanAttribute">
+        <rdfs:subClassOf rdf:resource="#CategoricalAttribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#BooleanAttributeValue -->
+
+    <owl:Class rdf:about="#BooleanAttributeValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:allValuesFrom rdf:resource="#BooleanAttribute"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AttributeValue"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#CategoricalAttribute -->
+
+    <owl:Class rdf:about="#CategoricalAttribute">
+        <rdfs:subClassOf rdf:resource="#Attribute"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#CategoricalAttributeValue -->
+
+    <owl:Class rdf:about="#CategoricalAttributeValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:allValuesFrom rdf:resource="#CategoricalAttribute"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AttributeValue"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ClassifiedDataset -->
+
+    <owl:Class rdf:about="#ClassifiedDataset">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#classAttribute"/>
+                        <owl:someValuesFrom rdf:resource="#CategoricalAttribute"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#example"/>
+                        <owl:allValuesFrom rdf:resource="#ClassifiedExample"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#Dataset"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ClassifiedExample -->
+
+    <owl:Class rdf:about="#ClassifiedExample">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Example"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#classSpecification"/>
+                        <owl:someValuesFrom rdf:resource="#CategoricalAttributeValue"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Cluster -->
+
+    <owl:Class rdf:about="#Cluster">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#child"/>
+                                <owl:someValuesFrom rdf:resource="#Cluster"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#representsExample"/>
+                                <owl:someValuesFrom rdf:resource="#Example"/>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ordering"/>
+                        <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AtomicKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ordering"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ClusteringAlgorithm -->
+
+    <owl:Class rdf:about="#ClusteringAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:someValuesFrom rdf:resource="#Cluster"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AlgorithmConfiguration"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AlgorithmConfiguration"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Dataset -->
+
+    <owl:Class rdf:about="#Dataset">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#example"/>
+                        <owl:someValuesFrom rdf:resource="#Example"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#Knowledge"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DecisionTreeKnowledge -->
+
+    <owl:Class rdf:about="#DecisionTreeKnowledge">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#hasTP"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#FOLKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#contains"/>
+                        <owl:allValuesFrom rdf:resource="#PredictiveRule"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#treeSize"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#classSpecification"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#hasTP"/>
+                                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#CategoricalAttributeValue"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#precision"/>
+                                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#recall"/>
+                                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#hasFP"/>
+                                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Dendrogram -->
+
+    <owl:Class rdf:about="#Dendrogram">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#NonlogicalKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#rootCluster"/>
+                        <owl:cardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:cardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#rootCluster"/>
+                        <owl:someValuesFrom rdf:resource="#Cluster"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DescriptiveRule -->
+
+    <owl:Class rdf:about="#DescriptiveRule">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:someValuesFrom rdf:resource="#Selector"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#support"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#HornClause"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#confidence"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DescriptiveRuleAlgorithm -->
+
+    <owl:Class rdf:about="#DescriptiveRuleAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:allValuesFrom rdf:resource="#DescriptiveRule"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#SupervisedAlgorithm"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Example -->
+
+    <owl:Class rdf:about="#Example">
+        <rdfs:subClassOf rdf:resource="#Knowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ExclusionMatrix -->
+
+    <owl:Class rdf:about="#ExclusionMatrix">
+        <rdfs:subClassOf rdf:resource="#LanguageBias"/>
+        <owl:disjointWith rdf:resource="#ModeDeclarations"/>
+        <owl:disjointWith rdf:resource="#SubsumptionMatrix"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FOLAxiom -->
+
+    <owl:Class rdf:about="#FOLAxiom">
+        <rdfs:subClassOf rdf:resource="#AtomicKnowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FOLKnowledge -->
+
+    <owl:Class rdf:about="#FOLKnowledge">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#contains"/>
+                        <owl:allValuesFrom rdf:resource="#FOLAxiom"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#Knowledge"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Feature -->
+
+    <owl:Class rdf:about="#Feature">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#BooleanAttribute"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#firstTerm"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#firstTerm"/>
+                        <owl:someValuesFrom rdf:resource="#TopClass"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FeatureMissingValue -->
+
+    <owl:Class rdf:about="#FeatureMissingValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:someValuesFrom rdf:resource="#Feature"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#data"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">false</owl:hasValue>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#BooleanAttributeValue"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#BooleanAttributeValue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FeaturePresentValue -->
+
+    <owl:Class rdf:about="#FeaturePresentValue">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#ofAttribute"/>
+                        <owl:someValuesFrom rdf:resource="#Feature"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AttributeValue"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#data"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#BooleanAttributeValue"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FormatChangingAlgorithm -->
+
+    <owl:Class rdf:about="#FormatChangingAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#preservesDatasetExpressivity"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AlgorithmConfiguration"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AlgorithmConfiguration"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FrequentPatternsAlgorithm -->
+
+    <owl:Class rdf:about="#FrequentPatternsAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:allValuesFrom rdf:resource="#SingleAssociation"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#AlgorithmConfiguration"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#GroundFact -->
+
+    <owl:Class rdf:about="#GroundFact">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#FOLAxiom"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#relation"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;string"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#term"/>
+                        <owl:allValuesFrom rdf:resource="#AttributeValue"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#relation"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment
+            >Necessary to integrate with Feature and TopClass/TopProperty</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#HierarchicalClusteringResult -->
+
+    <owl:Class rdf:about="#HierarchicalClusteringResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#MiningResult"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom rdf:resource="#WekaCobwebAlgorithm"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#MiningResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#HornClause -->
+
+    <owl:Class rdf:about="#HornClause">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#antecedent"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#Selector"/>
+                                    <rdf:Description rdf:about="#And"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#FOLAxiom"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#antecedent"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:someValuesFrom rdf:resource="#BooleanAtom"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#HornClauseKnowledge -->
+
+    <owl:Class rdf:about="#HornClauseKnowledge">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#FOLKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#contains"/>
+                        <owl:allValuesFrom rdf:resource="#HornClause"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Knowledge -->
+
+    <owl:Class rdf:about="#Knowledge">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotatedEntity"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#contains"/>
+                        <owl:someValuesFrom rdf:resource="#AtomicKnowledge"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#AlgorithmConfiguration"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#KnowledgeFormat -->
+
+    <owl:Class rdf:about="#KnowledgeFormat">
+        <owl:disjointWith rdf:resource="#TopClass"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#LanguageBias -->
+
+    <owl:Class rdf:about="#LanguageBias">
+        <rdfs:subClassOf rdf:resource="#NonlogicalKnowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#MiningResult -->
+
+    <owl:Class rdf:about="#MiningResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom rdf:resource="#AlgorithmConfiguration"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#Knowledge"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#cpuTimeSeconds"/>
+                <owl:someValuesFrom rdf:resource="&xsd;double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#contains"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AtomicKnowledge"/>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#singleResultAnnotation"/>
+                                <owl:someValuesFrom rdf:resource="&xsd;anySimpleType"/>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ModeDeclarations -->
+
+    <owl:Class rdf:about="#ModeDeclarations">
+        <rdfs:subClassOf rdf:resource="#LanguageBias"/>
+        <owl:disjointWith rdf:resource="#SubsumptionMatrix"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#NamedAlgorithm -->
+
+    <owl:Class rdf:about="#NamedAlgorithm">
+        <rdfs:subClassOf rdf:resource="#AlgorithmConfiguration"/>
+        <rdfs:comment
+            >A superclass of all particular algorithm descriptions.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#NonlogicalKnowledge -->
+
+    <owl:Class rdf:about="#NonlogicalKnowledge">
+        <rdfs:subClassOf rdf:resource="#Knowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Not -->
+
+    <owl:Class rdf:about="#Not">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#atom"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#atom"/>
+                        <owl:someValuesFrom rdf:resource="#BooleanAtom"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#BooleanAtom"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#And"/>
+        <owl:disjointWith rdf:resource="#Or"/>
+        <owl:disjointWith rdf:resource="#Selector"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#OWLDLAxiom -->
+
+    <owl:Class rdf:about="#OWLDLAxiom">
+        <rdfs:subClassOf rdf:resource="#FOLAxiom"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#OWLDLKnowledge -->
+
+    <owl:Class rdf:about="#OWLDLKnowledge">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#FOLKnowledge"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#contains"/>
+                        <owl:allValuesFrom rdf:resource="#OWLDLAxiom"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Operator -->
+
+    <owl:Class rdf:about="#Operator"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Or -->
+
+    <owl:Class rdf:about="#Or">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#BooleanAtom"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#atom"/>
+                        <owl:someValuesFrom rdf:resource="#BooleanAtom"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#PredictiveRule -->
+
+    <owl:Class rdf:about="#PredictiveRule">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#hasTP"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#HornClause"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#hasFP"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:someValuesFrom rdf:resource="#Selector"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#PredictiveRuleAlgorithm -->
+
+    <owl:Class rdf:about="#PredictiveRuleAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#SupervisedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:allValuesFrom rdf:resource="#PredictiveRule"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#RelationalKnowledge -->
+
+    <owl:Class rdf:about="#RelationalKnowledge">
+        <rdfs:subClassOf rdf:resource="#FOLKnowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#RulesetResult -->
+
+    <owl:Class rdf:about="#RulesetResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#MiningResult"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom rdf:resource="#WekaJRipAlgorithm"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#MiningResult"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SRRelationalFeaturesAlgorithm -->
+
+    <owl:Class rdf:about="#SRRelationalFeaturesAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Relational features construction algorithm based on sorted refinement - frequent patterns</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SubsumptionMatrix"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#RelationalKnowledge"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SingleRelationKnowledge"/>
+                                    <rdf:Description rdf:about="#ClassifiedDataset"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SortTheory"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#ModeDeclarations"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxLength"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#ExclusionMatrix"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minSupport"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#RelationalKnowledge"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#ClassifiedDataset"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#input"/>
+                                <owl:someValuesFrom>
+                                    <owl:Class>
+                                        <owl:oneOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="#NO-BIAS"/>
+                                        </owl:oneOf>
+                                    </owl:Class>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Class>
+                                        <owl:complementOf rdf:resource="#ModeDeclarations"/>
+                                    </owl:Class>
+                                    <rdf:Description rdf:about="#LanguageBias"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Finds frequent patterns in relational data</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SRRelationalFeaturesResult -->
+
+    <owl:Class rdf:about="#SRRelationalFeaturesResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom rdf:resource="#SRRelationalFeaturesAlgorithm"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#MiningResult"/>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Selector -->
+
+    <owl:Class rdf:about="#Selector">
+        <rdfs:subClassOf rdf:resource="#BooleanAtom"/>
+        <owl:disjointWith rdf:resource="#Or"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SingleAssociation -->
+
+    <owl:Class rdf:about="#SingleAssociation">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#HornClause"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#consequent"/>
+                        <owl:allValuesFrom>
+                            <owl:Class>
+                                <owl:oneOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#TRUE"/>
+                                </owl:oneOf>
+                            </owl:Class>
+                        </owl:allValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#support"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#antecedent"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#antecedent"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <owl:Class>
+                                        <owl:unionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="#FeaturePresentValue"/>
+                                            <rdf:Description rdf:about="#FeatureMissingValue"/>
+                                        </owl:unionOf>
+                                    </owl:Class>
+                                    <owl:Class>
+                                        <owl:intersectionOf rdf:parseType="Collection">
+                                            <rdf:Description rdf:about="#And"/>
+                                            <owl:Restriction>
+                                                <owl:onProperty rdf:resource="#atom"/>
+                                                <owl:allValuesFrom>
+                                                    <owl:Class>
+                                                        <owl:unionOf rdf:parseType="Collection">
+                                                            <rdf:Description rdf:about="#FeaturePresentValue"/>
+                                                            <rdf:Description rdf:about="#FeatureMissingValue"/>
+                                                        </owl:unionOf>
+                                                    </owl:Class>
+                                                </owl:allValuesFrom>
+                                            </owl:Restriction>
+                                        </owl:intersectionOf>
+                                    </owl:Class>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SingleRelationKnowledge -->
+
+    <owl:Class rdf:about="#SingleRelationKnowledge">
+        <rdfs:subClassOf rdf:resource="#RelationalKnowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SortTheory -->
+
+    <owl:Class rdf:about="#SortTheory">
+        <rdfs:subClassOf rdf:resource="#FOLKnowledge"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#StochasticLocalRuleSearchAdaptedAlgorithm -->
+
+    <owl:Class rdf:about="#StochasticLocalRuleSearchAdaptedAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Stochastic local rule search algorithm - descriptive rules</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#ExclusionMatrix"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">3</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minSupport"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#targetScore"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxRulesetSize"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxLength"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#contains"/>
+                                        <owl:allValuesFrom rdf:resource="#DescriptiveRule"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#RDFXML"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SubsumptionMatrix"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SingleRelationKnowledge"/>
+                                    <rdf:Description rdf:about="#ClassifiedDataset"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Finds a set of descriptive rules for the given class</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SubsumptionMatrix -->
+
+    <owl:Class rdf:about="#SubsumptionMatrix">
+        <rdfs:subClassOf rdf:resource="#LanguageBias"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#SupervisedAlgorithm -->
+
+    <owl:Class rdf:about="#SupervisedAlgorithm">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AlgorithmConfiguration"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom rdf:resource="#ClassifiedDataset"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AlgorithmConfiguration"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#TopClass -->
+
+    <owl:Class rdf:about="#TopClass">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#correspondsTo"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#correspondsTo"/>
+                        <owl:someValuesFrom rdf:resource="#TopClass"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#topProperty"/>
+                <owl:allValuesFrom rdf:resource="#TopClass"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#TopDownRuleSearchAdaptedAlgorithm -->
+
+    <owl:Class rdf:about="#TopDownRuleSearchAdaptedAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Top down rule search algorithm (special version)  - descriptive rules</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SingleRelationKnowledge"/>
+                                    <rdf:Description rdf:about="#ClassifiedDataset"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxSteps"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minSupport"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#targetScore"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxRulesetSize"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxLength"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#beamWidth"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#ExclusionMatrix"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#contains"/>
+                                        <owl:allValuesFrom rdf:resource="#DescriptiveRule"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#RDFXML"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#SubsumptionMatrix"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">3</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Finds a set of descriptive rules for the given class</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#TopDownRuleSearchAlgorithm -->
+
+    <owl:Class rdf:about="#TopDownRuleSearchAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Top down rule search algorithm  - descriptive rules</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#beamWidth"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minSupport"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxLength"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxRuleSize"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#maxSteps"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;int"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#contains"/>
+                                        <owl:allValuesFrom rdf:resource="#DescriptiveRule"/>
+                                    </owl:Restriction>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#Prolog"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Finds a set of descriptive rules for the given class</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#TopDownRuleSearchResult -->
+
+    <owl:Class rdf:about="#TopDownRuleSearchResult">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#MiningResult"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#producedBy"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#TopDownRuleSearchAlgorithm"/>
+                                    <rdf:Description rdf:about="#TopDownRuleSearchAdaptedAlgorithm"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#WekaAprioriAlgorithm -->
+
+    <owl:Class rdf:about="#WekaAprioriAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Weka APRIORI algorithm - association rules - NOT IMPLEMENTED YET</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minSupport"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#Dataset"/>
+                                    <rdf:Description rdf:about="#SingleRelationKnowledge"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#CSV"/>
+                                                    <rdf:Description rdf:about="#ARFF"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#minMetric"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:allValuesFrom rdf:resource="#AssociationRule"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Finds association rules starting with a propositional dataset.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#WekaCobwebAlgorithm -->
+
+    <owl:Class rdf:about="#WekaCobwebAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Weka Cobweb algorithm - hierarchical clustering - NOT IMPLEMENTED YET</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#CSV"/>
+                                                    <rdf:Description rdf:about="#ARFF"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                    <rdf:Description rdf:about="#Dataset"/>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom rdf:resource="#Dendrogram"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Given a dataset it returns a dendrogram of clusters.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#WekaJRipAlgorithm -->
+
+    <owl:Class rdf:about="#WekaJRipAlgorithm">
+        <rdfs:label xml:lang="en"
+            >Weka JRip algorithm - predictive rules - NOT IMPLEMENTED YET</rdfs:label>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#NamedAlgorithm"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#pruning"/>
+                        <owl:someValuesFrom rdf:resource="&xsd;boolean"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#output"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="#contains"/>
+                                <owl:allValuesFrom rdf:resource="#PredictiveRule"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#ClassifiedDataset"/>
+                                    <rdf:Description rdf:about="#SingleRelationKnowledge"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="#format"/>
+                                        <owl:someValuesFrom>
+                                            <owl:Class>
+                                                <owl:oneOf rdf:parseType="Collection">
+                                                    <rdf:Description rdf:about="#CSV"/>
+                                                    <rdf:Description rdf:about="#ARFF"/>
+                                                </owl:oneOf>
+                                            </owl:Class>
+                                        </owl:someValuesFrom>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#input"/>
+                        <owl:maxCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:maxCardinality>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment
+            >Finding predictive rules.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#ARFF -->
+
+    <KnowledgeFormat rdf:about="#ARFF"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#CSV -->
+
+    <KnowledgeFormat rdf:about="#CSV"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultCobwebAlgorithm -->
+
+    <WekaCobwebAlgorithm rdf:about="#DefaultCobwebAlgorithm">
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.ClusterAlgorithmDefinitionImpl</stringRepresentation>
+    </WekaCobwebAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultSRFrequentPatternAlgorithm -->
+
+    <SRRelationalFeaturesAlgorithm rdf:about="#DefaultSRFrequentPatternAlgorithm">
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.SRFrequentPatternsAlgorithmImpl</stringRepresentation>
+        <maxLength rdf:datatype="&xsd;int">5</maxLength>
+        <minSupport rdf:datatype="&xsd;double">0.6</minSupport>
+    </SRRelationalFeaturesAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultStochasticLocalRuleSearchAdaptedAlgorithm -->
+
+    <StochasticLocalRuleSearchAdaptedAlgorithm rdf:about="#DefaultStochasticLocalRuleSearchAdaptedAlgorithm">
+        <targetScore rdf:datatype="&xsd;double">0.8</targetScore>
+        <maxLength rdf:datatype="&xsd;int">4</maxLength>
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.StochasticLocalSearchAdaptedAlgorithmImpl</stringRepresentation>
+        <minSupport rdf:datatype="&xsd;double">0.3</minSupport>
+        <maxRulesetSize rdf:datatype="&xsd;int">10</maxRulesetSize>
+    </StochasticLocalRuleSearchAdaptedAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultTopDownRuleSearchAdaptedAlgorithm -->
+
+    <TopDownRuleSearchAdaptedAlgorithm rdf:about="#DefaultTopDownRuleSearchAdaptedAlgorithm">
+        <rulesetThreshold rdf:datatype="&xsd;double">0.9</rulesetThreshold>
+        <maxRuleSize rdf:datatype="&xsd;int">6</maxRuleSize>
+        <beamWidth rdf:datatype="&xsd;int">5</beamWidth>
+        <ruleThreshold rdf:datatype="&xsd;double">0.9</ruleThreshold>
+        <minSupport rdf:datatype="&xsd;double">0.2</minSupport>
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.TopDownRuleSearchAdaptedAlgorithmImpl</stringRepresentation>
+        <maxSteps rdf:datatype="&xsd;long">100</maxSteps>
+        <maxLength rdf:datatype="&xsd;int">2</maxLength>
+    </TopDownRuleSearchAdaptedAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultTopDownRuleSearchAlgorithm -->
+
+    <TopDownRuleSearchAlgorithm rdf:about="#DefaultTopDownRuleSearchAlgorithm">
+        <rulesetThreshold rdf:datatype="&xsd;double">0.9</rulesetThreshold>
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.TopDownRuleSearchAlgorithmImpl</stringRepresentation>
+        <maxSteps rdf:datatype="&xsd;long">100</maxSteps>
+        <maxLength rdf:datatype="&xsd;int">2</maxLength>
+        <maxRuleSize rdf:datatype="&xsd;int">6</maxRuleSize>
+        <beamWidth rdf:datatype="&xsd;int">5</beamWidth>
+        <minSupport rdf:datatype="&xsd;double">0.2</minSupport>
+        <ruleThreshold rdf:datatype="&xsd;double">0.9</ruleThreshold>
+    </TopDownRuleSearchAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultWekaAprioriAlgorithm -->
+
+    <WekaAprioriAlgorithm rdf:about="#DefaultWekaAprioriAlgorithm">
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.AprioriAlgorithmDefinitionImpl</stringRepresentation>
+        <minConfidence rdf:datatype="&xsd;double">0.9</minConfidence>
+        <minSupport rdf:datatype="&xsd;double">0.1</minSupport>
+    </WekaAprioriAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#DefaultWekaJRipAlgorithm -->
+
+    <WekaJRipAlgorithm rdf:about="#DefaultWekaJRipAlgorithm">
+        <pruning rdf:datatype="&xsd;boolean">true</pruning>
+        <stringRepresentation rdf:datatype="&xsd;string"
+            >cz.cvut.rdm.algorithms.JRipperAlgorithmDefinitionImpl</stringRepresentation>
+    </WekaJRipAlgorithm>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#FALSE -->
+
+    <BooleanAtom rdf:about="#FALSE"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#NO-BIAS -->
+
+    <LanguageBias rdf:about="#NO-BIAS"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#Prolog -->
+
+    <KnowledgeFormat rdf:about="#Prolog"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#RDFTurtle -->
+
+    <KnowledgeFormat rdf:about="#RDFTurtle"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#RDFXML -->
+
+    <KnowledgeFormat rdf:about="#RDFXML"/>
+    
+
+
+    <!-- http://www.sevenpro.org/ontologies/2006/rdm#TRUE -->
+
+    <BooleanAtom rdf:about="#TRUE"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#TRUE"/>
+            <rdf:Description rdf:about="#FALSE"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
