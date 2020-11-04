@@ -19,16 +19,12 @@
     <artifactId>owldiff</artifactId>
     <packaging>pom</packaging>
     <name>OWLDiff</name>
-    <version>0.2</version>
+    <version>0.2.1</version>
     <description>OWLDiff - diff of OWL ontologies</description>
-    <scm>
-        <connection>scm:svn:http://krizik.felk.cvut.cz/svnkbss/research/owldiff/trunk</connection>
-        <url>http://krizik.felk.cvut.cz/owldiff</url>
-    </scm>
     <distributionManagement>
         <repository>
-            <id>krizik</id>
-            <url>scp://krizik.felk.cvut.cz/var/www/m2repo</url>
+            <id>kbss</id>
+            <url>http://kbss.felk.cvut.cz/var/www/m2repo</url>
         </repository>
     </distributionManagement>
     <modules>

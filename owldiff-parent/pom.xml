@@ -19,22 +19,12 @@
     <artifactId>owldiff-parent</artifactId>
     <packaging>pom</packaging>
     <name>OWLDiff Parent POM</name>
-    <version>0.2</version>
-    <scm>
-        <connection>scm:svn:http://krizik.felk.cvut.cz/svnkbss/research/owldiff/trunk</connection>
-        <url>http://krizik.felk.cvut.cz/owldiff</url>
-    </scm>
-    <distributionManagement>
-        <repository>
-            <id>krizik</id>
-            <url>scp://krizik.felk.cvut.cz/var/www/m2repo/</url>
-        </repository>
-    </distributionManagement>
+    <version>0.2.1</version>
     <repositories>
         <repository>
-            <id>krizik</id>
+            <id>kbss</id>
             <name>KBSS Maven 2 Repository</name>
-            <url>http://krizik.felk.cvut.cz/m2repo</url>
+            <url>http://kbss.felk.cvut.cz/m2repo</url>
         </repository>
         <repository>
             <!-- owlapi -->
@@ -119,14 +109,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2</version>
+                <version>3.2.1</version>
             </plugin>
         </plugins>
         <extensions>
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>2.2</version>
+                <version>3.4.1</version>
             </extension>
         </extensions>
     </build>
