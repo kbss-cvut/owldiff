@@ -170,7 +170,7 @@ public class DLSyntax implements Syntax {
             }
 
             private void symmetricPropertiesAxiom(
-                    final Collection<? extends OWLPropertyExpression<?, ?>> de,
+                    final Collection<? extends OWLPropertyExpression> de,
                     final Object context, final String separator,
                     final boolean fullURI) {
                 if (new HashSet<Object>(de).contains(context)) { // TODO remove
@@ -183,7 +183,7 @@ public class DLSyntax implements Syntax {
                     // context
                     // is not
                     // Comparable
-                    for (final OWLPropertyExpression<?, ?> d : de) {
+                    for (final OWLPropertyExpression d : de) {
                         if (!d.equals(context)) {
                             b.append(separator).append(write(d, fullURI, html));
                         }
@@ -195,7 +195,7 @@ public class DLSyntax implements Syntax {
                     }
                     boolean first = true;
 
-                    for (final OWLPropertyExpression<?, ?> d : de) {
+                    for (final OWLPropertyExpression d : de) {
                         if (!first) {
                             b.append(separator);
                         }
@@ -795,7 +795,7 @@ public class DLSyntax implements Syntax {
         return dt.toString();
     }
 
-    private String write(final OWLPropertyExpression<?, ?> relation,
+    private String write(final OWLPropertyExpression relation,
                          final boolean full, final boolean html) {
         if (relation == null) {
             throw new IllegalArgumentException("Relation is null.");

@@ -13,7 +13,7 @@
 package cz.cvut.kbss.owldiff.syntax;
 
 public enum SyntaxEnum {
-    MANCHESTER(new ManchesterSyntax()), MANCHESTER_ORIGINAL(new ManchesterSyntaxOriginal()), DL(new DLSyntax());
+    MANCHESTER(new ManchesterSyntax()), DL(new DLSyntax());
 
     Syntax s;
 

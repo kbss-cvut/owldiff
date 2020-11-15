@@ -17,8 +17,10 @@ import java.net.URI;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import cz.cvut.kbss.owldiff.ontology.OntologyHandler;
@@ -34,13 +36,18 @@ public class OntologyHandlerImpl implements OntologyHandler {
         parse(oldFile, newFile);
     }
 
+    private void silentImports(final OWLOntologyManager m) {
+        m.setOntologyLoaderConfiguration(new OWLOntologyLoaderConfiguration().setMissingImportHandlingStrategy(
+            MissingImportHandlingStrategy.SILENT));
+    }
+
     private void parse(URI oldFile, URI newFile) {
         try {
             originalOntologyManager = OWLManager.createOWLOntologyManager();
-            originalOntologyManager.setSilentMissingImportsHandling(true);
+            silentImports(originalOntologyManager);
 
             updateOntologyManager = OWLManager.createOWLOntologyManager();
-            updateOntologyManager.setSilentMissingImportsHandling(true);
+            silentImports(updateOntologyManager);
 
             originalOntology = originalOntologyManager.loadOntology(IRI
                     .create(oldFile));

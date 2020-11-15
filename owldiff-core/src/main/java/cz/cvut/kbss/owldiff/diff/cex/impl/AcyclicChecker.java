@@ -15,7 +15,6 @@ package cz.cvut.kbss.owldiff.diff.cex.impl;
 
 import cz.cvut.kbss.owldiff.OWLDiffException;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.util.OWLAxiomVisitorAdapter;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -28,7 +27,7 @@ import java.util.Set;
  * Time: 6:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AcyclicChecker extends OWLAxiomVisitorAdapter {
+public class AcyclicChecker implements OWLAxiomVisitor {
 
     private OWLOntology onto;
     private Set<OWLAxiom> axioms;

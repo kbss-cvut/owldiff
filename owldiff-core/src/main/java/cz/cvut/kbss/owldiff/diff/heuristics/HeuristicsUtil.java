@@ -16,6 +16,7 @@ package cz.cvut.kbss.owldiff.diff.heuristics;
 import java.util.Iterator;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -49,5 +50,13 @@ public class HeuristicsUtil {
             OWLClassExpression cl = i.next();
             System.out.println(cl.toString());
         }
+    }
+
+    public static Set<OWLClassExpression> getSubClasses(final OWLOntology o, final OWLClass c) {
+        return o.subClassAxiomsForSuperClass(c).map(a -> a.getSubClass()).collect(Collectors.toSet());
+    }
+
+    public static Set<OWLClassExpression> getSuperClasses(final OWLOntology o, final OWLClass c) {
+        return o.subClassAxiomsForSubClass(c).map(a -> a.getSuperClass()).collect(Collectors.toSet());
     }
 }

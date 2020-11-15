@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -48,12 +49,12 @@ public class SameSubAndSuperClassesDiff extends AbstractDiff {
 
         for (Iterator<OWLClass> i = unmatchedClassesOrig.iterator(); i.hasNext(); ) {
             OWLClass cl = i.next();
-            Set<OWLClassExpression> sub1 = cl.getSubClasses(orig);
-            Set<OWLClassExpression> sup1 = cl.getSuperClasses(orig);
+            Set<OWLClassExpression> sub1 = HeuristicsUtil.getSubClasses(orig,cl);
+            Set<OWLClassExpression> sup1 = HeuristicsUtil.getSuperClasses(orig,cl);
             for (Iterator<OWLClass> j = unmatchedClassesUpd.iterator(); j.hasNext(); ) {
                 OWLClass clu = j.next();
-                Set<OWLClassExpression> sub2 = clu.getSubClasses(upd);
-                Set<OWLClassExpression> sup2 = clu.getSuperClasses(upd);
+                Set<OWLClassExpression> sub2 = HeuristicsUtil.getSubClasses(upd,clu);
+                Set<OWLClassExpression> sup2 = HeuristicsUtil.getSubClasses(upd,clu);
                 if (sub1.equals(sub2) && sup1.equals(sup2)) {
                     output.getPossiblyRenamed().put(cl, clu);
                     output.getOWLChanges().add(new HeuristicOWLChange(cl, clu, OWLChangeType.HEURISTIC_SAME_SUB_AND_SUPER_CLASSES));

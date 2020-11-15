@@ -113,7 +113,7 @@ public class Normalizator implements OWLAxiomVisitor {
         try {
             manager = OWLManager.createOWLOntologyManager();
             factory = manager.getOWLDataFactory();
-            nont = manager.createOntology(ont.getOntologyID().getOntologyIRI());
+            nont = manager.createOntology(ont.getOntologyID().getOntologyIRI().get());
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Failed to init normalizator", ex);
         }

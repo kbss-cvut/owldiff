@@ -700,7 +700,7 @@ public class ManchesterSyntax implements Syntax {
         return dt.toString();
     }
 
-    public String write(final OWLPropertyExpression<?, ?> relation,
+    public String write(final OWLPropertyExpression relation,
                         final boolean fullURI) {
         if (relation == null) {
             throw new IllegalArgumentException("Relation is null.");

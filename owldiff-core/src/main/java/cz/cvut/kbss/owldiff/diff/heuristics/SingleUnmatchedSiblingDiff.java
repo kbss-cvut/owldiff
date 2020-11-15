@@ -47,15 +47,15 @@ public class SingleUnmatchedSiblingDiff extends AbstractDiff {
 
         for (Iterator<OWLClass> i = unmatchedClassesOrig.iterator(); i.hasNext(); ) {
             OWLClass clo = i.next();
-            Set<OWLClassExpression> supo = clo.getSuperClasses(orig);
+            Set<OWLClassExpression> supo = HeuristicsUtil.getSuperClasses(orig, clo);
             for (Iterator<OWLClass> j = unmatchedClassesUpd.iterator(); j.hasNext(); ) {
                 OWLClass clu = j.next();
-                Set<OWLClassExpression> supu = clu.getSuperClasses(upd);
+                Set<OWLClassExpression> supu = HeuristicsUtil.getSuperClasses(upd, clu);
 
                 if (!(supo.size() == 1 && supo.containsAll(supu))) continue;
                 else {
-                    Set<OWLClassExpression> supoSib = supo.iterator().next().asOWLClass().getSubClasses(orig);
-                    Set<OWLClassExpression> supuSib = supu.iterator().next().asOWLClass().getSubClasses(upd);
+                    Set<OWLClassExpression> supoSib = HeuristicsUtil.getSuperClasses(orig, supo.iterator().next().asOWLClass());
+                    Set<OWLClassExpression> supuSib = HeuristicsUtil.getSuperClasses(upd, supu.iterator().next().asOWLClass());
                     supoSib.remove(clo);
                     supuSib.remove(clu);
                     if (supoSib.containsAll(supuSib)) {
