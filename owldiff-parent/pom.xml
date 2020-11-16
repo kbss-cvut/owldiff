@@ -19,51 +19,13 @@
     <artifactId>owldiff-parent</artifactId>
     <packaging>pom</packaging>
     <name>OWLDiff Parent POM</name>
-    <version>0.2.1</version>
+    <version>0.2.1-SNAPSHOT</version>
     <repositories>
         <repository>
             <id>kbss</id>
             <name>KBSS Maven 2 Repository</name>
             <url>http://kbss.felk.cvut.cz/m2repo</url>
         </repository>
-<!--        <repository>-->
-<!--            &lt;!&ndash; owlapi &ndash;&gt;-->
-<!--            <id>oss - releases</id>-->
-<!--            <name>OSS Maven 2 Repository</name>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/releases</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--                <updatePolicy>always</updatePolicy>-->
-<!--            </releases>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            &lt;!&ndash; owlapi &ndash;&gt;-->
-<!--            <id>oss - snapshots</id>-->
-<!--            <name>OSS Maven 2 Repository</name>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--                <updatePolicy>always</updatePolicy>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            &lt;!&ndash; protege &ndash;&gt;-->
-<!--            <id>oss - central sync</id>-->
-<!--            <name>OSS Maven 2 Repository</name>-->
-<!--            <url>https://oss.sonatype.org/content/repositories/central-sync</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--                <updatePolicy>always</updatePolicy>-->
-<!--            </releases>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            &lt;!&ndash; protege &ndash;&gt;-->
-<!--            <id>eclipse - testing</id>-->
-<!--            <name>Eclipse Testing Repository</name>-->
-<!--            <url>http://maven.eclipse.org/nexus/content/repositories/testing</url>-->
-<!--        </repository>-->
-
-
     </repositories>
     <developers>
         <developer>
@@ -110,6 +72,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <source>14</source>
+                    <target>14</target>
+                </configuration>
             </plugin>
         </plugins>
         <extensions>

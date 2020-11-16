@@ -17,41 +17,13 @@
         <groupId>cz.cvut.kbss</groupId>
         <artifactId>owldiff-parent</artifactId>
         <relativePath>../owldiff-parent/pom.xml</relativePath>
-        <version>0.2.1</version>
+        <version>0.2.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>owldiff-core</artifactId>
     <packaging>jar</packaging>
     <name>OWLDiff Core Library</name>
 
-    <repositories>
-        <!--
-              repository> <releases> <enabled>true</enabled> </releases>
-              <snapshots> <enabled>true</enabled> </snapshots>
-              <id>owlapi-repository</id> <name>owlapi repository</name>
-              <url>http://maven.topazproject.org/maven2</url> </repository
-          -->
-        <!--
-              repository> <id>Maven Search</id> <name>Maven Search</name>
-              <url>http://mvnsearch.org/maven2</url> <releases>
-              <enabled>true</enabled> </releases> </repository
-          -->
-
-        <!--<repository>-->
-        <!--<id>Topaz project</id>-->
-        <!--<name>Topaz project</name>-->
-        <!--<url>http://maven.topazproject.org/maven2</url>-->
-        <!--<releases>-->
-        <!--<enabled>true</enabled>-->
-        <!--</releases>-->
-        <!--</repository>-->
-        <!--
-              repository> <id>neo4j-public-repository</id> <name>Publically
-              available Maven 2 repository for Neo4j</name>
-              <url>http://m2.neo4j.org</url> <snapshots> <enabled>true</enabled>
-              </snapshots> </repository
-          -->
-    </repositories>
     <build>
         <resources>
             <resource>
@@ -66,16 +38,6 @@
                 <version>3.1.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>14</source>
-                    <target>14</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -127,26 +89,6 @@
         </extensions>
     </build>
     <dependencies>
-        <!--
-              dependency> <groupId>owlapi</groupId> <artifactId>api</artifactId>
-              <version>2.1.1</version> <type>jar</type> <optional>false</optional>
-              </dependency
-          -->
-        <!--
-              dependency> <groupId>owlapi</groupId> <artifactId>impl</artifactId>
-              <version>2.1.1</version> <type>jar</type> <optional>false</optional>
-              </dependency> <dependency> <groupId>owlapi</groupId>
-              <artifactId>util</artifactId> <version>2.1.1</version>
-              <type>jar</type> <optional>false</optional> </dependency>
-              <dependency> <groupId>owlapi</groupId>
-              <artifactId>debugging</artifactId> <version>2.1.1</version>
-              <type>jar</type> <optional>false</optional> </dependency
-          -->
-        <!--
-              dependency> <groupId>owlapi</groupId>
-              <artifactId>owlapi-parent</artifactId> <version>2.1.1</version>
-              <optional>false</optional> <type>pom</type> </dependency
-          -->
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>owlapi-distribution</artifactId>
@@ -163,12 +105,5 @@
             <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
-        <!--
-              dependency> <groupId>aterm</groupId> <artifactId>aterm</artifactId>
-              <version>1.6</version> </dependency> <dependency>
-              <groupId>relaxngDatatype</groupId>
-              <artifactId>relaxngDatatype</artifactId> <version>20020414</version>
-              </dependency
-          -->
     </dependencies>
 </project>
