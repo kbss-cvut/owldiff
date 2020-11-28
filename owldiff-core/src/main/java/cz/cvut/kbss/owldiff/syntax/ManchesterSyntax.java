@@ -478,6 +478,9 @@ public class ManchesterSyntax implements Syntax {
             }
 
             public void visit(OWLAnnotationAssertionAxiom arg0) {
+                if (arg0.getSubject().isIRI()) {
+                    b.append(getName(arg0.getSubject().asIRI().get(), fullURI) + " : ");
+                }
                 b.append(write(arg0.getAnnotation(), fullURI, html));
             }
 

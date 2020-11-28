@@ -30,6 +30,7 @@
     <modules>
         <module>owldiff-parent</module>
         <module>owldiff-core</module>
+        <module>owldiff-cli</module>
         <module>owldiff-standalone</module>
         <module>owldiff-protege-plugin</module>
     </modules>
@@ -38,7 +39,7 @@
             <extension>
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
-                <version>2.2</version>
+                <version>3.4.1</version>
             </extension>
         </extensions>
     </build>
