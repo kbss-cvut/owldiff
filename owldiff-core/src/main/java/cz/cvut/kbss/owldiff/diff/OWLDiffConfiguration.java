@@ -13,76 +13,78 @@
 
 package cz.cvut.kbss.owldiff.diff;
 
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.reasoner.*;
-
 import java.io.IOException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.reasoner.FreshEntityPolicy;
+import org.semanticweb.owlapi.reasoner.IndividualNodeSetPolicy;
+import org.semanticweb.owlapi.reasoner.NullReasonerProgressMonitor;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
+import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 public class OWLDiffConfiguration {
     private static final Logger LOG = Logger.getLogger(OWLDiffConfiguration.class
-            .getName());
+        .getName());
 
     private static String VERSION;
 
-    private static ReasonerProvider p;
+    private static String REASONER_FACTORY;
+
+    private static ReasonerProvider reasonerProvider;
 
     private static ResourceBundle resourceBundle;
 
     static {
-
-        String reasonerFactory = System.getProperty("reasonerFactory");
-        if (reasonerFactory != null) {
-            try {
-                final Class<?> c = Class.forName(reasonerFactory);
-                setReasonerProvider(new ReasonerProvider() {
-                    final OWLReasonerFactory f = (OWLReasonerFactory) c.newInstance();
-
-                    public OWLReasoner getOWLReasoner(OWLOntology o) {
-                        return f.createReasoner(o, new SimpleConfiguration(
-                                new NullReasonerProgressMonitor(), FreshEntityPolicy.ALLOW, -1,
-                                IndividualNodeSetPolicy.BY_SAME_AS));
-                    }
-                });
-                LOG.info("Reasoner factory successfully set");
-            } catch (Exception e) {
-                LOG.log(Level.WARNING, "Reasoner factory not found.");
-//            p = new ReasonerProvider() {
-//                public OWLReasoner getOWLReasoner(OWLOntology o) {
-//                    return new StructuralReasoner(o, new SimpleConfiguration(), BufferingMode.BUFFERING);
-//                }
-//            };
-            }
-        } else {
-            LOG.log(Level.WARNING, "Reasoner factory not found.");
-        }
         try {
-            Properties p = new Properties();
+            final Properties p = new Properties();
             p.load(OWLDiffConfiguration.class.getResource("/owldiff.properties").openStream());
             VERSION = p.getProperty("version");
+            REASONER_FACTORY = p.getProperty("reasonerFactory", StructuralReasonerFactory.class.getName());
             resourceBundle = ResourceBundle.getBundle("core-translation");
+            initReasonerFactory();
         } catch (IOException e) {
             LOG.log(Level.SEVERE, "Error during loading properties", e);
         }
     }
+
+    private static void initReasonerFactory() {
+        try {
+            final Class<?> c = Class.forName(REASONER_FACTORY);
+            setReasonerProvider(new ReasonerProvider() {
+                final OWLReasonerFactory f =
+                    (OWLReasonerFactory) c.getDeclaredConstructor().newInstance();
+                public OWLReasoner getOWLReasoner(OWLOntology o) {
+                    return f.createReasoner(o, new SimpleConfiguration(
+                        new NullReasonerProgressMonitor(), FreshEntityPolicy.ALLOW, -1,
+                        IndividualNodeSetPolicy.BY_SAME_AS));
+                }
+            });
+            LOG.info("Reasoner factory successfully set to " + REASONER_FACTORY);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Reasoner factory not found.", e);
+        }
+    }
+
 
     public interface ReasonerProvider {
         OWLReasoner getOWLReasoner(final OWLOntology o);
     }
 
     public static void setReasonerProvider(final ReasonerProvider rp) {
-        p = rp;
+        reasonerProvider = rp;
     }
 
     public static boolean isReasonerAvailable() {
-        return p != null;
+        return reasonerProvider != null;
     }
 
     public static OWLReasoner getOWLReasoner(final OWLOntology o) {
-        return p.getOWLReasoner(o);
+        return reasonerProvider.getOWLReasoner(o);
     }
 
     public static String getVersion() {
