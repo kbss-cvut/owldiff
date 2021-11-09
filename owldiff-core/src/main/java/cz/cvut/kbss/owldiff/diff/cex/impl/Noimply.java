@@ -158,7 +158,12 @@ public class Noimply {
             OWLClassExpression d = factory.getOWLObjectSomeValuesFrom(role, inters);
             interset.add(d);
         }
-        allSigmaSuperClass = factory.getOWLObjectIntersectionOf(interset);
+
+        if ( interset.isEmpty() ) {
+            allSigmaSuperClass = factory.getOWLThing();
+        } else {
+            allSigmaSuperClass = factory.getOWLObjectIntersectionOf(interset);
+        }
         alpha = factory.getOWLSubClassOfAxiom(allSigmaClass, allSigmaSuperClass);
     }
 

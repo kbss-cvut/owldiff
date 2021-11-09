@@ -14,6 +14,7 @@
 package cz.cvut.kbss.owldiff.diff.cex.impl;
 
 import cz.cvut.kbss.owldiff.OWLDiffException;
+import java.util.stream.Collectors;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.HashSet;
@@ -41,16 +42,14 @@ public class AcyclicChecker implements OWLAxiomVisitor {
     }
 
     public void check() throws OWLDiffException {
-        for (OWLClass c : onto.getClassesInSignature()) {
-            if (onto.getAxioms(c).isEmpty()) {
-                defined.add(c);
-            }
-        }
+        onto.classesInSignature()
+            .filter( c -> onto.axioms(c).findAny().isEmpty())
+            .forEach(defined::add);
 
-        axioms = new HashSet<OWLAxiom>(onto.getAxioms());
-        axiomIter = axioms.iterator();
+        axioms = new HashSet<>(onto.axioms().collect(Collectors.toSet()));
         while (changed) {
             changed = false;
+            axiomIter = axioms.iterator();
             while (axiomIter.hasNext()) {
                 axiomIter.next().accept(this);
             }
