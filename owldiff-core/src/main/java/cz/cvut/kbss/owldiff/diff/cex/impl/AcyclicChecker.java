@@ -14,12 +14,20 @@
 package cz.cvut.kbss.owldiff.diff.cex.impl;
 
 import cz.cvut.kbss.owldiff.OWLDiffException;
-import java.util.stream.Collectors;
-import org.semanticweb.owlapi.model.*;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLAxiomVisitor;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLClassExpressionVisitor;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,23 +38,23 @@ import java.util.Set;
  */
 public class AcyclicChecker implements OWLAxiomVisitor {
 
-    private OWLOntology onto;
-    private Set<OWLAxiom> axioms;
+    private final OWLOntology onto;
     private Iterator<OWLAxiom> axiomIter;
-    private boolean changed = true;
-    private Set<OWLClass> defined;
+    private boolean changed;
+    private final Set<OWLClass> defined;
 
-    public AcyclicChecker(OWLOntology o) {
+    public AcyclicChecker(final OWLOntology o) {
         onto = o;
-        defined = new HashSet<OWLClass>();
+        defined = new HashSet<>();
+        changed = true;
     }
 
     public void check() throws OWLDiffException {
         onto.classesInSignature()
-            .filter( c -> onto.axioms(c).findAny().isEmpty())
+            .filter(c -> onto.axioms(c).findAny().isEmpty())
             .forEach(defined::add);
 
-        axioms = new HashSet<>(onto.axioms().collect(Collectors.toSet()));
+        Set<OWLAxiom> axioms = onto.axioms().collect(Collectors.toSet());
         while (changed) {
             changed = false;
             axiomIter = axioms.iterator();
@@ -55,19 +63,20 @@ public class AcyclicChecker implements OWLAxiomVisitor {
             }
         }
         if (!axioms.isEmpty()) {
-            throw new OWLDiffException(OWLDiffException.Reason.INCOMPATIBLE_ONTOLOGY, "Ontology " + onto.getOntologyID().getOntologyIRI() + " is not acyclic");
+            throw new OWLDiffException(OWLDiffException.Reason.INCOMPATIBLE_ONTOLOGY,
+                "Ontology " + onto.getOntologyID().getOntologyIRI() + " is not acyclic");
         }
     }
 
     @Override
-    public void visit(OWLSubClassOfAxiom axiom) {
+    public void visit(final OWLSubClassOfAxiom axiom) {
         process((OWLClass) axiom.getSubClass(), axiom.getSuperClass());
     }
 
     @Override
-    public void visit(OWLEquivalentClassesAxiom axiom) {
-        Iterator<OWLClassExpression> i = axiom.getClassExpressions().iterator();
-        OWLClassExpression e1 = i.next(), e2 = i.next();
+    public void visit(final OWLEquivalentClassesAxiom axiom) {
+        final Iterator<OWLClassExpression> i = axiom.classExpressions().iterator();
+        final OWLClassExpression e1 = i.next(), e2 = i.next();
         if (e1 instanceof OWLClass) {
             process((OWLClass) e1, e2);
         }
@@ -76,8 +85,8 @@ public class AcyclicChecker implements OWLAxiomVisitor {
         }
     }
 
-    private void process(OWLClass left, OWLClassExpression right) {
-        Set<OWLClass> rs = new ClassExpVisitor(right).getClasses();
+    private void process(final OWLClass left, final OWLClassExpression right) {
+        final Set<OWLClass> rs = new ClassExpVisitor(right).getClasses();
         if (defined.containsAll(rs)) {
             defined.add(left);
             changed = true;
@@ -85,72 +94,25 @@ public class AcyclicChecker implements OWLAxiomVisitor {
         }
     }
 
-    private class ClassExpVisitor implements OWLClassExpressionVisitor {
+    private static class ClassExpVisitor implements OWLClassExpressionVisitor {
 
-        private Set<OWLClass> classes;
+        private final Set<OWLClass> classes;
 
         public ClassExpVisitor(OWLClassExpression ex) {
-            classes = new HashSet<OWLClass>();
+            classes = new HashSet<>();
             ex.accept(this);
         }
 
-        public void visit(OWLClass owlClass) {
+        public void visit(final OWLClass owlClass) {
             classes.add(owlClass);
         }
 
-        public void visit(OWLObjectSomeValuesFrom owlObjectSomeValuesFrom) {
+        public void visit(final OWLObjectSomeValuesFrom owlObjectSomeValuesFrom) {
             owlObjectSomeValuesFrom.getFiller().accept(this);
         }
 
-        public void visit(OWLObjectIntersectionOf owlObjectIntersectionOf) {
-            for (OWLClassExpression e : owlObjectIntersectionOf.getOperands()) {
-                e.accept(this);
-            }
-        }
-
-        public void visit(OWLObjectUnionOf owlObjectUnionOf) {
-        }
-
-        public void visit(OWLObjectComplementOf owlObjectComplementOf) {
-        }
-
-        public void visit(OWLObjectAllValuesFrom owlObjectAllValuesFrom) {
-        }
-
-        public void visit(OWLObjectHasValue owlObjectHasValue) {
-        }
-
-        public void visit(OWLObjectMinCardinality owlObjectMinCardinality) {
-        }
-
-        public void visit(OWLObjectExactCardinality owlObjectExactCardinality) {
-        }
-
-        public void visit(OWLObjectMaxCardinality owlObjectMaxCardinality) {
-        }
-
-        public void visit(OWLObjectHasSelf owlObjectHasSelf) {
-        }
-
-        public void visit(OWLObjectOneOf owlObjectOneOf) {
-        }
-
-        public void visit(OWLDataSomeValuesFrom owlDataSomeValuesFrom) {
-        }
-
-        public void visit(OWLDataAllValuesFrom owlDataAllValuesFrom) {
-        }
-
-        public void visit(OWLDataHasValue owlDataHasValue) {
-        }
-
-        public void visit(OWLDataMinCardinality owlDataMinCardinality) {
-        }
-
-        public void visit(OWLDataExactCardinality owlDataExactCardinality) {
-        }
-
-        public void visit(OWLDataMaxCardinality owlDataMaxCardinality) {
+        public void visit(final OWLObjectIntersectionOf owlObjectIntersectionOf) {
+            owlObjectIntersectionOf.operands().forEach(operand -> operand.accept(this));
         }
 
         public Set<OWLClass> getClasses() {
