@@ -1,0 +1,29 @@
+{
+  "name": "owldiff-gui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OWLDiff-GUI",
+  "author": "Vévar, Lukáš",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/lab": "^5.0.0-alpha.63",
+    "@mui/material": "^5.2.6",
+    "@mui/styles": "^5.2.3",
+    "gatsby": "^4.4.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.5.4"
+  }
+}
