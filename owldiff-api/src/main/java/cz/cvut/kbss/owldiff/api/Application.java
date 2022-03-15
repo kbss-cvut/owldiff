@@ -1,4 +1,4 @@
-package cz.cvut.kbss;
+package cz.cvut.kbss.owldiff.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
