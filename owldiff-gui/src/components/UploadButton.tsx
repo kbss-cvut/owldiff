@@ -1,48 +1,37 @@
-import { Button, IconButton } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Button } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import * as React from 'react';
-import { uploadedOntology } from '../pages';
 
 interface UploadButtonProps{
     text: string,
-    type?: "original" | "updated",
-    parentUploadedFiles?: uploadedOntology[],
-    setParentUploadedFiles?: any,
+    parentUploadedFile: File,
+    setParentUploadedFile: (File) => void,
 }
 
-const useStyles = makeStyles({
-    input: {
-      display: 'none',
-    },
-});
-
 const UploadButton = (props: UploadButtonProps) => {
-    const [uploadedFile, setUploadedFile] = React.useState<File>(null);
-    const [isFileUploaded, setIsFileUploaded] = React.useState(false);
-    const classes = useStyles();
+    const [isFileUploaded, setIsFileUploaded] = React.useState(props.parentUploadedFile!=null);
 
 	const changeHandler = (event : React.ChangeEvent<HTMLInputElement>) => {
-		setUploadedFile(event.target.files[0]);
-        props.setParentUploadedFiles(parentUploadedFiles => [...parentUploadedFiles, {type:props.type, file:event.target.files[0]}]);
+        props.setParentUploadedFile(event.target.files[0]);
+        event.target.value = null;
 		setIsFileUploaded(true);
 	};
 
     React.useEffect(()=>{
-        if(props.parentUploadedFiles.length==0) setIsFileUploaded(false);
-    },[props.parentUploadedFiles])
+        if(props.parentUploadedFile==null) setIsFileUploaded(false);
+    },[props.parentUploadedFile])
 
     return (
         <div>
         <input
             accept=".owl"
-            className={classes.input}
+            style={{display: 'none'}}
             id={props.text}
             type="file"
             onChange={changeHandler}
         />
         <label htmlFor={props.text}>
-            {isFileUploaded? uploadedFile.name : 
+            {props.parentUploadedFile!=null ? props.parentUploadedFile.name :
             <Button variant="contained" component="span" startIcon={<UploadFileIcon/>}>
                 {props.text}
             </Button>}

@@ -13,8 +13,8 @@ public class NodeModelDto {
 
     private String explanations;
 
-    private boolean isCommon;
-    private boolean isInferred;
+    private boolean common;
+    private boolean inferred;
     private boolean useCex;
 
     private List<NodeModelDto> children;
@@ -38,14 +38,6 @@ public class NodeModelDto {
         this.id = id;
     }
 
-    public boolean isInferred() {
-        return isInferred;
-    }
-
-    public void setInferred(boolean inferred) {
-        isInferred = inferred;
-    }
-
     public String getData() {
         return data;
     }
@@ -63,11 +55,19 @@ public class NodeModelDto {
     }
 
     public boolean isCommon() {
-        return isCommon;
+        return common;
     }
 
     public void setCommon(boolean common) {
-        isCommon = common;
+        common = common;
+    }
+
+    public boolean isInferred() {
+        return inferred;
+    }
+
+    public void setInferred(boolean inferred) {
+        inferred = inferred;
     }
 
     public boolean isUseCex() {

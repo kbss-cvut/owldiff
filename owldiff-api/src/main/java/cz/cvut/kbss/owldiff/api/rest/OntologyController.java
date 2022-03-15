@@ -51,6 +51,7 @@ public class OntologyController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> uploadAndCompareOntologies(@RequestParam("originalFile") MultipartFile originalFile,
                                                              @RequestParam("updateFile") MultipartFile updateFile,
+                                                             @RequestParam(value = "sid",required = false) String sessionId,
                                                              @RequestParam(value = "diffType",required = false, defaultValue="SYNTACTIC") DiffView.DiffEnum diffType,
                                                              @RequestParam(value = "diffView",required = false, defaultValue="CLASSIFIED_FRAME_VIEW") DiffVisualization diffView,
                                                              @RequestParam(value = "syntax",required = false, defaultValue="MANCHESTER") SyntaxEnum syntax,
@@ -60,6 +61,10 @@ public class OntologyController {
 
         //TODO: Test on different ontologies.. test speed and session size
 
+        //If session already exist, use that one
+        if(sessionId!=null){
+            session = httpSessionConfig.getSessionById(sessionId);
+        }
         InputStream originalStream;
         InputStream updateStream;
         try {

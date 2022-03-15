@@ -91,6 +91,7 @@ public class OntologyService {
             case ENTAILMENT:
                 SyntacticDiffOutput syntacticOutput = null;
                 if(httpSession!=null){
+                    System.out.println("SESSION" + httpSession.getId());
                     syntacticOutput = (SyntacticDiffOutput) httpSession.getAttribute("syntacticDiffOutput");
                     ComparisonDto ontologies = (ComparisonDto) httpSession.getAttribute("ontologies");
                     OntologyDataDto originalOntologyDataDto = ontologies.getOriginal();
@@ -108,6 +109,7 @@ public class OntologyService {
                 treeModelUpdate.setInferred(entailmentDiff.getPossiblyRemove());
                 break;
             default:
+                System.out.println("SESSION" + httpSession.getId());
                 SyntacticDiffOutput defaultDiff = new SyntacticDiff(ontologyHandler).diff();
                 if(httpSession!=null){
                     httpSession.setAttribute("syntacticDiffOutput",defaultDiff);

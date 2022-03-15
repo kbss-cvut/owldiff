@@ -36,7 +36,7 @@ public class NodeModelDataParser implements NodeModelVisitor {
         nodeModelDto.setId(anm.hashCode());
         nodeModelDto.setData(b.toString());
         nodeModelDto.setCommon(anm.isCommon());
-        nodeModelDto.setInferred(anm.isInferred());
+       // nodeModelDto.setInferred(anm.isInferred());
     }
 
     @Override

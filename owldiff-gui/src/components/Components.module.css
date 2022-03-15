@@ -1,0 +1,11 @@
+.ontology_tree_view_item{
+    padding: 0 !important;
+}
+
+.ontology_tree_view_item_selected{
+    background-color: lightblue !important;
+}
+
+.button_selected{
+    background-color: lightblue !important;
+}
