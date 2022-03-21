@@ -8,7 +8,7 @@ export interface ComparisonDto{
 }
 
 export interface OntologyDataDto{
-    name: string,
+    ontologyName: string,
     data: NodeModelDto
 }
 
@@ -38,12 +38,12 @@ export interface ColorsSettings{
 }
 
 export enum OWLDocumentFormats{
-    OBO,
-    OWL,
-    TTL,
-    OWX,
-    OMN,
-    OFN
+    OBO = "OBO",
+    OWL = "OWL",
+    TTL = "TTL",
+    OWX = "OWX",
+    OMN = "OMN",
+    OFN = "OFN"
 }
 
 export const uploadOntologies = (original: File, update: File, { diffType, diffView, syntax, generateExplanation, sid} : ComparisonSettings) => {
@@ -83,7 +83,7 @@ export const mergeOntologies = (sid: string, filename: string, add: string[], re
             "Content-Type": "multipart/form-data",
         }}
     ).then(response => {
-        return response.data;
+        return response;
     }).catch(error => {
         throw(error);
     })

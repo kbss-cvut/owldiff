@@ -101,7 +101,7 @@ const Toolkit = (props: ToolkitProps) => {
 
     const settings2 : settingType[] = [
         {
-            text: 'Merge Selected',
+            text: 'Merge ontologies',
             onClick: () => {
                 props.onMerge();
             },

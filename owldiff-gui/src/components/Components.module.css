@@ -9,3 +9,16 @@
 .button_selected{
     background-color: lightblue !important;
 }
+
+.paper_flex{
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.dialog_buttons{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}

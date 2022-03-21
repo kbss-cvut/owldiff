@@ -15,7 +15,10 @@ import UploadButton from "../components/UploadButton";
 import OntologyTreeView from "../components/OntologyTreeView";
 import ClearIcon from '@mui/icons-material/Clear';
 import CloseIcon from '@mui/icons-material/Close';
-import {ComparisonDto, ComparisonSettings, uploadOntologies} from '../api/ontologyApi';
+import { ComparisonDto, ComparisonSettings, uploadOntologies } from '../api/ontologyApi';
+import { MergeDialog } from "../components/MergeDialog";
+// @ts-ignore
+import * as styles from "../components/Components.module.css";
 
 
 const IndexPage = () => {
@@ -26,8 +29,6 @@ const IndexPage = () => {
   const [error, setError] = useState<string>(null);
 
   const [expanded, setExpanded] = useState<string[]>([]);
-  const [toAddFromOriginal, setToAddFromOriginal] = useState<string[]>([]);
-  const [toDeleteFromUpdate, setToDeleteFromUpdate] = useState<string[]>([]);
   const [openMergeModal, setOpenMergeModal] = useState<boolean>(false);
   const [comparisonSettings, setComparisonSettings] = useState<ComparisonSettings>(
       {diffType: "SYNTACTIC",
@@ -71,41 +72,29 @@ const IndexPage = () => {
           Clear
         </Button>
       </div>
-      <div style={{display: "flex", flexFlow: "row", justifyContent: "flex-start", marginTop: 20}}>
+      <div className={styles.paper_flex}>
         {resultComparison!=null &&
           <>
             <Paper sx={{width:'45%', wordWrap:"break-word"}} elevation={24}>
-                {resultComparison.original.name}
                 <OntologyTreeView treeItems={resultComparison.original.data}
                                   expanded={expanded}
                                   setExpanded={setExpanded}
-                                  colorSettings={comparisonSettings.colors}
-                                  setSelected={setToAddFromOriginal}/>
+                                  colorSettings={comparisonSettings.colors}/>
             </Paper>
             <Paper sx={{width:'45%', wordWrap:"break-word", marginLeft: 2}} elevation={24}>
-                {resultComparison.update.name}
                 <OntologyTreeView treeItems={resultComparison.update.data}
                                   expanded={expanded}
                                   setExpanded={setExpanded}
-                                  colorSettings={comparisonSettings.colors}
-                                  setSelected={setToDeleteFromUpdate}/>
+                                  colorSettings={comparisonSettings.colors}/>
             </Paper>
           </>
         }
       </div>
 
-        {/*TODO: CREATE MERGE MODAL */}
-        <Dialog open={openMergeModal} onClose={()=>{setOpenMergeModal(false)}}>
-            <DialogTitle sx={{width: 500, display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                <h2>Merge ontologies</h2>
-                <IconButton onClick={()=>{setOpenMergeModal(false)}}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <span>Dialog Content</span>
-            </DialogContent>
-        </Dialog>
+        {resultComparison &&
+            <MergeDialog openMergeModal={openMergeModal} setOpenMergeModal={setOpenMergeModal}
+                         resultComparison={resultComparison} expanded={expanded}/>
+        }
     </Layout>
   )
 }

@@ -140,6 +140,7 @@ public class OntologyController {
         headers.set(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=" + fileName + "." + fileExtension);
         headers.setContentLength(outputStream.toByteArray().length);
+        headers.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
         return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
     }
 }
