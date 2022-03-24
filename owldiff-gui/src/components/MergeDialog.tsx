@@ -1,12 +1,22 @@
 // @ts-ignore
 import React, {useEffect, useState} from "react";
-import {Dialog, DialogContent, DialogTitle, IconButton, Paper, Typography, Button, Alert} from "@mui/material";
+import {
+    Alert,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogTitle, FormControl, FormHelperText,
+    IconButton, InputLabel, MenuItem,
+    Paper, Select,
+    TextField,
+    Typography
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {ComparisonDto, mergeOntologies, NodeModelDto, OWLDocumentFormats} from "../api/ontologyApi";
 import OntologyTreeView from "./OntologyTreeView";
 // @ts-ignore
 import * as styles from './Components.module.css';
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver';
 
 interface MergeDialogProps{
     openMergeModal: boolean;
@@ -18,6 +28,8 @@ interface MergeDialogProps{
 export const MergeDialog = (props: MergeDialogProps) => {
     const [toAddFromOriginal, setToAddFromOriginal] = useState<string[]>([]);
     const [toDeleteFromUpdate, setToDeleteFromUpdate] = useState<string[]>([]);
+    const [fileName, setFileName] = useState<string>(undefined);
+    const [format, setFormat] = useState<OWLDocumentFormats>(OWLDocumentFormats.OWL);
 
     const [error, setError] = useState<string>(null);
     const [expandedNew, setExpandedNew] = useState<string[]>(props.expanded);
@@ -26,13 +38,11 @@ export const MergeDialog = (props: MergeDialogProps) => {
     },[props.expanded])
 
     const handleMerge = () => {
-        mergeOntologies(props.resultComparison.sessionId, null, toAddFromOriginal, toDeleteFromUpdate, OWLDocumentFormats.OWL).then(res => {
+        mergeOntologies(props.resultComparison.sessionId, toAddFromOriginal, toDeleteFromUpdate, format, fileName).then(res => {
             let headerLine = res.headers['content-disposition'];
-            console.log(res)
             let startFileNameIndex = headerLine.indexOf('=') + 1
             let endFileNameIndex = headerLine.length
             let filename = headerLine.substring(startFileNameIndex, endFileNameIndex);
-            console.log(filename)
             saveAs(new Blob([res.data], {type: "text/plain;charset=utf-8"}),filename);
             props.setOpenMergeModal(false);
         }).catch(err =>{
@@ -114,6 +124,26 @@ export const MergeDialog = (props: MergeDialogProps) => {
                             </ul>
                         </Paper>
                     </div>
+                    <TextField
+                        variant={"outlined"}
+                        label={"Filename"}
+                        helperText={"Enter filename. Dont enter extension. Leave blank to use update ontology filename."}
+                        value={fileName}
+                        sx={{ marginTop: 2, marginRight: 2 }}
+                        onChange={(file) => setFileName(file.target.value)}
+                    />
+                    <FormControl sx={{marginTop: 2}}>
+                        <InputLabel>File format</InputLabel>
+                        <Select variant={"outlined"}
+                                label={"File format"}
+                                value={OWLDocumentFormats[format]}
+                                onChange={(e) => setFormat(e.target.value as OWLDocumentFormats)}>
+                            {Object.values(OWLDocumentFormats).map(value => { return (
+                                <MenuItem value={value} key={value}>{OWLDocumentFormats[value]}</MenuItem>
+                            )})}
+                        </Select>
+                        <FormHelperText>Select file format. Result will have its extension. Default is OWL</FormHelperText>
+                    </FormControl>
                     <div className={styles.dialog_buttons}>
                         <Button variant={"contained"} onClick={()=>setStep(1)}>Back</Button>
                         <Button variant={"contained"} onClick={handleMerge}>Merge</Button>

@@ -35,9 +35,20 @@ interface settingType{
 }
 
 const Toolkit = (props: ToolkitProps) => {
-    const [open, setOpen] = React.useState<boolean>(localStorage.getItem('toolOpen')==="true");
+    const [open, setOpen] = React.useState<boolean>(false);
+
+    useEffect(()=>{
+       setOpen(localStorage.getItem('toolOpen')==="true");
+    },[])
 
     const settings : settingType[] = [
+        {
+            text: props.comparisonSettings.showCommon==false ? 'Show common' : 'Hide common',
+            onClick: () => {
+                props.setComparisonSettings({...props.comparisonSettings, showCommon: !props.comparisonSettings.showCommon});
+            },
+            selected: props.comparisonSettings.showCommon==true
+        },
         {
             text: props.comparisonSettings.generateExplanation==false ? 'Show explanations' : 'Hide explanations',
             onClick: () => {
@@ -146,7 +157,7 @@ const Toolkit = (props: ToolkitProps) => {
     }
 
     return (
-        <div style={{width: 200}}>
+        <div className={styles.toolkit_button}>
             <IconButton
                 color="inherit"
                 aria-label="open drawer"

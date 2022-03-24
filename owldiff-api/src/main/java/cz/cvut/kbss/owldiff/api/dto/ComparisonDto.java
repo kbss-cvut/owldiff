@@ -10,6 +10,8 @@ public class ComparisonDto {
 
     private String sessionTimer;
 
+    private String guiUrl;
+
     public OntologyDataDto getOriginal() {
         return original;
     }
@@ -40,5 +42,13 @@ public class ComparisonDto {
 
     public void setSessionTimer(String sessionTimer) {
         this.sessionTimer = sessionTimer;
+    }
+
+    public String getGuiUrl() {
+        return guiUrl;
+    }
+
+    public void setGuiUrl(String guiUrl) {
+        this.guiUrl = guiUrl;
     }
 }

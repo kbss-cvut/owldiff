@@ -59,7 +59,7 @@ public class NodeModelDto {
     }
 
     public void setCommon(boolean common) {
-        common = common;
+        this.common = common;
     }
 
     public boolean isInferred() {
@@ -67,7 +67,7 @@ public class NodeModelDto {
     }
 
     public void setInferred(boolean inferred) {
-        inferred = inferred;
+        this.inferred = inferred;
     }
 
     public boolean isUseCex() {

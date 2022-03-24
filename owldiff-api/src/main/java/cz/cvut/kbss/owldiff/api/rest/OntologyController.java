@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@RequestMapping("/ontology")
+@RequestMapping("/api/ontology")
 @RestController
 public class OntologyController {
 
@@ -56,13 +56,14 @@ public class OntologyController {
                                                              @RequestParam(value = "diffView",required = false, defaultValue="CLASSIFIED_FRAME_VIEW") DiffVisualization diffView,
                                                              @RequestParam(value = "syntax",required = false, defaultValue="MANCHESTER") SyntaxEnum syntax,
                                                              @RequestParam(value = "generateExplanation",required = false, defaultValue="false") Boolean generateExplanation,
+                                                             @RequestParam(value = "showCommon",required = false, defaultValue="false") Boolean showCommon,
                                                              HttpSession session){
         //TODO: Add custom reasoner
 
         //TODO: Test on different ontologies.. test speed and session size
 
         //If session already exist, use that one
-        if(sessionId!=null){
+        if(sessionId!=null && httpSessionConfig.getSessionById(sessionId)!=null){
             session = httpSessionConfig.getSessionById(sessionId);
         }
         InputStream originalStream;
@@ -70,7 +71,7 @@ public class OntologyController {
         try {
             originalStream = originalFile.getInputStream();
             updateStream = updateFile.getInputStream();
-            String ontologyMapped = ontologyService.compareOntologies(originalStream, updateStream, diffType,diffView, syntax.getSyntax(), generateExplanation, session);
+            String ontologyMapped = ontologyService.compareOntologies(originalStream, updateStream, diffType,diffView, syntax.getSyntax(), generateExplanation, showCommon, session);
             //Save returning json string into session for /upload/{id} endpoint
             session.setAttribute("ontologiesMapped",ontologyMapped);
             //Save update fileName for merge ontology

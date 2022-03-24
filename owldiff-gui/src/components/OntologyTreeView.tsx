@@ -114,11 +114,11 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
                 <TreeItem
                     key={treeItemData.id}
                     sx={props.colorSettings ?
-                        treeItemData.isCommon ? {color: props.colorSettings.common} :
-                        treeItemData.isInferred ? {color: props.colorSettings.inferred} :
+                        treeItemData.common ? {color: props.colorSettings.common} :
+                        treeItemData.inferred ? {color: props.colorSettings.inferred} :
                         treeItemData.useCex ? {color: props.colorSettings.cex} :
-                        {color: 'black'}
-                        : {color: 'black'}}
+                        {color: 'green'}
+                        : undefined}
                     nodeId={treeItemData.id.toString()}
                     classes={{content: styles.ontology_tree_view_item,
                               selected: styles.ontology_tree_view_item_selected}}

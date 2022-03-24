@@ -40,6 +40,9 @@ public class OntologyService {
     @Value("${server.servlet.session.timeout}")
     String sessionTimerConfig;
 
+    @Value("${client.gui.url}")
+    String clientGuiUrl;
+
     private OWLOntologyManager originalOntologyManager;
     private OWLOntologyManager updateOntologyManager;
 
@@ -55,17 +58,30 @@ public class OntologyService {
                                            DiffVisualization view,
                                            Syntax syntax,
                                            Boolean generateExplanation,
+                                           Boolean showCommon,
                                            HttpSession httpSession
                                         ) throws OWLOntologyCreationException, JsonProcessingException, OWLDiffException {
-        OWLOntology originalOntology = originalOntologyManager.loadOntologyFromOntologyDocument(originalFile);
-        OWLOntology updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
+
+        OWLOntology originalOntology;
+        OWLOntology updateOntology;
+        try {
+            originalOntology = originalOntologyManager.loadOntologyFromOntologyDocument(originalFile);
+            updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
+        }catch (OWLOntologyAlreadyExistsException e){
+            originalOntologyManager.clearOntologies();
+            updateOntologyManager.clearOntologies();
+            originalOntology = originalOntologyManager.loadOntologyFromOntologyDocument(originalFile);
+            updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
+        }
+        OWLOntology finalOriginalOntology = originalOntology;
+        OWLOntology finalUpdateOntology = updateOntology;
 
         OntologyHandler ontologyHandler = new OntologyHandler() {
             public OWLOntology getOriginalOntology() {
-                return originalOntology;
+                return finalOriginalOntology;
             }
             public OWLOntology getUpdateOntology() {
-                return updateOntology;
+                return finalUpdateOntology;
             }
         };
 
@@ -123,14 +139,15 @@ public class OntologyService {
         //We are setting comparsion dto object, with tree models.
         ComparisonDto ontologiesComparison = new ComparisonDto();
         //TODO: Check expl manager
-        OntologyDataDto originalData = mapNodeTreeToOntology(treeModelOriginal, syntax, new BBOWLAPIExplanationManager(originalOntology), generateExplanation);
+        OntologyDataDto originalData = mapNodeTreeToOntology(treeModelOriginal, syntax, new BBOWLAPIExplanationManager(originalOntology), generateExplanation, showCommon);
         originalData.setOntology(originalOntology);
         originalData.setTreeModel(treeModelOriginal);
-        OntologyDataDto updateData = mapNodeTreeToOntology(treeModelUpdate, syntax, new BBOWLAPIExplanationManager(updateOntology), generateExplanation);
+        OntologyDataDto updateData = mapNodeTreeToOntology(treeModelUpdate, syntax, new BBOWLAPIExplanationManager(updateOntology), generateExplanation, showCommon);
         updateData.setOntology(updateOntology);
         updateData.setTreeModel(treeModelUpdate);
         ontologiesComparison.setOriginal(originalData);
         ontologiesComparison.setUpdate(updateData);
+        ontologiesComparison.setGuiUrl(clientGuiUrl + "/?sid=" + httpSession.getId());
         ontologiesComparison.setSessionId(httpSession.getId());
         ontologiesComparison.setSessionTimer(sessionTimerConfig);
         //Then set it into session
@@ -142,7 +159,7 @@ public class OntologyService {
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         return mapper.writeValueAsString(ontologiesComparison);
     }
-    private OntologyDataDto mapNodeTreeToOntology(OWLDiffTreeModel treeModel, Syntax syntax, ExplanationManager expl, Boolean generateExplanation){
+    private OntologyDataDto mapNodeTreeToOntology(OWLDiffTreeModel treeModel, Syntax syntax, ExplanationManager expl, Boolean generateExplanation, Boolean showCommon){
         OntologyDataDto ret = new OntologyDataDto();
         NodeModelDataParser parser = new NodeModelDataParser(syntax, expl);
         //TODO: Handle better just test
@@ -151,7 +168,7 @@ public class OntologyService {
         ret.setOntologyName(parser.getNodeModelDto().getData());
         NodeModelDto parentData = parser.getNodeModelDto();
         parser.setNodeModelDto(new NodeModelDto());
-        modelChildrenIntoJson(model, parentData, parser, true, generateExplanation);
+        modelChildrenIntoJson(model, parentData, parser, showCommon, generateExplanation);
         ret.setData(parentData);
         return ret;
     }
