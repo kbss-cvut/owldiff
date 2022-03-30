@@ -30,13 +30,13 @@ public class NodeModelDataParser implements NodeModelVisitor {
     public void visit(AxiomNodeModel anm) {
         final OWLAxiom ax = anm.getData();
         final StringBuilder b = new StringBuilder();
-        //TODO: Add parent
         b.append(syntax.writeAxiom(ax, false, null, true));
         nodeModelDto.setAxiom(ax);
         nodeModelDto.setId(anm.hashCode());
         nodeModelDto.setData(b.toString());
         nodeModelDto.setCommon(anm.isCommon());
-       // nodeModelDto.setInferred(anm.isInferred());
+        nodeModelDto.setIsAxiom(true);
+        nodeModelDto.setInferred(anm.isInferred());
     }
 
     @Override
@@ -97,13 +97,6 @@ public class NodeModelDataParser implements NodeModelVisitor {
         } else {
             return o.toString();
         }
-    }
-
-    private String getIriTooltip(NodeModel nm) {
-        if (nm.getObject() instanceof OWLEntity) {
-            //tooltip = ((OWLEntity) nm.getObject()).getIRI().toString();
-        }
-        return null;
     }
 
     private void setProperties(NodeModel nm) {

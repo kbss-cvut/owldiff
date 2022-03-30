@@ -1,4 +1,4 @@
-package cz.cvut.kbss.owldiff.api.util;
+package cz.cvut.kbss.owldiff.api.enums;
 
 import org.semanticweb.owlapi.formats.*;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;

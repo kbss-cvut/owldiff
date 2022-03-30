@@ -8,7 +8,7 @@ public class ComparisonDto {
 
     private String sessionId;
 
-    private String sessionTimer;
+    private Integer sessionTimer;
 
     private String guiUrl;
 
@@ -36,11 +36,11 @@ public class ComparisonDto {
         this.sessionId = sessionId;
     }
 
-    public String getSessionTimer() {
+    public Integer getSessionTimer() {
         return sessionTimer;
     }
 
-    public void setSessionTimer(String sessionTimer) {
+    public void setSessionTimer(Integer sessionTimer) {
         this.sessionTimer = sessionTimer;
     }
 

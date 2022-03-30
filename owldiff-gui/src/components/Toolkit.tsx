@@ -24,7 +24,8 @@ import * as styles from './Components.module.css';
 export interface ToolkitProps{
     comparisonSettings: ComparisonSettings,
     setComparisonSettings: (value: ComparisonSettings) => void,
-    onMerge: () => void
+    onMerge: () => void,
+    disabled?: boolean
 }
 
 interface settingType{
@@ -145,7 +146,7 @@ const Toolkit = (props: ToolkitProps) => {
                     <List component="div" disablePadding>
                     {parent.children && parent.children.map(child => {
                         return(
-                            <ListItemButton sx={{ pl: 4 }} key={child.text} onClick={child.onClick} selected={child.selected} classes={{selected: styles.button_selected}}>
+                            <ListItemButton disabled={props.disabled==true} sx={{ pl: 4 }} key={child.text} onClick={child.onClick} selected={child.selected} classes={{selected: styles.button_selected}}>
                                 <ListItemText primary={child.text}/>
                             </ListItemButton>
                         )
@@ -185,7 +186,7 @@ const Toolkit = (props: ToolkitProps) => {
                 <List>
                     {settings.map((setting, index) => (
                         setting.children ? renderSettingChildren(setting) :
-                        <ListItemButton key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
+                        <ListItemButton disabled={props.disabled==true} key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
                             <ListItemText primary={setting.text}/>
                         </ListItemButton>
                     ))}
@@ -194,11 +195,19 @@ const Toolkit = (props: ToolkitProps) => {
                 <List>
                     {settings2.map((setting, index) => (
                         setting.children ? renderSettingChildren(setting) :
-                            <ListItemButton key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
+                            <ListItemButton disabled={props.disabled==true} key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
                                 <ListItemText primary={setting.text}/>
                             </ListItemButton>
                     ))}
                 </List>
+                <Divider />
+                    <Box sx={{marginLeft:2, marginTop: 2}}>
+                        <Typography variant={"body1"}>Colors:</Typography>
+                        <Typography variant={"body1"}> - Common axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.common}}/>
+                        <Typography variant={"body1"}> - Different axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: 'green'}}/>
+                        <Typography variant={"body1"}> - Inferred axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.inferred}}/>
+                        <Typography variant={"body1"}> - CEX axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.cex}}/>
+                    </Box>
                 </Box>
             </Drawer>
         </div>

@@ -4,6 +4,7 @@
 
 .ontology_tree_view_item{
     padding: 0 !important;
+    word-break: break-all;
 }
 
 .ontology_tree_view_item_selected{
@@ -25,4 +26,11 @@
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
+}
+
+.flex_row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row;
 }

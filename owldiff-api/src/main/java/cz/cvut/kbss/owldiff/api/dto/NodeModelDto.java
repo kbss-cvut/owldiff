@@ -16,6 +16,7 @@ public class NodeModelDto {
     private boolean common;
     private boolean inferred;
     private boolean useCex;
+    private boolean isAxiom;
 
     private List<NodeModelDto> children;
 
@@ -40,6 +41,14 @@ public class NodeModelDto {
 
     public String getData() {
         return data;
+    }
+
+    public boolean isAxiom() {
+        return isAxiom;
+    }
+
+    public void setIsAxiom(boolean axiom) {
+        isAxiom = axiom;
     }
 
     public void setData(String data) {

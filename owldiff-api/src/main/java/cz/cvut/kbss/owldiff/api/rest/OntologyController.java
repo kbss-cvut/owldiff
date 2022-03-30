@@ -2,17 +2,11 @@ package cz.cvut.kbss.owldiff.api.rest;
 
 import cz.cvut.kbss.owldiff.OWLDiffException;
 import cz.cvut.kbss.owldiff.api.config.HttpSessionConfig;
-import cz.cvut.kbss.owldiff.api.dto.NodeModelDto;
-import cz.cvut.kbss.owldiff.api.dto.OntologyDataDto;
-import cz.cvut.kbss.owldiff.api.util.OWLDocumentFormatEnum;
-import cz.cvut.kbss.owldiff.change.SyntacticAxiomChange;
+import cz.cvut.kbss.owldiff.api.enums.OWLDocumentFormatEnum;
 import cz.cvut.kbss.owldiff.api.service.OntologyService;
-import cz.cvut.kbss.owldiff.syntax.ManchesterSyntax;
 import cz.cvut.kbss.owldiff.syntax.SyntaxEnum;
 import cz.cvut.kbss.owldiff.view.DiffView;
 import cz.cvut.kbss.owldiff.view.DiffVisualization;
-import net.minidev.json.JSONObject;
-import org.semanticweb.owlapi.formats.RDFJsonDocumentFormat;
 import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -23,20 +17,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @RequestMapping("/api/ontology")
 @RestController
@@ -58,10 +46,6 @@ public class OntologyController {
                                                              @RequestParam(value = "generateExplanation",required = false, defaultValue="false") Boolean generateExplanation,
                                                              @RequestParam(value = "showCommon",required = false, defaultValue="false") Boolean showCommon,
                                                              HttpSession session){
-        //TODO: Add custom reasoner
-
-        //TODO: Test on different ontologies.. test speed and session size
-
         //If session already exist, use that one
         if(sessionId!=null && httpSessionConfig.getSessionById(sessionId)!=null){
             session = httpSessionConfig.getSessionById(sessionId);
@@ -93,9 +77,7 @@ public class OntologyController {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Provided session was not found or is timeout");
         }
-        System.out.println("Session from saved ID = " + id);
         String ret = (String) session.getAttribute("ontologiesMapped");
-        //TODO: DOWNLOAD FILES MAYBE FOR MERGE???
         return new ResponseEntity<>(ret,HttpStatus.OK);
     }
 

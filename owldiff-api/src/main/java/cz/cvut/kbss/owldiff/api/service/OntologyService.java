@@ -10,6 +10,7 @@ import cz.cvut.kbss.owldiff.api.dto.ComparisonDto;
 import cz.cvut.kbss.owldiff.api.dto.NodeModelDto;
 import cz.cvut.kbss.owldiff.api.dto.OntologyDataDto;
 import cz.cvut.kbss.owldiff.api.util.NodeModelDataParser;
+import cz.cvut.kbss.owldiff.diff.OWLDiffConfiguration;
 import cz.cvut.kbss.owldiff.diff.cex.CEXDiff;
 import cz.cvut.kbss.owldiff.diff.cex.CEXDiffOutput;
 import cz.cvut.kbss.owldiff.diff.entailments.EntailmentsExplanationsDiff;
@@ -23,9 +24,11 @@ import cz.cvut.kbss.owldiff.view.DiffView;
 import cz.cvut.kbss.owldiff.view.DiffVisualization;
 import cz.cvut.kbss.owldiff.view.OWLDiffTreeModel;
 import cz.cvut.kbss.owldiff.view.nodes.NodeModel;
-import cz.cvut.kbss.owldiff.view.nodes.OntologyNodeModel;
+import openllet.owlapi.OWLHelper;
+import openllet.owlapi.OpenlletReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -38,18 +41,23 @@ import java.util.stream.IntStream;
 public class OntologyService {
 
     @Value("${server.servlet.session.timeout}")
-    String sessionTimerConfig;
+    Integer sessionTimerConfig;
 
     @Value("${client.gui.url}")
     String clientGuiUrl;
 
-    private OWLOntologyManager originalOntologyManager;
-    private OWLOntologyManager updateOntologyManager;
+    private final OWLOntologyManager originalOntologyManager;
+    private final OWLOntologyManager updateOntologyManager;
 
     public OntologyService(){
+        OWLDiffConfiguration.setReasonerProvider(new OWLDiffConfiguration.ReasonerProvider() {
+            public OWLReasoner getOWLReasoner(OWLOntology o) {
+                OWLHelper h = OWLHelper.createLightHelper(OpenlletReasonerFactory.getInstance().createReasoner(o));
+                return h.getReasoner();
+            }
+        });
         originalOntologyManager = OWLManager.createOWLOntologyManager();
         updateOntologyManager = OWLManager.createOWLOntologyManager();
-
     }
 
     public String compareOntologies(InputStream originalFile,
@@ -62,20 +70,27 @@ public class OntologyService {
                                            HttpSession httpSession
                                         ) throws OWLOntologyCreationException, JsonProcessingException, OWLDiffException {
 
-        OWLOntology originalOntology;
-        OWLOntology updateOntology;
+        //Get imported ontology because when using endpoint multiple times on same ontology causes errors
+        //TODO: Perhaps move to separate file
+        OWLOntology originalOntology = null;
+        OWLOntology updateOntology = null;
         try {
             originalOntology = originalOntologyManager.loadOntologyFromOntologyDocument(originalFile);
-            updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
-        }catch (OWLOntologyAlreadyExistsException e){
-            originalOntologyManager.clearOntologies();
-            updateOntologyManager.clearOntologies();
-            originalOntology = originalOntologyManager.loadOntologyFromOntologyDocument(originalFile);
-            updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
+        } catch(OWLOntologyAlreadyExistsException e){
+            OWLOntologyID originalID = e.getOntologyID();
+            originalOntology = originalOntologyManager.getOntology(originalID);
         }
-        OWLOntology finalOriginalOntology = originalOntology;
-        OWLOntology finalUpdateOntology = updateOntology;
 
+        try {
+            updateOntology = updateOntologyManager.loadOntologyFromOntologyDocument(updateFile);
+        } catch(OWLOntologyAlreadyExistsException e){
+            OWLOntologyID updateID = e.getOntologyID();
+            updateOntology = updateOntologyManager.getOntology(updateID);
+        }
+
+        //Create handler for owldiff diffing classes
+        OWLOntology finalUpdateOntology = updateOntology;
+        OWLOntology finalOriginalOntology = originalOntology;
         OntologyHandler ontologyHandler = new OntologyHandler() {
             public OWLOntology getOriginalOntology() {
                 return finalOriginalOntology;
@@ -85,84 +100,79 @@ public class OntologyService {
             }
         };
 
+        //Prepare owldiff treeModels before running comparison
         OWLDiffTreeModel treeModelOriginal = null;
         OWLDiffTreeModel treeModelUpdate = null;
-        //Comparison switcher
+        ComparisonDto ontologies = (ComparisonDto) httpSession.getAttribute("ontologies");
+        //Generate treeModels according to selected diff
         switch (diff) {
-            case CEX:
+            case CEX -> {
+                //Check if syntactic diff was already run
+                if (ontologies == null) {
+                    throw new OWLDiffException(OWLDiffException.Reason.INTERNAL_ERROR, "You need to run syntactic diff first");
+                }
                 CEXDiffOutput cexDiffOutput = new CEXDiff(ontologyHandler).diff();
-                if(httpSession!=null){
-                    ComparisonDto ontologies = (ComparisonDto) httpSession.getAttribute("ontologies");
-                    if(ontologies==null){
-                        throw new OWLDiffException(OWLDiffException.Reason.INTERNAL_ERROR, "You need to run syntactic diff first");
-                    }
-                    OntologyDataDto originalOntologyDataDto = ontologies.getOriginal();
-                    OntologyDataDto updateOntologyDataDto = ontologies.getUpdate();
-                    treeModelOriginal = originalOntologyDataDto.getTreeModel();
-                    treeModelUpdate = updateOntologyDataDto.getTreeModel();
-                    treeModelOriginal.setCEXDiff(cexDiffOutput.getOriginalDiffR(), cexDiffOutput.getOriginalDiffL());
-                    treeModelUpdate.setCEXDiff(cexDiffOutput.getUpdateDiffR(), cexDiffOutput.getUpdateDiffL());
-                }
-                break;
-            case ENTAILMENT:
-                SyntacticDiffOutput syntacticOutput = null;
-                if(httpSession!=null){
-                    System.out.println("SESSION" + httpSession.getId());
-                    syntacticOutput = (SyntacticDiffOutput) httpSession.getAttribute("syntacticDiffOutput");
-                    ComparisonDto ontologies = (ComparisonDto) httpSession.getAttribute("ontologies");
-                    OntologyDataDto originalOntologyDataDto = ontologies.getOriginal();
-                    OntologyDataDto updateOntologyDataDto = ontologies.getUpdate();
-                    treeModelOriginal = originalOntologyDataDto.getTreeModel();
-                    treeModelUpdate = updateOntologyDataDto.getTreeModel();
-                }
-                if(syntacticOutput == null){
+                treeModelOriginal = ontologies.getOriginal().getTreeModel();
+                treeModelUpdate = ontologies.getUpdate().getTreeModel();
+                treeModelOriginal.setCEXDiff(cexDiffOutput.getOriginalDiffR(), cexDiffOutput.getOriginalDiffL());
+                treeModelUpdate.setCEXDiff(cexDiffOutput.getUpdateDiffR(), cexDiffOutput.getUpdateDiffL());
+            }
+            case ENTAILMENT -> {
+                SyntacticDiffOutput syntacticOutput = (SyntacticDiffOutput) httpSession.getAttribute("syntacticDiffOutput");
+                if (syntacticOutput == null || ontologies == null) {
                     syntacticOutput = new SyntacticDiff(ontologyHandler).diff();
                     treeModelOriginal = new OWLDiffTreeModel(view, syntacticOutput.getInOriginal(), originalOntology);
                     treeModelUpdate = new OWLDiffTreeModel(view, syntacticOutput.getInUpdate(), updateOntology);
+                } else {
+                    treeModelOriginal = ontologies.getOriginal().getTreeModel();
+                    treeModelUpdate = ontologies.getUpdate().getTreeModel();
                 }
-                EntailmentsExplanationsDiffOutput entailmentDiff = new EntailmentsExplanationsDiff(ontologyHandler, null ,syntacticOutput).diff();
+                EntailmentsExplanationsDiffOutput entailmentDiff = new EntailmentsExplanationsDiff(ontologyHandler, null, syntacticOutput).diff();
                 treeModelOriginal.setInferred(entailmentDiff.getInferred());
                 treeModelUpdate.setInferred(entailmentDiff.getPossiblyRemove());
-                break;
-            default:
-                System.out.println("SESSION" + httpSession.getId());
+            }
+            default -> {
+                //basically case SYNTACTIC
                 SyntacticDiffOutput defaultDiff = new SyntacticDiff(ontologyHandler).diff();
-                if(httpSession!=null){
-                    httpSession.setAttribute("syntacticDiffOutput",defaultDiff);
-                }
+                httpSession.setAttribute("syntacticDiffOutput", defaultDiff);
                 treeModelOriginal = new OWLDiffTreeModel(view, defaultDiff.getInOriginal(), originalOntology);
                 treeModelUpdate = new OWLDiffTreeModel(view, defaultDiff.getInUpdate(), updateOntology);
-                break;
+            }
         }
 
 
-        //We are setting comparsion dto object, with tree models.
-        ComparisonDto ontologiesComparison = new ComparisonDto();
-        //TODO: Check expl manager
+
+        //Map original TreeModel into OntologyDataDto object, which is jsonable
         OntologyDataDto originalData = mapNodeTreeToOntology(treeModelOriginal, syntax, new BBOWLAPIExplanationManager(originalOntology), generateExplanation, showCommon);
         originalData.setOntology(originalOntology);
         originalData.setTreeModel(treeModelOriginal);
+
+        //Map update TreeModel into OntologyDataDto object, which is jsonable
         OntologyDataDto updateData = mapNodeTreeToOntology(treeModelUpdate, syntax, new BBOWLAPIExplanationManager(updateOntology), generateExplanation, showCommon);
         updateData.setOntology(updateOntology);
         updateData.setTreeModel(treeModelUpdate);
+
+        //Now set all attributes to finishing ComparisonDto object
+        ComparisonDto ontologiesComparison = new ComparisonDto();
         ontologiesComparison.setOriginal(originalData);
         ontologiesComparison.setUpdate(updateData);
         ontologiesComparison.setGuiUrl(clientGuiUrl + "/?sid=" + httpSession.getId());
         ontologiesComparison.setSessionId(httpSession.getId());
         ontologiesComparison.setSessionTimer(sessionTimerConfig);
+
         //Then set it into session
-        if(httpSession!=null){
-            httpSession.setAttribute("ontologies",ontologiesComparison);
-        }
+        httpSession.setAttribute("ontologies",ontologiesComparison);
+
         //Return comparison dto object as json string for controller
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         return mapper.writeValueAsString(ontologiesComparison);
     }
+
+    //Helper function returning ontologyDataDto with mapped treeModel
     private OntologyDataDto mapNodeTreeToOntology(OWLDiffTreeModel treeModel, Syntax syntax, ExplanationManager expl, Boolean generateExplanation, Boolean showCommon){
         OntologyDataDto ret = new OntologyDataDto();
         NodeModelDataParser parser = new NodeModelDataParser(syntax, expl);
-        //TODO: Handle better just test
         NodeModel model = (NodeModel) treeModel.getRoot();
         model.accept(parser);
         ret.setOntologyName(parser.getNodeModelDto().getData());
@@ -173,6 +183,7 @@ public class OntologyService {
         return ret;
     }
 
+    //Recursive function for mapping all children
     private void modelChildrenIntoJson(NodeModel nodeModel, NodeModelDto parent, NodeModelDataParser parser, Boolean showCommon, Boolean generateExplanation){
         if(nodeModel.getCount(showCommon)!=0){
             for(int i = 0; i < nodeModel.getCount(showCommon); i++){
@@ -192,24 +203,22 @@ public class OntologyService {
         }
     }
 
-    public OWLOntology mergeOntologies(OWLOntology originalOWL, OWLOntology updateOWL, int[] toAdd, int[] toDelete){
-        //TODO: Do we want merge ontologies from existing file?
-        return null;
-    }
-
     public OWLOntology mergeOntologies(HttpSession session, int[] toAdd, int[] toDelete){
+        //Get ontologies from session
         ComparisonDto ontologies = (ComparisonDto) session.getAttribute("ontologies");
         OntologyDataDto originalOntologyDataDto = ontologies.getOriginal();
         OntologyDataDto updateOntologyDataDto = ontologies.getUpdate();
 
         OWLOntology updateOntology = updateOntologyDataDto.getOntology();
 
+        //Add or remove axioms from update
         updateOntology.addAxioms(axiomsFromNodeModel(originalOntologyDataDto.getData(),new HashSet<OWLAxiom>(),toAdd));
         updateOntology.removeAxioms(axiomsFromNodeModel(updateOntologyDataDto.getData(),new HashSet<OWLAxiom>(),toDelete));
 
         return updateOntology;
     }
 
+    //Helper recursive function for merge to get axioms from saved treeModel
     private Set<OWLAxiom> axiomsFromNodeModel(NodeModelDto data, Set<OWLAxiom> axioms, int[] values){
         OWLAxiom axiom = data.getAxiom();
         if(axiom!=null){

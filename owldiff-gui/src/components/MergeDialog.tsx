@@ -20,6 +20,7 @@ import {saveAs} from 'file-saver';
 
 interface MergeDialogProps{
     openMergeModal: boolean;
+    sessionTimer: number;
     setOpenMergeModal: (value: boolean) => void;
     resultComparison: ComparisonDto;
     expanded: string[],
@@ -32,18 +33,21 @@ export const MergeDialog = (props: MergeDialogProps) => {
     const [format, setFormat] = useState<OWLDocumentFormats>(OWLDocumentFormats.OWL);
 
     const [error, setError] = useState<string>(null);
+    const [mergeLoading, setMergeLoading] = useState<boolean>(false);
     const [expandedNew, setExpandedNew] = useState<string[]>(props.expanded);
     useEffect(()=>{
         setExpandedNew(props.expanded)
     },[props.expanded])
 
     const handleMerge = () => {
+        setMergeLoading(true);
         mergeOntologies(props.resultComparison.sessionId, toAddFromOriginal, toDeleteFromUpdate, format, fileName).then(res => {
             let headerLine = res.headers['content-disposition'];
             let startFileNameIndex = headerLine.indexOf('=') + 1
             let endFileNameIndex = headerLine.length
             let filename = headerLine.substring(startFileNameIndex, endFileNameIndex);
             saveAs(new Blob([res.data], {type: "text/plain;charset=utf-8"}),filename);
+            setMergeLoading(false);
             props.setOpenMergeModal(false);
         }).catch(err =>{
             setError(err.response.data.message);
@@ -70,9 +74,12 @@ export const MergeDialog = (props: MergeDialogProps) => {
         <Dialog fullWidth maxWidth={"lg"} open={props.openMergeModal} onClose={()=>{props.setOpenMergeModal(false)}}>
             <DialogTitle sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 Merge ontologies
-                <IconButton onClick={()=>{props.setOpenMergeModal(false)}}>
-                    <CloseIcon />
-                </IconButton>
+                <div className={styles.flex_row}>
+                    <Typography>Session time left: {props.sessionTimer/1000} seconds</Typography>
+                    <IconButton onClick={()=>{props.setOpenMergeModal(false)}}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
             </DialogTitle>
             {error && <Alert sx={{margin: 4, width: 500, marginLeft: '30%'}} severity="error">{error}</Alert>}
             {step==1 &&
@@ -146,7 +153,7 @@ export const MergeDialog = (props: MergeDialogProps) => {
                     </FormControl>
                     <div className={styles.dialog_buttons}>
                         <Button variant={"contained"} onClick={()=>setStep(1)}>Back</Button>
-                        <Button variant={"contained"} onClick={handleMerge}>Merge</Button>
+                        <Button variant={"contained"} onClick={handleMerge} disabled={mergeLoading}>Merge</Button>
                     </div>
                 </DialogContent>
             }

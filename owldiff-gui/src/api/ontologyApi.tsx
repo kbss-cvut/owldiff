@@ -4,7 +4,7 @@ export interface ComparisonDto{
     original: OntologyDataDto,
     update: OntologyDataDto,
     sessionId: string,
-    sessionTimer: string
+    sessionTimer: number
 }
 
 export interface OntologyDataDto{
@@ -18,6 +18,7 @@ export interface NodeModelDto{
     explanations: string,
     common: boolean,
     inferred: boolean,
+    isAxiom: boolean,
     useCex: boolean,
     children: NodeModelDto[]
 }
@@ -57,12 +58,12 @@ export const uploadOntologies = (original: File, update: File, { diffType, diffV
     if(sid) formData.append("sid",sid);
     formData.append("generateExplanation",generateExplanation.toString())
     formData.append("showCommon",showCommon.toString())
-    return APIKit.post<ComparisonDto>("/ontology/upload", formData, {
+    return APIKit.post("/ontology/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         }}
     )
-    .then(response => {
+    .then<ComparisonDto>(response => {
         return response.data;
     }).catch(error => {
         throw(error);
@@ -70,7 +71,7 @@ export const uploadOntologies = (original: File, update: File, { diffType, diffV
 }
 
 export const getComparisonResult = (sid: string) => {
-    return APIKit.get<ComparisonDto>("/ontology/upload/" + sid).then(response => {
+    return APIKit.get("/ontology/upload/" + sid).then<ComparisonDto>(response => {
         return response.data;
     }).catch(error => {
         throw(error);

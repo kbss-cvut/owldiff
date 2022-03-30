@@ -6,7 +6,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // @ts-ignore
 import * as styles from './Components.module.css';
-import {Checkbox, Tooltip, FormControlLabel} from "@mui/material";
+import {Checkbox, Tooltip, FormControlLabel, Typography} from "@mui/material";
 
 interface OntologyTreeViewProps{
     treeItems: NodeModelDto,
@@ -31,45 +31,10 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
         }
     }
 
-    const getChildById = (treeItemParent: NodeModelDto, id: string) => {
-        let array: string[] = [];
-
-        const getAllChild = (treeItem: NodeModelDto | null) => {
-            if (treeItem === null) return [];
-            array.push(treeItem.id.toString());
-            if (Array.isArray(treeItem.children)) {
-                treeItem.children.forEach((node) => {
-                    array = [...array, ...getAllChild(node)];
-                    array = array.filter((v, i) => array.indexOf(v) === i);
-                });
-            }
-            return array;
-        }
-
-        const getNodeById = (treeItem: NodeModelDto, id: string) => {
-            if (treeItem.id.toString() === id) {
-                return treeItem;
-            } else if (Array.isArray(treeItem.children)) {
-                let result = null;
-                treeItem.children.forEach((node) => {
-                    if (!!getNodeById(node, id)) {
-                        result = getNodeById(node, id);
-                    }
-                });
-                return result;
-            }
-
-            return null;
-        }
-
-        return getAllChild(getNodeById(treeItemParent, id));
-    }
-
-    const getOnChange = (checked: boolean, treeItem: NodeModelDto) => {
-        const allNode: string[] = getChildById(props.treeItems, treeItem.id.toString());
+    function getOnChange(checked: boolean, treeItem: NodeModelDto) {
         let array = checked
-            ? [...props.selected, ...allNode]
-            : props.selected.filter((value) => !allNode.includes(value));
+            ? [...props.selected, treeItem.id.toString()]
+            : props.selected.filter((value) => value != treeItem.id.toString());
 
         props.setSelected(array);
     }
@@ -77,13 +42,15 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
     const getCheckboxLabel = (treeItem: NodeModelDto) => {
         return(
             <FormControlLabel
+                sx={{ alignItems: 'flex-start' }}
                 control={
                     <Checkbox
+                        sx={{ paddingTop: 0}}
                         checked={props.selected.some((item) => item === treeItem.id.toString())}
                         onChange={(event) =>
-                            getOnChange(event.currentTarget.checked, treeItem)
+                            getOnChange(event.target.checked, treeItem)
                         }
-                        //onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()}
                     />
                 }
                 label={treeItem.explanations ?
@@ -114,21 +81,23 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
                 <TreeItem
                     key={treeItemData.id}
                     sx={props.colorSettings ?
-                        treeItemData.common ? {color: props.colorSettings.common} :
-                        treeItemData.inferred ? {color: props.colorSettings.inferred} :
                         treeItemData.useCex ? {color: props.colorSettings.cex} :
+                        treeItemData.inferred ? {color: props.colorSettings.inferred} :
+                        treeItemData.common ? {color: props.colorSettings.common} :
                         {color: 'green'}
                         : undefined}
                     nodeId={treeItemData.id.toString()}
                     classes={{content: styles.ontology_tree_view_item,
                               selected: styles.ontology_tree_view_item_selected}}
                     label={
-                        props.setSelected != null ?
-                            getCheckboxLabel(treeItemData)
-                            :
-                        treeItemData.explanations ?
-                        getExplanationsLabel(treeItemData.explanations, treeItemData.data)
-                        : <div dangerouslySetInnerHTML={{__html: treeItemData.data}}/>
+                        props.setSelected != undefined ?
+                            (treeItemData.isAxiom == true && treeItemData.common == false)
+                                ? getCheckboxLabel(treeItemData)
+                                : <div dangerouslySetInnerHTML={{__html: treeItemData.data}}/>
+                        :
+                            treeItemData.explanations
+                                ? getExplanationsLabel(treeItemData.explanations, treeItemData.data)
+                                : <div dangerouslySetInnerHTML={{__html: treeItemData.data}}/>
                     }
                     children={children}
                 />
@@ -143,11 +112,12 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
                 defaultCollapseIcon={<ExpandLessIcon />}
                 defaultExpandIcon={<ExpandMoreIcon />}
                 expanded={props.expanded}
-                multiSelect={props.setSelected != null}
+                disableSelection={true}
+                selected={props.selected}
                 onNodeToggle={props.setSelected ? handleExpandedCheckbox : handleExpanded}
-                onNodeSelect={props.setSelected != null ? (node, ids)=>{props.setSelected(ids)} : undefined}
+                onNodeSelect={props.setSelected != undefined ? (node, ids)=>{props.setSelected(ids)} : undefined}
             >
-                {getTreeItemsFromData(props.treeItems.children)}
+                {props.treeItems.children!=null ? getTreeItemsFromData(props.treeItems.children) : <Typography sx={{fontWeight: 'bold'}}>No axioms to display</Typography>}
             </TreeView>
         </>
     )
