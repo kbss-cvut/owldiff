@@ -56,8 +56,8 @@ public class OntologyService {
                 return h.getReasoner();
             }
         });
-        originalOntologyManager = OWLManager.createOWLOntologyManager();
-        updateOntologyManager = OWLManager.createOWLOntologyManager();
+        originalOntologyManager = OWLManager.createConcurrentOWLOntologyManager();
+        updateOntologyManager = OWLManager.createConcurrentOWLOntologyManager();
     }
 
     public String compareOntologies(InputStream originalFile,

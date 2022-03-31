@@ -24,7 +24,7 @@ const UploadButton = (props: UploadButtonProps) => {
     return (
         <div>
         <input
-            accept=".owl"
+            accept=".owl, .obo, .ttl, .owx, .omn, .ofn"
             style={{display: 'none'}}
             id={props.text}
             type="file"
