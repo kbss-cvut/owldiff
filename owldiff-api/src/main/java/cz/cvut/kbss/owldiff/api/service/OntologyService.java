@@ -71,7 +71,7 @@ public class OntologyService {
                                         ) throws OWLOntologyCreationException, JsonProcessingException, OWLDiffException {
 
         //Get imported ontology because when using endpoint multiple times on same ontology causes errors
-        //TODO: Perhaps move to separate file
+        //TODO: Perhaps move functions and parts to separate file
         OWLOntology originalOntology = null;
         OWLOntology updateOntology = null;
         try {

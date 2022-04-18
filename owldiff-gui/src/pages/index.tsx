@@ -50,6 +50,7 @@ const IndexPage = () => {
               setLoading(true);
               getComparisonResult(curSid).then(res => {
                   setResultComparison(res);
+                  setExpanded([])
                   start(res.sessionTimer * 1000)
                   setLoading(false);
               }).catch(err =>{
@@ -68,6 +69,7 @@ const IndexPage = () => {
       setLoading(true);
       uploadOntologies(originalOntology,updateOntology,comparisonSettings).then(res =>{
         setResultComparison(res);
+        setExpanded([]);
         start(res.sessionTimer * 1000)
         setLoading(false);
         localStorage.setItem('sid',res.sessionId);
