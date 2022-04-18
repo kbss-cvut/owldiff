@@ -21,6 +21,7 @@ interface OntologyTreeViewProps{
 
 const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getCheckboxLabel, getExplanationsLabel, layer: number, index: number, paddings, setPaddings) => {
     const currentRef = React.useRef();
+    const innerRef = React.useRef();
 
     const handleThings = (heigth: number) => {
         //console.log(layer, heigth)
@@ -37,19 +38,40 @@ const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getChec
     }
 
     React.useEffect(() => {
-        if(currentRef.current){
+        if(currentRef.current && innerRef.current){
             // @ts-ignore
             //console.log(currentRef.current)
-            handleThings(currentRef.current?.clientHeight)
+            if(currentRef.current?.clientHeight < innerRef.current?.clientHeight){
+                // @ts-ignore
+                handleThings(currentRef.current?.clientHeight)
+            }else{
+                // @ts-ignore
+                handleThings(innerRef.current?.clientHeight)
+            }
+
         }else{
+            console.log(currentRef.current)
             handleThings(0)
         }
     },[currentRef.current])
+
+
+    const measuredRef = React.useCallback(node => {
+        if (node !== null) {
+            //console.log(node.getBoundingClientRect().height);
+            handleThings(node.getBoundingClientRect().height)
+        }else{
+            //console.log(node)
+            handleThings(0)
+        }
+    }, []);
+
     return  <List
         height={700-layer*100}
         width={'100%'}
         outerRef={currentRef}
-        style={layer==1 && {overflow: 'hidden'}}
+        innerRef={innerRef}
+        //style={layer==1 && {overflow: 'hidden'}}
         itemData={{
             items: treeItems,
             usedIds: usedIds,
@@ -85,7 +107,7 @@ const treeItemRender = React.memo( ({ data, index, style }) => {
 
     const currentPadding = React.useRef(0);
     const handleThings = () => {
-        //console.log("layer" + layer, "index" + index, paddings)
+        console.log("layer" + layer, "index" + index, paddings)
         let total = 0
         paddings.forEach(pad => {
             if(pad.curLayer>layer && pad.curIndex<index){
@@ -129,13 +151,13 @@ const treeItemRender = React.memo( ({ data, index, style }) => {
 
 const OntologyTreeView = (props: OntologyTreeViewProps) => {
 
-    const [selectedAll, setSelectedAll] = React.useState<boolean>(false);
+
     const [paddings, setPaddings] = React.useState([])
     let usedIds: number[] = [];
     let allPossibleAxioms: string[] = [];
 
     const searchAxiom = (node: NodeModelDto) => {
-        if(node.isAxiom){
+        if(node.isAxiom && !node.common){
             allPossibleAxioms.push(node.id.toString())
         }
         if(node.children && node.children.length > 0){
@@ -143,6 +165,7 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
         }
     }
     searchAxiom(props.treeItems);
+    const [selectedAll, setSelectedAll] = React.useState<boolean>(props.selected ? allPossibleAxioms.length==props.selected.length : false);
 
     React.useEffect(()=>{
         if(props.setSelected){

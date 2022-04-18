@@ -35,9 +35,12 @@ export const MergeDialog = (props: MergeDialogProps) => {
     const [error, setError] = useState<string>(null);
     const [mergeLoading, setMergeLoading] = useState<boolean>(false);
     const [expandedNew, setExpandedNew] = useState<string[]>(props.expanded);
+    const [step, setStep] = useState<number>(1);
     useEffect(()=>{
-        setExpandedNew(props.expanded)
-    },[props.expanded])
+        if(step==1){
+            setExpandedNew(props.expanded)
+        }
+    },[props.expanded, step])
 
     const handleMerge = () => {
         setMergeLoading(true);
@@ -67,8 +70,6 @@ export const MergeDialog = (props: MergeDialogProps) => {
             }
         }
     }
-
-    const [step, setStep] = useState<number>(1);
 
     return(
         <Dialog fullWidth maxWidth={"lg"} open={props.openMergeModal} onClose={()=>{props.setOpenMergeModal(false)}}>
