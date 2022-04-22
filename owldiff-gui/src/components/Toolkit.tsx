@@ -19,6 +19,7 @@ import {ComparisonSettings} from "../api/ontologyApi";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 // @ts-ignore
 import * as styles from './Components.module.css';
+import {ConfirmDialog} from "./ConfirmDialog";
 
 
 export interface ToolkitProps{
@@ -37,6 +38,9 @@ interface settingType{
 
 const Toolkit = (props: ToolkitProps) => {
     const [open, setOpen] = React.useState<boolean>(false);
+
+    const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+    const [modalFunc, setModalFunc] = React.useState<any>(null);
 
     useEffect(()=>{
        setOpen(localStorage.getItem('toolOpen')==="true");
@@ -96,14 +100,16 @@ const Toolkit = (props: ToolkitProps) => {
                 {
                     text: 'Classified frame view',
                     onClick: () => {
-                        props.setComparisonSettings({...props.comparisonSettings, diffView: "CLASSIFIED_FRAME_VIEW"});
+                        setModalFunc(() => () => { props.setComparisonSettings({...props.comparisonSettings, diffView: "CLASSIFIED_FRAME_VIEW"}); setModalOpen(false)})
+                        setModalOpen(true)
                     },
                     selected: props.comparisonSettings.diffView=="CLASSIFIED_FRAME_VIEW"
                 },
                 {
                     text: 'Simple frame view',
                     onClick: () => {
-                        props.setComparisonSettings({...props.comparisonSettings, diffView: "SIMPLE_FRAME_VIEW"});
+                        setModalFunc(() => () => { props.setComparisonSettings({...props.comparisonSettings, diffView: "SIMPLE_FRAME_VIEW"}); setModalOpen(false)})
+                        setModalOpen(true)
                     },
                     selected: props.comparisonSettings.diffView=="SIMPLE_FRAME_VIEW"
                 }
@@ -210,6 +216,7 @@ const Toolkit = (props: ToolkitProps) => {
                     </Box>
                 </Box>
             </Drawer>
+            <ConfirmDialog open={modalOpen} onClose={() => setModalOpen(false)} onAgree={modalFunc} />
         </div>
     )
 }

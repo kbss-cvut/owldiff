@@ -4,7 +4,9 @@ import {
     Button,
     Paper,
     Alert,
-    CircularProgress
+    CircularProgress,
+    FormHelperText,
+    Box
 } from "@mui/material";
 import Layout from "../components/Layout";
 import Toolkit from "../components/Toolkit";
@@ -98,12 +100,18 @@ const IndexPage = () => {
 
   return (
     <Layout pageTitle="OWLDiff">
-      <Toolkit comparisonSettings={comparisonSettings} setComparisonSettings={setComparisonSettings} onMerge={onMerge} disabled={loading}/>
+      <Toolkit comparisonSettings={comparisonSettings} setComparisonSettings={setComparisonSettings} onMerge={onMerge} disabled={loading || resultComparison == null}/>
       {error && <Alert sx={{margin: 4, width: 500, marginLeft: '30%'}} severity="error">{error}</Alert>}
       <div className={styles.buttons_div}>
-        <UploadButton setParentUploadedFile={setOriginalOntology} parentUploadedFile={originalOntology} text="Upload original ontology"/>
-        <UploadButton setParentUploadedFile={setUpdateOntology} parentUploadedFile={updateOntology} text="Upload updated ontology"/>
-        <Button sx={{minWidth: 'inherit'}} variant="contained" component="span" startIcon={<ClearIcon/>} onClick={clearOntologies}>
+        <Box sx={{display: 'flex', flexFlow: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <UploadButton setParentUploadedFile={setOriginalOntology} parentUploadedFile={originalOntology} text="Upload original ontology"/>
+            {resultComparison==null && <FormHelperText>Ontology must be a file type of<br/> .owl, .obo, .ttl, .owx, .omn, .ofn</FormHelperText>}
+        </Box>
+        <Box sx={{display: 'flex', flexFlow: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            <UploadButton setParentUploadedFile={setUpdateOntology} parentUploadedFile={updateOntology} text="Upload updated ontology"/>
+            {resultComparison==null && <FormHelperText>Ontology must be a file type of<br/> .owl, .obo, .ttl, .owx, .omn, .ofn</FormHelperText>}
+        </Box>
+        <Button sx={{minWidth: 'inherit', height: '36.5px'}} variant="contained" component="span" startIcon={<ClearIcon/>} onClick={clearOntologies}>
           Clear
         </Button>
       </div>

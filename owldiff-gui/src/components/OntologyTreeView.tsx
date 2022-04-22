@@ -19,7 +19,7 @@ interface OntologyTreeViewProps{
     setSelected?: (value: string[]) => void;
 }
 
-const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getCheckboxLabel, getExplanationsLabel, layer: number, index: number, paddings, setPaddings) => {
+const getTreeItemsFromDataVirtualized = (treeItems: NodeModelDto[], usedIds, props, getCheckboxLabel, getExplanationsLabel, layer: number, index: number, paddings, setPaddings) => {
     const currentRef = React.useRef();
     const innerRef = React.useRef();
 
@@ -50,12 +50,12 @@ const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getChec
             }
 
         }else{
-            console.log(currentRef.current)
+            //console.log(currentRef.current)
             handleThings(0)
         }
     },[currentRef.current])
 
-
+/*
     const measuredRef = React.useCallback(node => {
         if (node !== null) {
             //console.log(node.getBoundingClientRect().height);
@@ -65,7 +65,7 @@ const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getChec
             handleThings(0)
         }
     }, []);
-
+*/
     return  <List
         height={700-layer*100}
         width={'100%'}
@@ -75,7 +75,7 @@ const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getChec
         itemData={{
             items: treeItems,
             usedIds: usedIds,
-            getTreeItemsFromData: getTreeItemsFromData,
+            getTreeItemsFromData: getTreeItemsFromDataVirtualized,
             props: props,
             getCheckboxLabel: getCheckboxLabel,
             getExplanationsLabel: getExplanationsLabel,
@@ -88,12 +88,54 @@ const getTreeItemsFromData = (treeItems: NodeModelDto[], usedIds, props, getChec
         itemSize={(index) =>  (treeItems[index].data.length + 40) / ( window.innerWidth / 800 )}
         useIsScrolling={true}
     >
-        {treeItemRender}
+        {treeItemRenderVirtualized}
     </List>
 };
 
+const treeItemRender = (treeItems: NodeModelDto[], usedIds, props, getCheckboxLabel, getExplanationsLabel, layer: number, index: number, paddings, setPaddings) => {
+    return treeItems.map(treeItemData => {
+        if(usedIds.includes(treeItemData.id)){
+            return;
+        }
+        let children = undefined;
+        if (treeItemData.children && treeItemData.children.length > 0) {
+            usedIds.push(treeItemData.id);
+            if(treeItemData.children.length < 50){
+                children = treeItemRender(treeItemData.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, layer + 1, index, paddings, setPaddings);
+            }else{
+                children = getTreeItemsFromDataVirtualized(treeItemData.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, layer + 1, index, paddings, setPaddings)
+            }
+        }
+        return (
+            <TreeItem
+                key={treeItemData.id}
+                sx={props.colorSettings ?
+                    treeItemData.useCex ? {color: props.colorSettings.cex} :
+                        treeItemData.inferred ? {color: props.colorSettings.inferred} :
+                            treeItemData.common ? {color: props.colorSettings.common} :
+                                {color: 'green'}
+                    : undefined}
+                nodeId={treeItemData.id.toString()}
+                classes={{content: styles.ontology_tree_view_item,
+                    selected: styles.ontology_tree_view_item_selected}}
+                label={
+                    props.setSelected != undefined ?
+                        (treeItemData.isAxiom == true && treeItemData.common == false)
+                            ? getCheckboxLabel(treeItemData)
+                            : <div dangerouslySetInnerHTML={{__html: treeItemData.data}}/>
+                        :
+                        treeItemData.explanations
+                            ? getExplanationsLabel(treeItemData.explanations, treeItemData.data)
+                            : <div dangerouslySetInnerHTML={{__html: treeItemData.data}}/>
+                }
+                children={children}
+            />
+        );
+    });
+};
+
 // @ts-ignore
-const treeItemRender = React.memo( ({ data, index, style }) => {
+const treeItemRenderVirtualized = React.memo( ({ data, index, style }) => {
     const { items, usedIds, getTreeItemsFromData, props, getCheckboxLabel, getExplanationsLabel, layer, paddings, setPaddings } = data;
     const treeItemData = items[index]
     if(usedIds.includes(treeItemData.id)){
@@ -107,7 +149,7 @@ const treeItemRender = React.memo( ({ data, index, style }) => {
 
     const currentPadding = React.useRef(0);
     const handleThings = () => {
-        console.log("layer" + layer, "index" + index, paddings)
+        //console.log("layer" + layer, "index" + index, paddings)
         let total = 0
         paddings.forEach(pad => {
             if(pad.curLayer>layer && pad.curIndex<index){
@@ -249,7 +291,7 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
                 onNodeToggle={props.setSelected ? handleExpandedCheckbox : handleExpanded}
                 onNodeSelect={props.setSelected ? (e, ids)=>{props.setSelected(ids)} : undefined}
             >
-                {props.treeItems.children ? getTreeItemsFromData(props.treeItems.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, 1, 0, paddings, setPaddings) : <Typography sx={{fontWeight: 'bold'}}>No axioms to display</Typography>}
+                {props.treeItems.children ? treeItemRender(props.treeItems.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, 1, 0, paddings, setPaddings) : <Typography sx={{fontWeight: 'bold'}}>No axioms to display</Typography>}
             </TreeView>
         </>
     )
