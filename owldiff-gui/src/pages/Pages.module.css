@@ -1,0 +1,7 @@
+.buttons_div{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-left: 10%;
+    gap: 10px;
+}

@@ -33,6 +33,7 @@
         <module>owldiff-cli</module>
         <module>owldiff-standalone</module>
         <module>owldiff-protege-plugin</module>
+        <module>owldiff-api</module>
     </modules>
     <build>
         <extensions>
