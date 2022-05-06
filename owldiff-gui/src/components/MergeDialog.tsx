@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {ComparisonDto, mergeOntologies, NodeModelDto, OWLDocumentFormats} from "../api/ontologyApi";
-import OntologyTreeView from "./OntologyTreeView";
+import OntologyTreeView from "./OntologyTreeView/OntologyTreeView";
 // @ts-ignore
 import * as styles from './Components.module.css';
 import {saveAs} from 'file-saver';

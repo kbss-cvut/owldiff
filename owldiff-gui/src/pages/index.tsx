@@ -11,7 +11,7 @@ import {
 import Layout from "../components/Layout";
 import Toolkit from "../components/Toolkit";
 import UploadButton from "../components/UploadButton";
-import OntologyTreeView from "../components/OntologyTreeView";
+import OntologyTreeView from "../components/OntologyTreeView/OntologyTreeView";
 import ClearIcon from '@mui/icons-material/Clear';
 import { ComparisonDto, ComparisonSettings, getComparisonResult, uploadOntologies } from '../api/ontologyApi';
 import { MergeDialog } from "../components/MergeDialog";
