@@ -4,6 +4,7 @@ import cz.cvut.kbss.owldiff.view.nodes.NodeModel;
 
 public class WriteCallbackImpl implements NodeModel.WriteCallback {
     private String ret = null;
+
     @Override
     public void notify(String returnValue) {
         this.ret = returnValue;

@@ -113,7 +113,7 @@ public class NodeModelDataParser implements NodeModelVisitor {
     }
 
 
-    public void generateExplanation(NodeModel nm){
+    public void generateExplanation(NodeModel nm) {
         nm.writeProperty(writeCallback, syntax, explanationManager);
         nodeModelDto.setExplanations(writeCallback.getRet());
     }

@@ -49,7 +49,7 @@ public class OntologyServiceHandler {
     private final OntologyManager originalOntologyManager;
     private final OntologyManager updateOntologyManager;
 
-    public OntologyServiceHandler(){
+    public OntologyServiceHandler() {
         OWLDiffConfiguration.setReasonerProvider(new OWLDiffConfiguration.ReasonerProvider() {
             public OWLReasoner getOWLReasoner(OWLOntology o) {
                 OWLHelper h = OWLHelper.createLightHelper(OpenlletReasonerFactory.getInstance().createReasoner(o));
@@ -61,14 +61,14 @@ public class OntologyServiceHandler {
     }
 
     public String compareOntologies(InputStream originalFile,
-                                           InputStream updateFile,
-                                           DiffView.DiffEnum diff,
-                                           DiffVisualization view,
-                                           Syntax syntax,
-                                           Boolean generateExplanation,
-                                           Boolean showCommon,
-                                           HttpSession httpSession
-                                        ) throws JsonProcessingException, OWLDiffException {
+                                    InputStream updateFile,
+                                    DiffView.DiffEnum diff,
+                                    DiffVisualization view,
+                                    Syntax syntax,
+                                    Boolean generateExplanation,
+                                    Boolean showCommon,
+                                    HttpSession httpSession
+    ) throws JsonProcessingException, OWLDiffException {
         //Get ontology from manager
         OWLOntology originalOntology = originalOntologyManager.getOntologyByFile(originalFile);
         OWLOntology updateOntology = updateOntologyManager.getOntologyByFile(updateFile);
@@ -78,6 +78,7 @@ public class OntologyServiceHandler {
             public OWLOntology getOriginalOntology() {
                 return originalOntology;
             }
+
             public OWLOntology getUpdateOntology() {
                 return updateOntology;
             }
@@ -142,7 +143,7 @@ public class OntologyServiceHandler {
         ontologiesComparison.setSessionTimer(sessionTimerConfig);
 
         //Then set it into session
-        httpSession.setAttribute("ontologies",ontologiesComparison);
+        httpSession.setAttribute("ontologies", ontologiesComparison);
 
         //Return comparison dto object as json string for controller
         ObjectMapper mapper = new ObjectMapper();
@@ -157,7 +158,7 @@ public class OntologyServiceHandler {
     }
 
     //Helper function returning ontologyDataDto with mapped treeModel
-    private OntologyDataDto mapNodeTreeToOntology(OWLDiffTreeModel treeModel, Syntax syntax, ExplanationManager expl, Boolean generateExplanation, Boolean showCommon){
+    private OntologyDataDto mapNodeTreeToOntology(OWLDiffTreeModel treeModel, Syntax syntax, ExplanationManager expl, Boolean generateExplanation, Boolean showCommon) {
         OntologyDataDto ret = new OntologyDataDto();
         NodeModelDataParser parser = new NodeModelDataParser(syntax, expl);
         NodeModel model = (NodeModel) treeModel.getRoot();
@@ -171,26 +172,26 @@ public class OntologyServiceHandler {
     }
 
     //Recursive function for mapping all children
-    private void modelChildrenIntoJson(NodeModel nodeModel, NodeModelDto parent, NodeModelDataParser parser, Boolean showCommon, Boolean generateExplanation){
-        if(nodeModel.getCount(showCommon)!=0){
-            for(int i = 0; i < nodeModel.getCount(showCommon); i++){
+    private void modelChildrenIntoJson(NodeModel nodeModel, NodeModelDto parent, NodeModelDataParser parser, Boolean showCommon, Boolean generateExplanation) {
+        if (nodeModel.getCount(showCommon) != 0) {
+            for (int i = 0; i < nodeModel.getCount(showCommon); i++) {
                 NodeModel<?> childNode = nodeModel.getChild(i, showCommon);
                 childNode.accept(parser);
-                if(generateExplanation) {
+                if (generateExplanation) {
                     parser.generateExplanation(childNode);
                 }
                 NodeModelDto child = parser.getNodeModelDto();
                 parser.setNodeModelDto(new NodeModelDto());
-                modelChildrenIntoJson(childNode, child, parser, showCommon,generateExplanation);
+                modelChildrenIntoJson(childNode, child, parser, showCommon, generateExplanation);
                 List<NodeModelDto> parentChildren = parent.getChildren();
-                if(parentChildren==null) parentChildren = new ArrayList<NodeModelDto>();
+                if (parentChildren == null) parentChildren = new ArrayList<NodeModelDto>();
                 parentChildren.add(child);
                 parent.setChildren(parentChildren);
             }
         }
     }
 
-    public OWLOntology mergeOntologies(HttpSession session, int[] toAdd, int[] toDelete){
+    public OWLOntology mergeOntologies(HttpSession session, int[] toAdd, int[] toDelete) {
         //Get ontologies from session
         ComparisonDto ontologies = (ComparisonDto) session.getAttribute("ontologies");
         OntologyDataDto originalOntologyDataDto = ontologies.getOriginal();
@@ -199,23 +200,23 @@ public class OntologyServiceHandler {
         OWLOntology updateOntology = updateOntologyDataDto.getOntology();
 
         //Add or remove axioms from update
-        updateOntology.addAxioms(axiomsFromNodeModel(originalOntologyDataDto.getData(),new HashSet<OWLAxiom>(),toAdd));
-        updateOntology.removeAxioms(axiomsFromNodeModel(updateOntologyDataDto.getData(),new HashSet<OWLAxiom>(),toDelete));
+        updateOntology.addAxioms(axiomsFromNodeModel(originalOntologyDataDto.getData(), new HashSet<OWLAxiom>(), toAdd));
+        updateOntology.removeAxioms(axiomsFromNodeModel(updateOntologyDataDto.getData(), new HashSet<OWLAxiom>(), toDelete));
 
         return updateOntology;
     }
 
     //Helper recursive function for merge to get axioms from saved treeModel
-    private Set<OWLAxiom> axiomsFromNodeModel(NodeModelDto data, Set<OWLAxiom> axioms, int[] values){
+    private Set<OWLAxiom> axiomsFromNodeModel(NodeModelDto data, Set<OWLAxiom> axioms, int[] values) {
         OWLAxiom axiom = data.getAxiom();
-        if(axiom!=null){
-            if(IntStream.of(values).anyMatch(val -> val == data.getId())){
+        if (axiom != null) {
+            if (IntStream.of(values).anyMatch(val -> val == data.getId())) {
                 axioms.add(axiom);
             }
         }
-        if(data.getChildren()!=null && data.getChildren().size()!=0){
-            for(int i = 0; i < data.getChildren().size(); i++){
-                axiomsFromNodeModel(data.getChildren().get(i),axioms,values);
+        if (data.getChildren() != null && data.getChildren().size() != 0) {
+            for (int i = 0; i < data.getChildren().size(); i++) {
+                axiomsFromNodeModel(data.getChildren().get(i), axioms, values);
             }
         }
         return axioms;

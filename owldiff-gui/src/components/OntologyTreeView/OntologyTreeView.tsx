@@ -8,7 +8,7 @@ import * as styles from '../Components.module.css';
 import {Checkbox, Tooltip, FormControlLabel, Typography} from "@mui/material";
 import {treeItemRender} from "./OntologyTreeItem";
 
-interface OntologyTreeViewProps{
+interface OntologyTreeViewProps {
     treeItems: NodeModelDto,
     colorSettings?: ColorsSettings,
     expanded: string[],
@@ -25,27 +25,27 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
     let allPossibleAxioms: string[] = [];
 
     const searchAxiom = (node: NodeModelDto) => {
-        if(node.isAxiom && !node.common){
+        if (node.isAxiom && !node.common) {
             allPossibleAxioms.push(node.id.toString())
         }
-        if(node.children && node.children.length > 0){
+        if (node.children && node.children.length > 0) {
             node.children.forEach((child) => searchAxiom(child))
         }
     }
     searchAxiom(props.treeItems);
-    const [selectedAll, setSelectedAll] = React.useState<boolean>(props.selected ? allPossibleAxioms.length==props.selected.length : false);
+    const [selectedAll, setSelectedAll] = React.useState<boolean>(props.selected ? allPossibleAxioms.length == props.selected.length : false);
 
-    React.useEffect(()=>{
-        if(props.setSelected){
-            if(selectedAll==true){
+    React.useEffect(() => {
+        if (props.setSelected) {
+            if (selectedAll == true) {
                 props.setSelected(allPossibleAxioms)
-            }else{
+            } else {
                 props.setSelected([])
             }
         }
-    },[selectedAll])
+    }, [selectedAll])
 
-    const handleExpanded = (event, nodes: string[]) =>{
+    const handleExpanded = (event, nodes: string[]) => {
         props.setExpanded(nodes);
     }
 
@@ -64,12 +64,12 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
     }
 
     const getCheckboxLabel = (treeItem: NodeModelDto) => {
-        return(
+        return (
             <FormControlLabel
-                sx={{ alignItems: 'flex-start' }}
+                sx={{alignItems: 'flex-start'}}
                 control={
                     <Checkbox
-                        sx={{ paddingTop: 0}}
+                        sx={{paddingTop: 0}}
                         checked={props.selected.some((item) => item === treeItem.id.toString())}
                         onChange={(event) =>
                             getOnSelected(event.target.checked, treeItem)
@@ -86,8 +86,10 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
     }
 
     const getExplanationsLabel = (explanation: string, data: string) => {
-        return(
-            <Tooltip followCursor title={<h2>{explanation}</h2>}><div dangerouslySetInnerHTML={{__html: data}}/></Tooltip>
+        return (
+            <Tooltip followCursor title={<h2>{explanation}</h2>}>
+                <div dangerouslySetInnerHTML={{__html: data}}/>
+            </Tooltip>
         )
     }
 
@@ -107,17 +109,20 @@ const OntologyTreeView = (props: OntologyTreeViewProps) => {
                         />
                     }
                     label={"Select all"}
-            />}
+                />}
             <TreeView
-                defaultCollapseIcon={<ExpandLessIcon />}
-                defaultExpandIcon={<ExpandMoreIcon />}
+                defaultCollapseIcon={<ExpandLessIcon/>}
+                defaultExpandIcon={<ExpandMoreIcon/>}
                 expanded={props.expanded}
                 disableSelection={true}
                 selected={props.selected}
                 onNodeToggle={props.setSelected ? handleExpandedCheckbox : handleExpanded}
-                onNodeSelect={props.setSelected ? (e, ids)=>{props.setSelected(ids)} : undefined}
+                onNodeSelect={props.setSelected ? (e, ids) => {
+                    props.setSelected(ids)
+                } : undefined}
             >
-                {props.treeItems.children ? treeItemRender(props.treeItems.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, 1, 0, paddings, setPaddings) : <Typography sx={{fontWeight: 'bold'}}>No axioms to display</Typography>}
+                {props.treeItems.children ? treeItemRender(props.treeItems.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, 1, 0, paddings, setPaddings) :
+                    <Typography sx={{fontWeight: 'bold'}}>No axioms to display</Typography>}
             </TreeView>
         </>
     )

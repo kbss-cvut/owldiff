@@ -17,7 +17,7 @@ public class OntologyManager {
     public OWLOntology getOntologyByFile(InputStream fileStream) throws OWLDiffException {
         try {
             return ontologyManager.loadOntologyFromOntologyDocument(fileStream);
-        } catch(OWLOntologyAlreadyExistsException e){
+        } catch (OWLOntologyAlreadyExistsException e) {
             OWLOntologyID originalID = e.getOntologyID();
             return ontologyManager.getOntology(originalID);
         } catch (OWLOntologyCreationException e) {

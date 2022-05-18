@@ -4,13 +4,23 @@ import TreeItem from "@mui/lab/TreeItem";
 import {NodeModelDto} from "../../api/ontologyApi";
 // @ts-ignore
 import * as styles from '../Components.module.css';
-import { VariableSizeList as List, areEqual } from "react-window";
+import {VariableSizeList as List, areEqual} from "react-window";
 
 // @ts-ignore
-export const treeItemRenderVirtualized = React.memo( ({ data, index, style }) => {
-    const { items, usedIds, getTreeItemsFromData, props, getCheckboxLabel, getExplanationsLabel, layer, paddings, setPaddings } = data;
+export const treeItemRenderVirtualized = React.memo(({data, index, style}) => {
+    const {
+        items,
+        usedIds,
+        getTreeItemsFromData,
+        props,
+        getCheckboxLabel,
+        getExplanationsLabel,
+        layer,
+        paddings,
+        setPaddings
+    } = data;
     const treeItemData = items[index]
-    if(usedIds.includes(treeItemData.id)){
+    if (usedIds.includes(treeItemData.id)) {
         return <></>;
     }
     let children = undefined;
@@ -24,7 +34,7 @@ export const treeItemRenderVirtualized = React.memo( ({ data, index, style }) =>
         //console.log("layer" + layer, "index" + index, paddings)
         let total = 0
         paddings.forEach(pad => {
-            if(pad.curLayer>layer && pad.curIndex<index){
+            if (pad.curLayer > layer && pad.curIndex < index) {
                 total = total + pad.curHeight
             }
         })
@@ -32,7 +42,7 @@ export const treeItemRenderVirtualized = React.memo( ({ data, index, style }) =>
     }
     React.useEffect(() => {
         handleThings()
-    },[paddings])
+    }, [paddings])
     return (
         <TreeItem
             key={treeItemData.id}
@@ -44,8 +54,10 @@ export const treeItemRenderVirtualized = React.memo( ({ data, index, style }) =>
                             {color: 'green'}
                 : undefined}
             nodeId={treeItemData.id.toString()}
-            classes={{content: styles.ontology_tree_view_item,
-                selected: styles.ontology_tree_view_item_selected}}
+            classes={{
+                content: styles.ontology_tree_view_item,
+                selected: styles.ontology_tree_view_item_selected
+            }}
             label={
                 props.setSelected ?
                     (treeItemData.isAxiom == true && treeItemData.common == false)
@@ -71,10 +83,10 @@ export const getTreeItemsFromDataVirtualized = (treeItems: NodeModelDto[], usedI
         //console.log(layer, heigth)
         const tmp = paddings.find(pad => pad.curLayer == layer && pad.curIndex == index)
         const tmpArr = [...paddings]
-        if(tmp != null){
+        if (tmp != null) {
             tmpArr.find(pad => pad.curLayer == layer && pad.curIndex == index).curHeight = heigth
             setPaddings(tmpArr)
-        }else{
+        } else {
             tmpArr.push({curLayer: layer, curIndex: index, curHeight: heigth})
             setPaddings(tmpArr)
         }
@@ -82,22 +94,22 @@ export const getTreeItemsFromDataVirtualized = (treeItems: NodeModelDto[], usedI
     }
 
     React.useEffect(() => {
-        if(currentRef.current && innerRef.current){
+        if (currentRef.current && innerRef.current) {
             // @ts-ignore
             //console.log(currentRef.current)
-            if(currentRef.current?.clientHeight < innerRef.current?.clientHeight){
+            if (currentRef.current?.clientHeight < innerRef.current?.clientHeight) {
                 // @ts-ignore
                 handleThings(currentRef.current?.clientHeight)
-            }else{
+            } else {
                 // @ts-ignore
                 handleThings(innerRef.current?.clientHeight)
             }
 
-        }else{
+        } else {
             //console.log(currentRef.current)
             handleThings(0)
         }
-    },[currentRef.current])
+    }, [currentRef.current])
 
     /*
         const measuredRef = React.useCallback(node => {
@@ -110,8 +122,8 @@ export const getTreeItemsFromDataVirtualized = (treeItems: NodeModelDto[], usedI
             }
         }, []);
     */
-    return  <List
-        height={700-layer*100}
+    return <List
+        height={700 - layer * 100}
         width={'100%'}
         outerRef={currentRef}
         innerRef={innerRef}
@@ -129,7 +141,7 @@ export const getTreeItemsFromDataVirtualized = (treeItems: NodeModelDto[], usedI
         }}
         itemCount={treeItems.length}
         estimatedItemSize={100}
-        itemSize={(index) =>  (treeItems[index].data.length + 40) / ( window.innerWidth / 800 )}
+        itemSize={(index) => (treeItems[index].data.length + 40) / (window.innerWidth / 800)}
         useIsScrolling={true}
     >
         {treeItemRenderVirtualized}

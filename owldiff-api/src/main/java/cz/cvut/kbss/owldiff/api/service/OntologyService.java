@@ -32,9 +32,6 @@ import java.io.InputStream;
 public class OntologyService {
 
     @Autowired
-    HttpSessionConfig httpSessionConfig;
-
-    @Autowired
     OntologyServiceHandler handler;
 
     public ResponseEntity<Object> uploadAndCompareOntologies(MultipartFile originalFile,
@@ -47,55 +44,42 @@ public class OntologyService {
                                                              Boolean showCommon,
                                                              HttpSession session) throws IOException, OWLDiffException {
         //If session already exist, use that one
-        if(sessionId!=null && httpSessionConfig.getSessionById(sessionId)!=null){
-            session = httpSessionConfig.getSessionById(sessionId);
-        }
         InputStream originalStream;
         InputStream updateStream;
         originalStream = originalFile.getInputStream();
         updateStream = updateFile.getInputStream();
-        String ontologyMapped = handler.compareOntologies(originalStream, updateStream, diffType,diffView, syntax.getSyntax(), generateExplanation, showCommon, session);
+        String ontologyMapped = handler.compareOntologies(originalStream, updateStream, diffType, diffView, syntax.getSyntax(), generateExplanation, showCommon, session);
         //Save update fileName for merge ontology
         String fileName = updateFile.getOriginalFilename();
-        session.setAttribute("updateFilename",fileName.substring(0, fileName.lastIndexOf('.')));
+        session.setAttribute("updateFilename", fileName.substring(0, fileName.lastIndexOf('.')));
         return new ResponseEntity<>(ontologyMapped, HttpStatus.OK);
 
     }
 
-    public ResponseEntity<Object> getOntologiesById(String id) throws JsonProcessingException {
-        HttpSession session = httpSessionConfig.getSessionById(id);
-        if(session==null){
-            //If session is timeout return not found
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Provided session was not found or is timeout");
-        }
+    public ResponseEntity<Object> getOntologiesById(HttpSession session) throws JsonProcessingException {
         ComparisonDto comparison = (ComparisonDto) session.getAttribute("ontologies");
         String ret = handler.getComparisonBySession(comparison);
-        return new ResponseEntity<>(ret,HttpStatus.OK);
+        return new ResponseEntity<>(ret, HttpStatus.OK);
     }
 
     public ResponseEntity<Object> mergeOntologies(String sessionId,
                                                   String fileName,
                                                   int[] addFromOriginal,
                                                   int[] removedFromUpdate,
-                                                  OWLDocumentFormatEnum format){
-        HttpSession session = httpSessionConfig.getSessionById(sessionId);
-        if(session==null){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Provided session was not found or is timeout");
-        }
-        OWLOntology retOntology = handler.mergeOntologies(session,addFromOriginal,removedFromUpdate);
+                                                  OWLDocumentFormatEnum format,
+                                                  HttpSession session) {
+        OWLOntology retOntology = handler.mergeOntologies(session, addFromOriginal, removedFromUpdate);
         //If custom filename not provided, use saved from update file
-        if(fileName==null){
+        if (fileName == null) {
             fileName = (String) session.getAttribute("updateFilename");
         }
         //If format not defined use RDF/XML, else use the one defined in OWLDocumentFormatEnum
         OWLDocumentFormat owlDocumentFormat;
         String fileExtension;
-        if(format==null){
+        if (format == null) {
             owlDocumentFormat = new RDFXMLDocumentFormat();
             fileExtension = "owl";
-        }else{
+        } else {
             owlDocumentFormat = format.getFormat();
             fileExtension = format.getExtension();
         }

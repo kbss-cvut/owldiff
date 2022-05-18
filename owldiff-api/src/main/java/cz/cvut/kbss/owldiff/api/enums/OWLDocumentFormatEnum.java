@@ -15,16 +15,17 @@ public enum OWLDocumentFormatEnum {
 
     private OWLDocumentFormat format;
     private String extension;
-    private OWLDocumentFormatEnum(OWLDocumentFormat format, String extension){
+
+    private OWLDocumentFormatEnum(OWLDocumentFormat format, String extension) {
         this.format = format;
         this.extension = extension;
     }
 
-    public OWLDocumentFormat getFormat(){
+    public OWLDocumentFormat getFormat() {
         return format;
     }
 
-    public String getExtension(){
+    public String getExtension() {
         return extension;
     }
 }

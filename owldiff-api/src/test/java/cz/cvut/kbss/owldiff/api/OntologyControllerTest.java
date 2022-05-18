@@ -37,7 +37,7 @@ public class OntologyControllerTest {
     @Test
     public void getOntologiesById_whenValid_thenReturns200AndResponse() throws Exception {
         // when
-        when(serviceMocked.getOntologiesById("test")).thenReturn(new ResponseEntity<>("Saved ontologies", HttpStatus.OK));
+        when(serviceMocked.getOntologiesById(any())).thenReturn(new ResponseEntity<>("Saved ontologies", HttpStatus.OK));
 
         // mock and assert
         mockMvc.perform(get("/api/ontology/upload/test")).andDo(print()).andExpect(status().isOk())

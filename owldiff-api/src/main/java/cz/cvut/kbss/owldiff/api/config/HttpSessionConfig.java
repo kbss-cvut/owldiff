@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +17,9 @@ public class HttpSessionConfig {
 
     private static final Map<String, HttpSession> activeSessions = new HashMap<>();
 
-    public HttpSession getSessionById(String id) { return activeSessions.get(id); }
+    public HttpSession getSessionById(String id) {
+        return activeSessions.get(id);
+    }
 
     @Bean
     public HttpSessionListener httpSessionListener() {

@@ -7,15 +7,15 @@ import * as styles from '../Components.module.css';
 
 export const treeItemRender = (treeItems: NodeModelDto[], usedIds, props, getCheckboxLabel, getExplanationsLabel, layer: number, index: number, paddings, setPaddings) => {
     return treeItems.map(treeItemData => {
-        if(usedIds.includes(treeItemData.id)){
+        if (usedIds.includes(treeItemData.id)) {
             return;
         }
         let children = undefined;
         if (treeItemData.children && treeItemData.children.length > 0) {
             usedIds.push(treeItemData.id);
-            if(treeItemData.children.length < 50){
+            if (treeItemData.children.length < 50) {
                 children = treeItemRender(treeItemData.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, layer + 1, index, paddings, setPaddings);
-            }else{
+            } else {
                 children = getTreeItemsFromDataVirtualized(treeItemData.children, usedIds, props, getCheckboxLabel, getExplanationsLabel, layer + 1, index, paddings, setPaddings)
             }
         }
@@ -29,8 +29,10 @@ export const treeItemRender = (treeItems: NodeModelDto[], usedIds, props, getChe
                                 {color: 'green'}
                     : undefined}
                 nodeId={treeItemData.id.toString()}
-                classes={{content: styles.ontology_tree_view_item,
-                    selected: styles.ontology_tree_view_item_selected}}
+                classes={{
+                    content: styles.ontology_tree_view_item,
+                    selected: styles.ontology_tree_view_item_selected
+                }}
                 label={
                     props.setSelected != undefined ?
                         (treeItemData.isAxiom == true && treeItemData.common == false)

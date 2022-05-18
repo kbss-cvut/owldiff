@@ -22,14 +22,14 @@ import * as styles from './Components.module.css';
 import {ConfirmDialog} from "./ConfirmDialog";
 
 
-export interface ToolkitProps{
+export interface ToolkitProps {
     comparisonSettings: ComparisonSettings,
     setComparisonSettings: (value: ComparisonSettings) => void,
     onMerge: () => void,
     disabled?: boolean
 }
 
-interface settingType{
+interface settingType {
     text: string,
     children?: settingType[],
     onClick?: () => void,
@@ -42,31 +42,41 @@ const Toolkit = (props: ToolkitProps) => {
     const [modalOpen, setModalOpen] = React.useState<boolean>(false);
     const [modalFunc, setModalFunc] = React.useState<any>(null);
 
-    useEffect(()=>{
-       setOpen(localStorage.getItem('toolOpen')==="true");
-    },[])
+    useEffect(() => {
+        setOpen(localStorage.getItem('toolOpen') === "true");
+    }, [])
 
-    const settings : settingType[] = [
+    const settings: settingType[] = [
         {
-            text: props.comparisonSettings.showCommon==false ? 'Show common' : 'Hide common',
+            text: props.comparisonSettings.showCommon == false ? 'Show common' : 'Hide common',
             onClick: () => {
-                props.setComparisonSettings({...props.comparisonSettings, showCommon: !props.comparisonSettings.showCommon});
+                props.setComparisonSettings({
+                    ...props.comparisonSettings,
+                    showCommon: !props.comparisonSettings.showCommon
+                });
             },
-            selected: props.comparisonSettings.showCommon==true
+            selected: props.comparisonSettings.showCommon == true
         },
         {
-            text: props.comparisonSettings.generateExplanation==false ? 'Show explanations' : 'Hide explanations',
+            text: props.comparisonSettings.generateExplanation == false ? 'Show explanations' : 'Hide explanations',
             onClick: () => {
-                props.setComparisonSettings({...props.comparisonSettings, diffType: "ENTAILMENT", generateExplanation: !props.comparisonSettings.generateExplanation});
+                props.setComparisonSettings({
+                    ...props.comparisonSettings,
+                    diffType: "ENTAILMENT",
+                    generateExplanation: !props.comparisonSettings.generateExplanation
+                });
             },
-            selected: props.comparisonSettings.generateExplanation==true
+            selected: props.comparisonSettings.generateExplanation == true
         },
         {
-            text: props.comparisonSettings.diffType!="CEX" ? 'Use CEX' : 'Dont use CEX',
+            text: props.comparisonSettings.diffType != "CEX" ? 'Use CEX' : 'Dont use CEX',
             onClick: () => {
-                props.setComparisonSettings({...props.comparisonSettings, diffType: props.comparisonSettings.diffType!="CEX" ? 'CEX' : 'SYNTACTIC',});
+                props.setComparisonSettings({
+                    ...props.comparisonSettings,
+                    diffType: props.comparisonSettings.diffType != "CEX" ? 'CEX' : 'SYNTACTIC',
+                });
             },
-            selected: props.comparisonSettings.diffType=="CEX"
+            selected: props.comparisonSettings.diffType == "CEX"
         },
         {
             text: 'Change syntax',
@@ -76,14 +86,14 @@ const Toolkit = (props: ToolkitProps) => {
                     onClick: () => {
                         props.setComparisonSettings({...props.comparisonSettings, syntax: "MANCHESTER"});
                     },
-                    selected: props.comparisonSettings.syntax=="MANCHESTER"
+                    selected: props.comparisonSettings.syntax == "MANCHESTER"
                 },
                 {
                     text: 'DL',
                     onClick: () => {
                         props.setComparisonSettings({...props.comparisonSettings, syntax: "DL"});
                     },
-                    selected: props.comparisonSettings.syntax=="DL"
+                    selected: props.comparisonSettings.syntax == "DL"
                 },
             ]
         },
@@ -95,29 +105,38 @@ const Toolkit = (props: ToolkitProps) => {
                     onClick: () => {
                         props.setComparisonSettings({...props.comparisonSettings, diffView: "LIST_VIEW"});
                     },
-                    selected: props.comparisonSettings.diffView=="LIST_VIEW"
+                    selected: props.comparisonSettings.diffView == "LIST_VIEW"
                 },
                 {
                     text: 'Classified frame view',
                     onClick: () => {
-                        setModalFunc(() => () => { props.setComparisonSettings({...props.comparisonSettings, diffView: "CLASSIFIED_FRAME_VIEW"}); setModalOpen(false)})
+                        setModalFunc(() => () => {
+                            props.setComparisonSettings({
+                                ...props.comparisonSettings,
+                                diffView: "CLASSIFIED_FRAME_VIEW"
+                            });
+                            setModalOpen(false)
+                        })
                         setModalOpen(true)
                     },
-                    selected: props.comparisonSettings.diffView=="CLASSIFIED_FRAME_VIEW"
+                    selected: props.comparisonSettings.diffView == "CLASSIFIED_FRAME_VIEW"
                 },
                 {
                     text: 'Simple frame view',
                     onClick: () => {
-                        setModalFunc(() => () => { props.setComparisonSettings({...props.comparisonSettings, diffView: "SIMPLE_FRAME_VIEW"}); setModalOpen(false)})
+                        setModalFunc(() => () => {
+                            props.setComparisonSettings({...props.comparisonSettings, diffView: "SIMPLE_FRAME_VIEW"});
+                            setModalOpen(false)
+                        })
                         setModalOpen(true)
                     },
-                    selected: props.comparisonSettings.diffView=="SIMPLE_FRAME_VIEW"
+                    selected: props.comparisonSettings.diffView == "SIMPLE_FRAME_VIEW"
                 }
             ]
         },
     ]
 
-    const settings2 : settingType[] = [
+    const settings2: settingType[] = [
         {
             text: 'Merge ontologies',
             onClick: () => {
@@ -128,12 +147,12 @@ const Toolkit = (props: ToolkitProps) => {
 
     const handleDrawerOpen = () => {
         setOpen(true);
-        localStorage.setItem('toolOpen', "true")  
+        localStorage.setItem('toolOpen', "true")
     };
 
     const handleDrawerClose = () => {
         setOpen(false);
-        localStorage.setItem('toolOpen', "false")  
+        localStorage.setItem('toolOpen', "false")
     };
 
     const renderSettingChildren = (parent: settingType) => {
@@ -142,21 +161,23 @@ const Toolkit = (props: ToolkitProps) => {
             setOpen(!open);
         };
 
-        return(
+        return (
             <div key={parent.text}>
                 <ListItem button key={parent.text} onClick={handleClick}>
                     <ListItemText primary={parent.text}/>
-                    {open ? <ExpandLess /> : <ExpandMore />}
+                    {open ? <ExpandLess/> : <ExpandMore/>}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                    {parent.children && parent.children.map(child => {
-                        return(
-                            <ListItemButton disabled={props.disabled==true} sx={{ pl: 4 }} key={child.text} onClick={child.onClick} selected={child.selected} classes={{selected: styles.button_selected}}>
-                                <ListItemText primary={child.text}/>
-                            </ListItemButton>
-                        )
-                    })}
+                        {parent.children && parent.children.map(child => {
+                            return (
+                                <ListItemButton disabled={props.disabled == true} sx={{pl: 4}} key={child.text}
+                                                onClick={child.onClick} selected={child.selected}
+                                                classes={{selected: styles.button_selected}}>
+                                    <ListItemText primary={child.text}/>
+                                </ListItemButton>
+                            )
+                        })}
                     </List>
                 </Collapse>
             </div>
@@ -170,53 +191,61 @@ const Toolkit = (props: ToolkitProps) => {
                 aria-label="open drawer"
                 edge="end"
                 onClick={handleDrawerOpen}
-                sx={{ ...(open && { display: 'none' }), position: "absolute", left:0, top: 60 }}
+                sx={{...(open && {display: 'none'}), position: "absolute", left: 0, top: 60}}
             >
-                <Typography>Show Tools</Typography><ChevronRightIcon />
+                <Typography>Show Tools</Typography><ChevronRightIcon/>
             </IconButton>
             <Drawer
-            anchor="left"
-            open={open}
-            sx={{
-                width: 200,
-                flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { width: 200, boxSizing: 'border-box' },
-            }}
-            variant="persistent"
+                anchor="left"
+                open={open}
+                sx={{
+                    width: 200,
+                    flexShrink: 0,
+                    [`& .MuiDrawer-paper`]: {width: 200, boxSizing: 'border-box'},
+                }}
+                variant="persistent"
             >
-                <Toolbar />
-                <Box sx={{ overflow: 'auto' }}>
-                <IconButton onClick={handleDrawerClose}>
-                    <ChevronLeftIcon />
-                </IconButton>
-                <List>
-                    {settings.map((setting, index) => (
-                        setting.children ? renderSettingChildren(setting) :
-                        <ListItemButton disabled={props.disabled==true} key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
-                            <ListItemText primary={setting.text}/>
-                        </ListItemButton>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {settings2.map((setting, index) => (
-                        setting.children ? renderSettingChildren(setting) :
-                            <ListItemButton disabled={props.disabled==true} key={setting.text} onClick={setting.onClick} selected={setting.selected} classes={{selected: styles.button_selected}}>
-                                <ListItemText primary={setting.text}/>
-                            </ListItemButton>
-                    ))}
-                </List>
-                <Divider />
-                    <Box sx={{marginLeft:2, marginTop: 2}}>
+                <Toolbar/>
+                <Box sx={{overflow: 'auto'}}>
+                    <IconButton onClick={handleDrawerClose}>
+                        <ChevronLeftIcon/>
+                    </IconButton>
+                    <List>
+                        {settings.map((setting, index) => (
+                            setting.children ? renderSettingChildren(setting) :
+                                <ListItemButton disabled={props.disabled == true} key={setting.text}
+                                                onClick={setting.onClick} selected={setting.selected}
+                                                classes={{selected: styles.button_selected}}>
+                                    <ListItemText primary={setting.text}/>
+                                </ListItemButton>
+                        ))}
+                    </List>
+                    <Divider/>
+                    <List>
+                        {settings2.map((setting, index) => (
+                            setting.children ? renderSettingChildren(setting) :
+                                <ListItemButton disabled={props.disabled == true} key={setting.text}
+                                                onClick={setting.onClick} selected={setting.selected}
+                                                classes={{selected: styles.button_selected}}>
+                                    <ListItemText primary={setting.text}/>
+                                </ListItemButton>
+                        ))}
+                    </List>
+                    <Divider/>
+                    <Box sx={{marginLeft: 2, marginTop: 2}}>
                         <Typography variant={"body1"}>Colors:</Typography>
-                        <Typography variant={"body1"}> - Common axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.common}}/>
-                        <Typography variant={"body1"}> - Different axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: 'green'}}/>
-                        <Typography variant={"body1"}> - Inferred axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.inferred}}/>
-                        <Typography variant={"body1"}> - CEX axioms</Typography><Box sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.cex}}/>
+                        <Typography variant={"body1"}> - Common axioms</Typography><Box
+                        sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.common}}/>
+                        <Typography variant={"body1"}> - Different axioms</Typography><Box
+                        sx={{width: 20, height: 20, backgroundColor: 'green'}}/>
+                        <Typography variant={"body1"}> - Inferred axioms</Typography><Box
+                        sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.inferred}}/>
+                        <Typography variant={"body1"}> - CEX axioms</Typography><Box
+                        sx={{width: 20, height: 20, backgroundColor: props.comparisonSettings.colors.cex}}/>
                     </Box>
                 </Box>
             </Drawer>
-            <ConfirmDialog open={modalOpen} onClose={() => setModalOpen(false)} onAgree={modalFunc} />
+            <ConfirmDialog open={modalOpen} onClose={() => setModalOpen(false)} onAgree={modalFunc}/>
         </div>
     )
 }
