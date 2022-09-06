@@ -32,7 +32,7 @@
         <module>owldiff-core</module>
         <module>owldiff-cli</module>
         <module>owldiff-standalone</module>
-        <module>owldiff-protege-plugin</module>
+        <!--module>owldiff-protege-plugin</module-->
     </modules>
     <build>
         <extensions>
