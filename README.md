@@ -1,4 +1,4 @@
-# OWLDiff [![Java CI with Maven](https://github.com/psiotwo/owldiff/actions/workflows/maven.yml/badge.svg)](https://github.com/psiotwo/owldiff/actions/workflows/maven.yml)
+# OWLDiff [![Java CI with Maven](https://github.com/psiotwo/owldiff/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/psiotwo/owldiff/actions/workflows/maven.yml)
 
 A tool to perform a 2-way diff of OWL ontologies.
 
