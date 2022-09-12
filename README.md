@@ -40,5 +40,10 @@ A tool to perform a 2-way diff of OWL ontologies.
 - to perform the diff of file/URI <u1> and file/URI <u2> run
 			'java -jar owldiff.jar <u1> <u2>' (or the convenience script 'owldiff <u1> <u2>' on linux)
 
+## Resources
+- Kremen, P. & Šmíd, M. & Kouba, Z.. (2011). OWLDiff: A practical tool for comparison and merge of owl ontologies. Proceedings of the 10th International Workshop on Web Semantics. 229-233. 
+- Kremen, P. & Kouba, Z.. (2009). Incremental Approach to Error Explanations in Ontologies. Networked Knowledge - Networked Media - Integrating Knowledge Management 2009: 171-185
+
+
 * * *
 2020 Czech Technical University, Knowledge Based and Software Systems Group
