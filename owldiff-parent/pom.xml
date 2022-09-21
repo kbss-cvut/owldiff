@@ -19,7 +19,7 @@
     <artifactId>owldiff-parent</artifactId>
     <packaging>pom</packaging>
     <name>OWLDiff Parent POM</name>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>0.2.1</version>
     <repositories>
         <repository>
             <id>kbss</id>
@@ -79,8 +79,8 @@
                 <version>3.8.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
-                    <source>14</source>
-                    <target>14</target>
+                    <source>18</source>
+                    <target>18</target>
                 </configuration>
             </plugin>
         </plugins>
