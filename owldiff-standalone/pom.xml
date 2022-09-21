@@ -17,7 +17,7 @@
         <groupId>cz.cvut.kbss</groupId>
         <artifactId>owldiff-parent</artifactId>
         <relativePath>../owldiff-parent/pom.xml</relativePath>
-        <version>0.2.1-SNAPSHOT</version>
+        <version>0.2.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
