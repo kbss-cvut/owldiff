@@ -23,10 +23,6 @@
     <description>OWLDiff - diff of OWL ontologies</description>
     <distributionManagement>
         <repository>
-            <id>kbss</id>
-            <url>http://kbss.felk.cvut.cz/var/www/m2repo</url>
-        </repository>
-        <repository>
           <id>github</id>
           <name>GitHub Packages</name>
           <url>https://maven.pkg.github.com/psiotwo/owldiff</url>
