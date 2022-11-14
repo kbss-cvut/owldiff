@@ -5,6 +5,11 @@ A tool to perform a 2-way diff of OWL ontologies.
 ## Requirements
 - Java 14
 
+## Run
+In order to run OWLDiff run `mvn clean install` and
+- for CLI: `cd owldiff-cli && mvn assembly:assembly` to create an executable JAR file in `target/owldiff-cli-<VERSION>-jar-with-dependencies.jar`
+- for Desktop UI: `cd owldiff-standalone && mvn assembly:assembly` to create a ZIP file`target/owldiff-standalone-<VERSION>-dist-bin.zip`. Unzip it and run `bin/owldiff`.
+
 ## Features
 - syntactic diff/merge functionality
 - explanations for inferred axioms
