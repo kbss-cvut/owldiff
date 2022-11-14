@@ -17,8 +17,8 @@ import cz.cvut.kbss.owldiff.change.OWLChange;
 import cz.cvut.kbss.owldiff.diff.OWLDiff;
 import cz.cvut.kbss.owldiff.diff.OWLDiffOutput;
 import cz.cvut.kbss.owldiff.ontology.OntologyHandler;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 
@@ -69,7 +69,7 @@ public class SyntacticDiffTest {
         final OWLDiffOutput diffOutput = diff.diff();
         final Set<? extends OWLChange> changes = diffOutput.getOWLChanges();
 
-        Assert.assertNotNull(changes);
-        Assert.assertEquals(changes.size(), 4);
+        Assertions.assertNotNull(changes);
+        Assertions.assertEquals(4, changes.size());
     }
 }
