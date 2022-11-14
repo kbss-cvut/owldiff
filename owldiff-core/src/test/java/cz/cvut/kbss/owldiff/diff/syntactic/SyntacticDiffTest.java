@@ -17,55 +17,46 @@ import cz.cvut.kbss.owldiff.change.OWLChange;
 import cz.cvut.kbss.owldiff.diff.OWLDiff;
 import cz.cvut.kbss.owldiff.diff.OWLDiffOutput;
 import cz.cvut.kbss.owldiff.ontology.OntologyHandler;
-import junit.framework.Assert;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: kremep1
- * Date: 10/3/12
- * Time: 8:01 AM
- * To change this template use File | Settings | File Templates.
- */
 public class SyntacticDiffTest {
 
-    OntologyHandler h;
+    private static final String iri = "http://kbss.felk.cvut.cz/ontologies/2012/owldiff-test-syntactic.owl";
+    private static final String ns = iri + "#";
 
-    @Before
-    public void setUp() throws Exception {
-        IRI iri = IRI.create("http://kbss.felk.cvut.cz/ontologies/2012/owldiff-test-syntactic.owl");
-        final OWLOntology o = OWLManager.createOWLOntologyManager().createOntology(iri);
+    @Test
+    public void testDiffBasic() throws Exception {
+
+        final OWLOntology o = OWLManager.createOWLOntologyManager().createOntology(IRI.create(iri));
         final OWLDataFactory oF = o.getOWLOntologyManager().getOWLDataFactory();
-        final OWLClass oClassA1 = oF.getOWLClass(IRI.create(iri.toString() + "#A1"));
-        final OWLClass oClassA2 = oF.getOWLClass(IRI.create(iri.toString() + "#A2"));
-        final OWLObjectProperty oPropR = oF.getOWLObjectProperty(IRI.create(iri.toString() + "#R"));
+        final OWLClass oCA1 = oF.getOWLClass(ns, "A1");
+        final OWLClass oCA2 = oF.getOWLClass(ns, "A2");
+        final OWLObjectProperty oR = oF.getOWLObjectProperty(ns, "R");
 
-        o.getOWLOntologyManager().addAxiom(o, oF.getOWLDeclarationAxiom(oClassA1));
-        o.getOWLOntologyManager().addAxiom(o, oF.getOWLDeclarationAxiom(oClassA2));
-        o.getOWLOntologyManager().addAxiom(o, oF.getOWLDeclarationAxiom(oPropR));
+        final OWLOntologyManager om = o.getOWLOntologyManager();
+        om.addAxiom(o, oF.getOWLDeclarationAxiom(oCA1));
+        om.addAxiom(o, oF.getOWLDeclarationAxiom(oCA2));
+        om.addAxiom(o, oF.getOWLDeclarationAxiom(oR));
+        om.addAxiom(o, oF.getOWLSubClassOfAxiom(oCA1, oF.getOWLObjectSomeValuesFrom(oR, oCA2)));
 
-        o.getOWLOntologyManager().addAxiom(o, oF.getOWLSubClassOfAxiom(oClassA1, oF.getOWLObjectSomeValuesFrom(oPropR, oClassA2)));
-
-        final OWLOntology u = OWLManager.createOWLOntologyManager().createOntology(iri);
+        final OWLOntology u = OWLManager.createOWLOntologyManager().createOntology(IRI.create(iri));
 
         final OWLDataFactory uF = o.getOWLOntologyManager().getOWLDataFactory();
-        final OWLClass uClassA1 = uF.getOWLClass(IRI.create(iri.toString() + "#A1"));
-        final OWLObjectProperty uPropR = uF.getOWLObjectProperty(IRI.create(iri.toString() + "#R"));
+        final OWLClass uCA1 = uF.getOWLClass(ns, "A1");
+        final OWLObjectProperty uR = uF.getOWLObjectProperty(ns, "R");
 
-        u.getOWLOntologyManager().addAxiom(u, uF.getOWLDeclarationAxiom(uClassA1));
-        u.getOWLOntologyManager().addAxiom(u, uF.getOWLDeclarationAxiom(uPropR));
+        final OWLOntologyManager um = u.getOWLOntologyManager();
+        um.addAxiom(u, uF.getOWLDeclarationAxiom(uCA1));
+        um.addAxiom(u, uF.getOWLDeclarationAxiom(uR));
+        um.addAxiom(u, uF.getOWLSubClassOfAxiom(uCA1, uF.getOWLObjectSomeValuesFrom(uR, uCA1)));
+        um.addAxiom(u, uF.getOWLSubClassOfAxiom(uCA1, uF.getOWLThing()));
 
-        u.getOWLOntologyManager().addAxiom(u, uF.getOWLSubClassOfAxiom(uClassA1, uF.getOWLObjectSomeValuesFrom(uPropR, uClassA1)));
-        u.getOWLOntologyManager().addAxiom(u, uF.getOWLSubClassOfAxiom(uClassA1, uF.getOWLThing()));
-
-
-        h = new OntologyHandler() {
+        final OWLDiff diff = new SyntacticDiff(new OntologyHandler() {
             public OWLOntology getOriginalOntology() {
                 return o;
             }
@@ -73,18 +64,10 @@ public class SyntacticDiffTest {
             public OWLOntology getUpdateOntology() {
                 return u;
             }
-        };
-    }
+        });
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test
-    public void testDiffBasic() throws Exception {
-        OWLDiff diff = new SyntacticDiff(h);
-        OWLDiffOutput diffOutput = diff.diff();
-        Set<? extends OWLChange> changes = diffOutput.getOWLChanges();
+        final OWLDiffOutput diffOutput = diff.diff();
+        final Set<? extends OWLChange> changes = diffOutput.getOWLChanges();
 
         Assert.assertNotNull(changes);
         Assert.assertEquals(changes.size(), 4);
