@@ -8,7 +8,7 @@
         </layout>
     </appender>
 
-    <logger name="cz.cvut.kbss" level="info" additivity="false">
+    <logger name="cz.cvut.kbss" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
