@@ -12,36 +12,36 @@
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>cz.cvut.kbss</groupId>
-    <artifactId>owldiff</artifactId>
-    <packaging>pom</packaging>
-    <name>OWLDiff</name>
-    <version>0.2.1</version>
-    <description>OWLDiff - diff of OWL ontologies</description>
-    <distributionManagement>
-        <repository>
-          <id>github</id>
-          <name>GitHub Packages</name>
-          <url>https://maven.pkg.github.com/psiotwo/owldiff</url>
-        </repository>
-    </distributionManagement>
-    <modules>
-        <module>owldiff-parent</module>
-        <module>owldiff-core</module>
-        <module>owldiff-cli</module>
-        <module>owldiff-standalone</module>
-        <!--module>owldiff-protege-plugin</module-->
-    </modules>
-    <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>3.4.1</version>
-            </extension>
-        </extensions>
-    </build>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cz.cvut.kbss</groupId>
+  <artifactId>owldiff</artifactId>
+  <packaging>pom</packaging>
+  <name>OWLDiff</name>
+  <version>0.2.1</version>
+  <description>OWLDiff - diff of OWL ontologies</description>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/psiotwo/owldiff</url>
+    </repository>
+  </distributionManagement>
+  <modules>
+    <module>owldiff-parent</module>
+    <module>owldiff-core</module>
+    <module>owldiff-cli</module>
+    <module>owldiff-standalone</module>
+    <!--module>owldiff-protege-plugin</module-->
+  </modules>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>3.5.2</version>
+      </extension>
+    </extensions>
+  </build>
 </project>
